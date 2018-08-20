@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pengeluaran.aspx.cs" Inherits="BioTemplate.Pages.Pengeluaran" %>
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -10,8 +11,12 @@
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/toastr/toastr.min.css" rel="stylesheet" />
     <link href="../CSS/animate.css" rel="stylesheet" />
-    <link href="../CSS/style.css" rel="stylesheet" />
     <link href="../CSS/style2.css" rel="stylesheet" />
+    <link href="../CSS/style.css" rel="stylesheet" />
+    <link href="../CSS/select2.css" rel="stylesheet" />
+    <link href="../CSS/morris.css" rel="stylesheet" />
+    <link href="../CSS/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../CSS/dataTables.responsive.css" rel="stylesheet" />
     <link href="../CSS/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../CSS/plugins/dataTables/datatables.min.css" rel="stylesheet" />
     <link href="../CSS/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
@@ -20,44 +25,30 @@
     <link href="../CSS/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-    <!-- DataTables CSS -->
-    <link href="../CSS/plugins/dataTablesBootstrap/dataTables.bootstrap.css" rel="stylesheet">
-    <!-- DataTables Responsive CSS -->
-    <link href="../CSS/plugins/dataTablesBootstrap/dataTables.responsive.css" rel="stylesheet">
-    </asp:ContentPlaceHolder>
-
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
-    <form name="form">
     <form id="form1" runat="server">
         <div id="wrapper">
             <nav class="navbar-default navbar-static-side " role="navigation">
                 <div class="sidebar-collapse" id="sideMenu" runat="server">
-                    <%--<ul class="nav metismenu" id="sideMenu" runat="server">--%>
-                    <ul class="nav sidebar-nav">   
-                    <li class="sidebar-brand">
-                    <a href="Default.aspx">
-                       Bio Farma
-                    </a>
-                </li>
-                <li>
-                    <a href="Default.aspx">Home</a>
-                </li>
-                <li>
-                    <a href="Pemasukan.aspx">Pemasukkan</a>
-                </li>
-                <li>
-                    <a href="Pengeluaran.aspx">Pengeluaran</a>
-                </li>
-                <li>
-                    <a href="#">Laporan</a>
-                </li>
-                        </ul>
-                    <%--</ul>--%>
+                    <ul class="nav metimenu sidebar-nav" runat="server">
+                        <li class="sidebar-brand">
+                            <a href="Default.aspx" >BioFarma</a>
+                        </li>
+                        <li>
+                            <a href="Master.aspx">Master Unit</a>
+                        </li>
+                        <li>
+                            <a href="Pemasukkan.aspx">Pemasukkan</a>
+                        </li>
+                        <li>
+                            <a href="Pengeluaran.aspx">Pengeluaran</a>
+                        </li>
+                        <li>
+                            <a href="Laporan.aspx">Laporan</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
 
@@ -115,8 +106,6 @@
                                                 </div>
                                             </FooterTemplate>
                                         </asp:Repeater>
-                                        
-
                                     </ul>
                                 </li>
                             </li>
@@ -169,83 +158,123 @@
 
                     </nav>
                 </div>
-                <h1 align="center">Pengeluaran Biaya Kas</h1>
-                
-                <table align="center" width="500px">
-
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <h1>Pengeluaran Saldo Kas</h1><br />
+                    <br />
+                    <table>
                         <tr>
-                            <select id="Divisi" required class="form-control margin" value="">
-                                <option value="">Pilih Divisi</option>
-                                <option value="it">IT</option>
-                                <option value="sdm">SDM</option>
-                                <option value="keuangan">Keuangan</option>
-                                <option value="lainnya">Lain Lain</option>
-                            </select>
-
-                            <div class="form-group">
-                                <tr>
-                                <td align="center"><label>Pengeluaran</label></td>
-                                </tr>
-                                <tr>
-                                <td align="center"><input type="number" id="masuk" class="form-control marginBottom" placeholder="Rp "></td>
-                                </tr>
-                                <tr>
-                                <td align="center"><label>Tanggal Pengeluaran</label></td>
-                                </tr>
-                                <tr>
-                                <td align="center"><input class="datepicker form-control marginBottom"  data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy"></td>
-                                </tr>
-                                <tr>
-                                <td align="center"><label>Keperluan</label></td>
-                                </tr>
-                                <tr>
-                                <td align="center"><input type="text" id="Keperluan" class="form-control marginBottom" placeholder="Ex. flashdrive, kabel, kertas. etc..."></td>
-                                </tr>
-                                <tr>
-                                <td align="center">
-                                    <input type="button" id="konfirmasi" name="konfirmasi" value="Konfirmasi" class="btn btn-success" onclick="Proses()">
-                                    <input type="reset" value="reset" class="btn btn-danger">
-                                </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                </tr>                           
-                            </div>
+                            <td>
+                                <h3>Pilih Kas </h3>
+                            </td>
+                            <td>
+                                <div class="container-fluid">
+                                <select class="form-control">
+                                    <option>Pilih Unit</option>
+                                    <option>Kas Kecil</option>
+                                    <option>Kas Besar</option>
+                                </select>
+                                </div>
+                                <br />
+                            </td>
                         </tr>
-                </table>
-                <tr>
-			    <td>
-                    
-				    Divisi
-			    <td>
-				    <input type='text' name='zdivisi' readonly>
-                
-                    <div id="wrapper">
-
-                    <table id="tabelpantry" width="100%" class="table table-striped table-bordered table-hover">
+                    <tr>
+                        <td>
+                            <h3>Jumlah uang </h3>
+                        </td>
+                            <td>
+                                <div class="container-fluid">
+                                <input type="number" id="masuk" name="masuk" placeholder="Rp." class="form-control" />
+                                </div>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <h3>Tanggal </h3>
+                        </td>
+                            <td>
+                                <div class="container-fluid">
+                                <input data-provide="datepicker" placeholder="mm/dd/yyy" class="form-control">
+                                </div>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <h3>Keperluan </h3>
+                        </td>
+                            <td>
+                                <div class="container-fluid">
+                                <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <h3>Jumlah Saldo </h3>
+                        </td>
+                            <td>
+                                <div class="container-fluid">
+                                <input id="saldo" name="saldo" class="form-control" readonly/>
+                                    <br />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3>Pilih Unit </h3>
+                            </td>
+                            <td>
+                                <div class="container-fluid">
+                                <select class="form-control">
+                                    <option>Pilih Unit</option>
+                                    <option>IT</option>
+                                    <option>SDM</option>
+                                    <option>Keuangan</option>
+                                </select>
+                                </div>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" value="Konfirmasi" class="btn btn-primary "/>
+                                <input type="reset" value="Reset" class="btn btn-danger"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                <div id="wrapper">
+                    <table id="tabelmasuk" width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Tanggal</th>
-                                <th>Jumlah</th>
-                                <th>Keperluan</th>
-                                <th>Saldo</th>
-            
+                                <th>Tanggal Masuk</th>
+                                <th>Jumlah Uang</th>
+                                <th>Jumlah Saldo</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                             <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td algin="center"><center>
+                                        <input type="button" id="edit" name="edit" value="edit" class="btn btn-success" onclick="edit">
+                                        <input type="button" value="hapus" class="btn btn-danger">
+                                    </center>
+                                    </td>
+                                </tr>
                             </tbody>
-        
-
                     </table>
                 </div>
-                <div class="wrapper wrapper-content animated fadeInRight">
-                        
-                    </asp:ContentPlaceHolder>
-                </div>
+                    </div>
                 <div class="footer">
                     <div>
-                        <strong>Copyright</strong> &copy; 2018 PT Bio Farma (Persero)
+                        <strong>Copyright</strong> &copy; 2016 PT Bio Farma (Persero)
                     </div>
                 </div>
             </div>
@@ -254,7 +283,6 @@
 
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
-        <script src='<%: ResolveClientUrl("~/JS/bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/metisMenu/jquery.metisMenu.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/slimscroll/jquery.slimscroll.js") %>'></script>
 
@@ -277,13 +305,11 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
-        <!-- DataTables JavaScript -->
-        <script src="../CSS/plugins/dataTablesBootstrap/jquery.dataTables.min.js"></script>
-        <script src="../CSS/plugins/dataTablesBootstrap/dataTables.bootstrap.min.js"></script>
-        <script src="../CSS/plugins/dataTablesBootstrap/dataTables.responsive.js"></script>
-
+        <script src="../JS/jquery.dataTables.min.js"></script>
+        <script src="../JS/dataTables.bootstrap.min.js"></script>
+        <script src="../JS/dataTables.responsive.js"></script>
         <script type="text/javascript">
-            var tabel=$('#tabelpantry').DataTable()
+            var tabel=$('#tabelmasuk').DataTable()
         
         </script>
         <script>
@@ -363,7 +389,6 @@
                         <br>
                             <small>*Primary layout</small>
                         </span>
-                        
 
                         <div class="switch">
                             <div class="onoffswitch">
@@ -378,6 +403,7 @@
                     <div class="setings-item">
                         <span>Boxed layout
                         </span>
+
                         <div class="switch">
                             <div class="onoffswitch">
                                 <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
@@ -438,26 +464,7 @@
             </div>
         </div>
         <script>
-
-            function Proses() {
-
-            var Divisi = document.getElementById("Divisi").value;
-
-            if (Divisi == "")
-               alert("Divisi harus di pilih");
-
-            else {
-               document.form.zdivisi.value = Divisi;
-
-                }
-            }
-            
             // Config box
-
-            //DatePiceker
-             $('.datepicker').datepicker({
-                startDate: '-3d'
-            });
 
             // Enable/disable fixed top navbar
             $('#fixednavbar').click(function () {
@@ -693,9 +700,8 @@
                     $('#fixedfooter').prop('checked', 'checked');
                 }
             }
-
-            
         </script>
     </form>
 </body>
 </html>
+

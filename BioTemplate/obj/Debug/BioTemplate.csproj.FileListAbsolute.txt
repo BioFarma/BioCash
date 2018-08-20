@@ -4,29 +4,31 @@ F:\Projects\BioTemplate\BioTemplate\bin\BioTemplate.pdb
 F:\Projects\BioTemplate\BioTemplate\obj\Debug\BioTemplate.dll
 F:\Projects\BioTemplate\BioTemplate\obj\Debug\BioTemplate.pdb
 F:\Projects\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csprojResolveAssemblyReference.cache
-E:\Bio Farma\BioTemplate\BioTemplate\bin\BioTemplate.dll.config
-E:\Bio Farma\BioTemplate\BioTemplate\bin\BioTemplate.dll
-E:\Bio Farma\BioTemplate\BioTemplate\bin\BioTemplate.pdb
-E:\Bio Farma\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csprojResolveAssemblyReference.cache
-E:\Bio Farma\BioTemplate\BioTemplate\obj\Debug\BioTemplate.dll
-E:\Bio Farma\BioTemplate\BioTemplate\obj\Debug\BioTemplate.pdb
-C:\xampp\htdocs\BioTemplate\BioTemplate\bin\BioTemplate.dll.config
-C:\xampp\htdocs\BioTemplate\BioTemplate\bin\BioTemplate.dll
-C:\xampp\htdocs\BioTemplate\BioTemplate\bin\BioTemplate.pdb
-C:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csprojResolveAssemblyReference.cache
-C:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
-C:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.dll
-C:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.pdb
-E:\xampp\htdocs\BioTemplate\BioTemplate\bin\BioTemplate.dll.config
-E:\xampp\htdocs\BioTemplate\BioTemplate\bin\BioTemplate.dll
-E:\xampp\htdocs\BioTemplate\BioTemplate\bin\BioTemplate.pdb
-E:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
-E:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
-E:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.dll
-E:\xampp\htdocs\BioTemplate\BioTemplate\obj\Debug\BioTemplate.pdb
-C:\Users\acer\Documents\Visual Studio 2015\Projects\BioTemplate\BioTemplate\bin\BioTemplate.dll.config
-C:\Users\acer\Documents\Visual Studio 2015\Projects\BioTemplate\BioTemplate\bin\BioTemplate.dll
-C:\Users\acer\Documents\Visual Studio 2015\Projects\BioTemplate\BioTemplate\bin\BioTemplate.pdb
-C:\Users\acer\Documents\Visual Studio 2015\Projects\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csprojResolveAssemblyReference.cache
-C:\Users\acer\Documents\Visual Studio 2015\Projects\BioTemplate\BioTemplate\obj\Debug\BioTemplate.dll
-C:\Users\acer\Documents\Visual Studio 2015\Projects\BioTemplate\BioTemplate\obj\Debug\BioTemplate.pdb
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\bin\BioTemplate.dll.config
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\bin\BioTemplate.dll
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\bin\BioTemplate.pdb
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csprojResolveAssemblyReference.cache
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\obj\Debug\BioTemplate.dll
+C:\Users\SANI\Desktop\BioTemplate\BioTemplate\obj\Debug\BioTemplate.pdb
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll.config
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\bin\BioTemplate.pdb
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.dll
+C:\Users\SANI\Desktop\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.pdb
+E:\VisualStudio\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll.config
+E:\VisualStudio\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll
+E:\VisualStudio\BioTemplate Ori\BioTemplate\bin\BioTemplate.pdb
+E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
+E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
+E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.dll
+E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.pdb
+D:\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll.config
+D:\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll
+D:\BioTemplate Ori\BioTemplate\bin\BioTemplate.pdb
+D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
+D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
+D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.dll
+D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.pdb

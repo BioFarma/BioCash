@@ -1,5 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="BioTemplate.Master.cs" Inherits="BioTemplate.MasterPages.BioProMaster" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pemasukkan.aspx.cs" Inherits="BioTemplate.Pages.Pemasukkan" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,6 +13,10 @@
     <link href="../CSS/animate.css" rel="stylesheet" />
     <link href="../CSS/style2.css" rel="stylesheet" />
     <link href="../CSS/style.css" rel="stylesheet" />
+    <link href="../CSS/select2.css" rel="stylesheet" />
+    <link href="../CSS/morris.css" rel="stylesheet" />
+    <link href="../CSS/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../CSS/dataTables.responsive.css" rel="stylesheet" />
     <link href="../CSS/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../CSS/plugins/dataTables/datatables.min.css" rel="stylesheet" />
     <link href="../CSS/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
@@ -22,8 +25,6 @@
     <link href="../CSS/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
-    <asp:ContentPlaceHolder ID="cpHead" runat="server">
-    </asp:ContentPlaceHolder>
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
@@ -159,11 +160,54 @@
 
                     </nav>
                 </div>
-                <asp:ContentPlaceHolder ID="cpPageHeader" runat="server"></asp:ContentPlaceHolder>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <asp:ContentPlaceHolder ID="cpMain" runat="server">
-                    </asp:ContentPlaceHolder>
+                    <h1>Laporan Kas</h1><br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+                                <h3>Pilih Unit </h3>
+                            </td>
+                            <td>
+                                <div class="container-fluid">
+                                <select class="form-control">
+                                    <option>Pilih Unit</option>
+                                    <option>IT</option>
+                                    <option>SDM</option>
+                                    <option>Keuangan</option>
+                                </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>                           
+                    <br />
+                <div id="wrapper">
+                    <table id="tabelmasuk" width="100%" class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal Masuk</th>
+                                <th>Jumlah Uang</th>
+                                <th>Jumlah Saldo</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td algin="center"><center>
+                                        <input type="button" id="edit" name="edit" value="edit" class="btn btn-success" onclick="edit">
+                                        <input type="button" value="hapus" class="btn btn-danger">
+                                    </center>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
                 </div>
+                    </div>
                 <div class="footer">
                     <div>
                         <strong>Copyright</strong> &copy; 2016 PT Bio Farma (Persero)
@@ -175,7 +219,6 @@
 
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
-        <script src='<%: ResolveClientUrl("~/JS/bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/metisMenu/jquery.metisMenu.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/slimscroll/jquery.slimscroll.js") %>'></script>
 
@@ -198,6 +241,13 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
+        <script src="../JS/jquery.dataTables.min.js"></script>
+        <script src="../JS/dataTables.bootstrap.min.js"></script>
+        <script src="../JS/dataTables.responsive.js"></script>
+        <script type="text/javascript">
+            var tabel=$('#tabelmasuk').DataTable()
+        
+        </script>
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -587,8 +637,7 @@
                 }
             }
         </script>
-        <asp:ContentPlaceHolder ID="cpScriptLibContent" runat="server"></asp:ContentPlaceHolder>
-        <asp:ContentPlaceHolder ID="cpScriptContent" runat="server"></asp:ContentPlaceHolder>
     </form>
 </body>
 </html>
+

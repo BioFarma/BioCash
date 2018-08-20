@@ -129,6 +129,7 @@
     <Content Include="CSS\plugins\slick\fonts\slick.eot" />
     <Content Include="CSS\plugins\slick\fonts\slick.ttf" />
     <Content Include="CSS\plugins\slick\fonts\slick.woff" />
+    <Content Include="CSS\style2.css" />
     <Content Include="Fonts\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Fonts\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -166,7 +167,6 @@
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="JS\output.js" />
     <Content Include="JS\plugins\chartist\chartist.min.js.map" />
     <Content Include="JS\plugins\diff_match_patch\COPYING" />
     <Content Include="JS\plugins\justified-gallery\README.md" />
@@ -838,7 +838,9 @@
     <Content Include="JS\TableScript\data-tables\images\sort_desc.png" />
     <Content Include="JS\TableScript\data-tables\jquery.dataTables.js" />
     <Content Include="Pages\Default.aspx" />
+    <Content Include="Pages\Pemasukkan.aspx" />
     <Content Include="Pages\Pengeluaran.aspx" />
+    <Content Include="Pages\Laporan.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -890,12 +892,26 @@
     <Compile Include="Pages\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Pemasukkan.aspx.cs">
+      <DependentUpon>Pemasukkan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Pemasukkan.aspx.designer.cs">
+      <DependentUpon>Pemasukkan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Pengeluaran.aspx.cs">
       <DependentUpon>Pengeluaran.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Pengeluaran.aspx.designer.cs">
       <DependentUpon>Pengeluaran.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Laporan.aspx.cs">
+      <DependentUpon>Laporan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Laporan.aspx.designer.cs">
+      <DependentUpon>Laporan.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
