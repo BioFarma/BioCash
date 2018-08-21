@@ -26,7 +26,6 @@
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
 </head>
-<%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
     <form id="form1" runat="server">
         <div id="wrapper">
@@ -166,16 +165,17 @@
                     <table>
                         <tr>
                             <td>
-                                <h3>Pilih Unit </h3>
+                                <h3>Pilih Kas Kecil </h3>
                             </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
-                                <select id="unit" class="form-control">
-                                    <option>Pilih Unit</option>
-                                    <option>IT</option>
-                                    <option>SDM</option>
-                                    <option>Keuangan</option>
-                                </select>
+                                    <asp:DropDownList ID="kas_kecil" runat="server" CssClass="form-control">
+                                        <asp:ListItem Value="0">-- Pilih kas kecil</asp:ListItem>
+                                        <asp:ListItem>IT</asp:ListItem>
+                                        <asp:ListItem>SDM</asp:ListItem>
+                                        <asp:ListItem>Keuangan</asp:ListItem>
+                                        <asp:ListItem>Lain-lain</asp:ListItem>
+                                    </asp:DropDownList>
                                 </div>
                                 <br />
                             </td>
@@ -186,7 +186,7 @@
                         </td>
                             <td>
                                 <div class="container-fluid">
-                                <input type="number" id="masuk" name="masuk" placeholder="Rp." class="form-control" />
+                                    <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
                                 </div>
                                 <br />
                             </td>
@@ -195,20 +195,30 @@
                         <td>
                             <h3>Tanggal </h3>
                         </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
-                                <input data-provide="datepicker" id="tgl" placeholder="mm/dd/yyyy" class="form-control">
+                                    <div class="input-group date" id="datepicker" data-provide="datepicker">
+                                        <asp:TextBox ID="tgl_masuk" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                    <br />
                                 </div>
-                                <br />
                             </td>
                         </tr>
                         <tr>
                         <td>
                             <h3>Periode </h3>
                         </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
-                                <input data-provide="datepicker" id="periode" placeholder="2018" class="year-only form-control">
+                                    <div class="input-group date" id="yearpicker" data-provide="datepicker">
+                                        <asp:TextBox ID="periode_masuk" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <br />
                             </td>
@@ -219,20 +229,19 @@
                         </td>
                             <td>
                                 <div class="container-fluid">
-                                <input id="saldo" name="saldo" class="form-control" readonly/>
+                                    <asp:TextBox ID="saldo" runat="server" CssClass="form-control" ReadOnly></asp:TextBox>
                                     <br />
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="button" id="confirm" value="Konfirmasi" class="btn btn-primary "/>
+                                <asp:Button ID="Confirm" runat="server" Text="Konfirmasi" CssClass="btn btn-primary" OnClick="Confirm_Click" />
                                 <input type="reset" value="Reset" class="btn btn-danger"/>
                             </td>
                         </tr>
                     </table>
                     <br />
-                <div id="wrapper">
                     <table id="tabelmasuk" width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
@@ -249,7 +258,8 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td algin="center"><center>
+                                    <td>
+                                        <center>
                                         <input type="button" id="edit" name="edit" value="edit" class="btn btn-success" onclick="edit">
                                         <input type="button" value="hapus" class="btn btn-danger">
                                     </center>
@@ -257,7 +267,6 @@
                                 </tr>
                             </tbody>
                     </table>
-                </div>
                     </div>
                 <div class="footer">
                     <div>
@@ -266,7 +275,7 @@
                 </div>
             </div>
         </div>
-
+        
 
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
@@ -453,12 +462,21 @@
         <script>
             // Config box
 
-            //year only
-             $('.year-only').datepicker({
-                 minViewMode: 2,
-                 format: 'yyyy'
-               });
+            //date picker
+                $("#datepicker").datepicker( {
+                    
+                    autoclose: true
+                });
 
+            //year picker
+                $("#yearpicker").datepicker( {
+                    format: "yyyy",
+                    viewMode: "years", 
+                    minViewMode: "years",
+                    autoclose: true
+                });
+            
+            
             // Enable/disable fixed top navbar
             $('#fixednavbar').click(function () {
                 if ($('#fixednavbar').is(':checked')) {

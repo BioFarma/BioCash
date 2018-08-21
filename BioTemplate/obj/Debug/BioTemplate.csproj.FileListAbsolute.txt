@@ -25,10 +25,10 @@ E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csprojAssembly
 E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
 E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.dll
 E:\VisualStudio\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.pdb
-D:\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll.config
-D:\BioTemplate Ori\BioTemplate\bin\BioTemplate.dll
-D:\BioTemplate Ori\BioTemplate\bin\BioTemplate.pdb
-D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
-D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
-D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.dll
-D:\BioTemplate Ori\BioTemplate\obj\Debug\BioTemplate.pdb
+D:\Project\VisualStudio\BioCash\BioTemplate\bin\BioTemplate.dll.config
+D:\Project\VisualStudio\BioCash\BioTemplate\bin\BioTemplate.dll
+D:\Project\VisualStudio\BioCash\BioTemplate\bin\BioTemplate.pdb
+D:\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
+D:\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
+D:\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.dll
+D:\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.pdb

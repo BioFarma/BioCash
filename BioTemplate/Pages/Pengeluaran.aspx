@@ -32,7 +32,7 @@
         <div id="wrapper">
             <nav class="navbar-default navbar-static-side " role="navigation">
                 <div class="sidebar-collapse" id="sideMenu" runat="server">
-                    <ul class="nav metimenu sidebar-nav" runat="server">
+                    <ul class="nav metismenu sidebar-nav" runat="server">
                         <li class="sidebar-brand">
                             <a href="Default.aspx" >BioFarma</a>
                         </li>
@@ -192,7 +192,7 @@
                         <td>
                             <h3>Tanggal </h3>
                         </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
                                 <input data-provide="datepicker" placeholder="mm/dd/yyy" class="form-control">
                                 </div>
@@ -203,7 +203,7 @@
                         <td>
                             <h3>Keperluan </h3>
                         </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
                                 <textarea class="form-control" rows="5"></textarea>
                                 </div>
@@ -214,7 +214,7 @@
                         <td>
                             <h3>Jumlah Saldo </h3>
                         </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
                                 <input id="saldo" name="saldo" class="form-control" readonly/>
                                     <br />
@@ -225,7 +225,7 @@
                             <td>
                                 <h3>Pilih Unit </h3>
                             </td>
-                            <td>
+                            <td >
                                 <div class="container-fluid">
                                 <select class="form-control">
                                     <option>Pilih Unit</option>
@@ -245,7 +245,6 @@
                         </tr>
                     </table>
                     <br />
-                <div id="wrapper">
                     <table id="tabelmasuk" width="100%" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
@@ -270,7 +269,6 @@
                                 </tr>
                             </tbody>
                     </table>
-                </div>
                     </div>
                 <div class="footer">
                     <div>

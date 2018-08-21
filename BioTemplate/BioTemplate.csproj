@@ -167,6 +167,7 @@
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Images\calendar.png" />
     <Content Include="JS\plugins\chartist\chartist.min.js.map" />
     <Content Include="JS\plugins\diff_match_patch\COPYING" />
     <Content Include="JS\plugins\justified-gallery\README.md" />
@@ -840,7 +841,6 @@
     <Content Include="Pages\Default.aspx" />
     <Content Include="Pages\Pemasukkan.aspx" />
     <Content Include="Pages\Pengeluaran.aspx" />
-    <Content Include="Pages\Laporan.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -905,13 +905,6 @@
     </Compile>
     <Compile Include="Pages\Pengeluaran.aspx.designer.cs">
       <DependentUpon>Pengeluaran.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Laporan.aspx.cs">
-      <DependentUpon>Laporan.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Laporan.aspx.designer.cs">
-      <DependentUpon>Laporan.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
