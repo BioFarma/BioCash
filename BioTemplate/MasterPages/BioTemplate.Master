@@ -36,7 +36,7 @@
                             <a href="Default.aspx" >BioFarma</a>
                         </li>    
                         <li>
-                            <a href="Master.aspx">Master Unit</a>
+                            <a href="MasterUnit.aspx">Master Unit</a>
                         </li>
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
@@ -146,8 +146,6 @@
                                             </div>
                                         </FooterTemplate>
                                     </asp:Repeater>
-                                    
-
                                 </ul>
                             </li>
                             <li>

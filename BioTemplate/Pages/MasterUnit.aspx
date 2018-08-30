@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pemasukkan.aspx.cs" Inherits="BioTemplate.Pages.Pemasukkan" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MasterUnit.aspx.cs" Inherits="BioTemplate.Pages.MasterUnit" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,7 +21,6 @@
     <link href="../CSS/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
@@ -156,176 +155,49 @@
                     </nav>
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <h1>Pemasukkan Saldo Kas</h1>
+                    <h1>Master Unit</h1>
                     <br />
-                    <a href="#divform"id="cpage" type="button" class="btn btn-primary"">
-                        <i class="fa fa-plus"></i> Tambah Data</a>
+                    <div id="forminput" runat="server" class="container-fluid form-horizontal">
+                       <label for="textbox"><h3 style="padding-right:10px;">Tambah Data</h3></label>
+                        <asp:TextBox ID="Unit" name="textbox" runat="server" CssClass="form-control-static"></asp:TextBox>
+                        <asp:Label ID="alert" runat="server"></asp:Label>
+                        <br />
+                        <br />
+                        <asp:Button ID="confirm" runat="server" Text="Konfirmasi" OnClick="Confirm_Click" CssClass="btn btn-primary" />
+                    </div>
                     <br />
                     <br />
                     <div id="gridview" runat="server" class="container-fluid">
-                        <asp:GridView ID="gvBioCash" DataKeyNames="tgl_masuk" runat="server" ClientIDMode="Static" AutoGenerateColumns="false" class="table table-striped table-bordered-hover" OnRowEditing="RowEditing" OnRowCancelingEdit="RowCancelEditing" OnRowUpdating="RowUpdating" OnRowDeleting="RowDeleting" OnRowDataBound="RowDataBound">
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="Unit" ClientIDMode="Static" AutoGenerateColumns="false" class="table table-striped table-responsive table-bordered-hover" OnRowEditing="RowEditing" OnRowCancelingEdit="RowCancelEditing" OnRowUpdating="RowUpdating" OnRowDeleting="RowDeleting">
                             <Columns>
-                                <asp:TemplateField HeaderText="TANGGAL MASUK">
-                                    <ItemTemplate>
-                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_masuk") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <div class="container-fluid">
-                                        <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                            <asp:TextBox ID="tgledit" runat="server" Text='<%#Eval("tgl_masuk") %>' CssClass="form-control"></asp:TextBox>
-                                            <div class="input-group-addon">
-                                                <span class="glyphicon glyphicon-th"></span>
-                                            </div>
-                                        </div>
-                                        </div>
+                                <asp:TemplateField HeaderText="UNIT">  
+                                    <ItemTemplate>  
+                                        <asp:Label ID="Unit_label" runat="server" Text='<%#Eval("Unit") %>'></asp:Label>  
+                                    </ItemTemplate>  
+                                    <EditItemTemplate>  
+                                        <asp:TextBox ID="Unitedit" runat="server" CssClass="form-control-static" Text='<%#Eval("Unit") %>'></asp:TextBox>  
                                     </EditItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="PERIODE">
-                                    <ItemTemplate>
-                                        <asp:Label ID="thnlabel" runat="server" Text='<%#Eval("thn_periode") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <div class="container-fluid">
-                                            <div class="input-group date" id="yearpicker" data-provide="datepicker">
-                                                <asp:TextBox ID="thnedit" runat="server" Text='<%#Eval("thn_periode") %>' CssClass="form-control"></asp:TextBox>
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-th"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="UNIT">
-                                    <ItemTemplate>
-                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("kas_kecil") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <div class="container-fluid">
-                                            <asp:DropDownList ID="unitedit" runat="server" CssClass="form-control">
-                                            </asp:DropDownList>
-                                        </div>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JUMLAH">
-                                    <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>'></asp:Label>
-                                    </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="jmlhedit" runat="server" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);" CssClass="form-control-static" Text='<%#Eval("jmlh_masuk") %>'></asp:TextBox>
-                                    </EditItemTemplate>
-                                </asp:TemplateField>
-
                                 <asp:TemplateField HeaderText="AKSI">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="btn_edit" ImageUrl="~/Images/edit.png" Text="Edit" CommandName="Edit" runat="server" />
-                                        <asp:ImageButton ID="btn_delete" ImageUrl="~/Images/delete.png" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" />
+                                        <asp:ImageButton ID="btn_delete" AlternateText="Delete" ImageUrl="~/Images/delete.png" OnClientClick="return confirm('Yakin ingin dihapus ?');"  CommandName="Delete" runat="server" />
                                     </ItemTemplate>
                                     <EditItemTemplate>
-                                        <asp:ImageButton ID="btn_update" ImageUrl="~/Images/update.png" Text="Update" CommandName="Update" runat="server" />
-                                        <asp:ImageButton ID="btn_cancel" ImageUrl="~/Images/cancel.png" Text="Cancel" CommandName="Cancel" runat="server" />
+                                        <asp:ImageButton ID="btn_update" ImageUrl="~/Images/update.png" Text="Update" CommandName="Update" runat="server"/>
+                                        <asp:ImageButton ID="btn_cancel" ImageUrl="~/Images/cancel.png" Text="Cancel" CommandName="Cancel" runat="server"/>
                                     </EditItemTemplate>
-                                </asp:TemplateField>
+                                    </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>
-                    <%--<asp:SqlDataSource ID="PemasukkanSqlDataSource" runat="server" 
+                    <%--<asp:SqlDataSource ID="SqlDataSource1" runat="server" 
                         ConnectionString='<%$ ConnectionStrings:BioCashConnectionString %>' 
-                        SelectCommand="SELECT * FROM biocash.pemasukkan"
-                        DeleteCommand="DELETE FROM biocash.pemasukkan WHERE tgl_masuk=@tgl_masuk">
-                        <DeleteParameters>
-                            <asp:Parameter Name="Unit" Type="String" />
-                        </DeleteParameters>
+                        SelectCommand="SELECT Unit FROM biocash.Masterunit"
+                        UpdateCommand="UPDATE biocash.Masterunit SET Unit=@Unit WHERE Unit=@Unit"
+                        DeleteCommand="DELETE FROM biocash.Masterunit WHERE Unit=@Unit">
                     </asp:SqlDataSource>--%>
-                    <br />
-                    <div id="divform">
-                    <table>
-                        <tr>
-                            <td>
-                                <h3>Pilih Kas Kecil </h3>
-                            </td>
-                            <td >
-                                <div class="container-fluid">
-                                    <asp:DropDownList ID="kas_kecil" runat="server" CssClass="form-control">
-                                    </asp:DropDownList>
-                                </div>
-                                <br />
-                            </td>
-                            <td>
-                                <asp:Label ID="alert_kas" runat="server"></asp:Label>
-                            </td>
-                        </tr>
-                    <tr>
-                        <td>
-                            <h3>Jumlah uang </h3>
-                        </td>
-                            <td>
-                                <div class="container-fluid">
-                                    <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
-                                </div>
-                                <br />
-                            </td>
-                        <td>
-                            <asp:Label ID="alert_uang" runat="server" ></asp:Label>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Tanggal </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                    <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                        <asp:TextBox ID="tgl_masuk" runat="server" CssClass="form-control"></asp:TextBox>
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                    <br />
-                                </div>
-                            </td>
-                            <td>
-                                <asp:Label ID="alert_tgl" runat="server" ></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Periode </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                    <div class="input-group date" id="yearpicker" data-provide="datepicker">
-                                        <asp:TextBox ID="periode_masuk" runat="server" CssClass="form-control"></asp:TextBox>
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                            </td>
-                            <td>
-                                <asp:Label ID="alert_thn" runat="server" ></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Jumlah Saldo </h3>
-                        </td>
-                            <td>
-                                <div class="container-fluid">
-                                    <asp:TextBox ID="saldo" runat="server" CssClass="form-control" ReadOnly></asp:TextBox>
-                                    <br />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:Button ID="Confirm" runat="server" Text="Konfirmasi" CssClass="btn btn-primary" OnClick="Confirm_Click" />
-                                <input type="reset" value="Reset" class="btn btn-danger"/>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
-                    </div>
                 <div class="footer">
                     <div>
                         <strong>Copyright</strong> &copy; 2016 PT Bio Farma (Persero)
@@ -360,16 +232,14 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
         <script type="text/javascript">
         $(function () {
             $('[id*=]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
                 "responsive": true,
                 "sPaginationType": "full_numbers"
             });
-            });
-        </script>
+        });
+    </script>
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -523,16 +393,6 @@
         </div>
         <script>
             // Config box
-
-        //change page
-            $(document).ready(function(){  
-              $("#cpage").click(function(e) {
-                e.preventDefault();
-                $('html, body').animate({
-                  scrollTop: $($.attr(this, 'href')).offset().top
-                }, 2000);
-              });
-            });
 
             //date picker
                 $("#datepicker").datepicker( {
