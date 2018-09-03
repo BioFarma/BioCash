@@ -67,13 +67,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.Repeater rptApproval;
         
         /// <summary>
-        /// forminput control.
+        /// kd_unit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl forminput;
+        protected global::System.Web.UI.WebControls.TextBox kd_unit;
         
         /// <summary>
         /// Unit control.
@@ -85,31 +85,49 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox Unit;
         
         /// <summary>
-        /// alert control.
+        /// Confirm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label alert;
+        protected global::System.Web.UI.WebControls.Button Confirm;
         
         /// <summary>
-        /// confirm control.
+        /// id_unit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button confirm;
+        protected global::System.Web.UI.WebControls.TextBox id_unit;
         
         /// <summary>
-        /// gridview control.
+        /// KdUnitEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl gridview;
+        protected global::System.Web.UI.WebControls.TextBox KdUnitEdit;
+        
+        /// <summary>
+        /// UnitEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox UnitEdit;
+        
+        /// <summary>
+        /// Update control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Update;
         
         /// <summary>
         /// gvBioCash control.

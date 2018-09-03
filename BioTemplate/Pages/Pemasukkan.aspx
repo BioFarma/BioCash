@@ -158,173 +158,163 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Pemasukkan Saldo Kas</h1>
                     <br />
-                    <a href="#divform"id="cpage" type="button" class="btn btn-primary"">
-                        <i class="fa fa-plus"></i> Tambah Data</a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
+                                  <i class="fa fa-plus"></i> Tambah Data
+                                </button>
+                    <%-- FORM INPUT MODAL --%>
+                        <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Unit</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <label for="Unit"><h3>Kas Kecil</h3></label>
+                                  <asp:DropDownList ID="kas_kecil" runat="server" CssClass="form-control"/>
+                                  
+                                  <br />
+                                  <label for="Unit"><h3>Jumlah Uang</h3></label>
+                                  <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+
+                                  <br />
+                                  <label for="Unit"><h3>Tanggal Pemasukkan</h3></label>
+                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
+                                      <asp:TextBox ID="tgl_masuk" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                           <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label for="Unit"><h3>Tahun Periode</h3></label>
+                                  <div class="input-group date" id="yearpicker" data-provide="datepicker">
+                                  <asp:TextBox ID="periode_masuk" runat="server" CssClass="form-control" Placeholder="yyyy"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                          <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label for="Unit"><h3>Jumlah Saldo</h3></label>
+                                  <asp:TextBox ID="saldo" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Button1" runat="server" Text="Simpan" OnClientClick="return dataValid()" OnClick="Confirm_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                       </div>
+                    <%-- AKHIR FORM INPUT MODAL --%>
+                    <%-- FORM EDIT MODAL --%>
+                        <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalCenterTitle">Tambah Unit</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:TextBox ID ="id_masuk" runat="server" Visible="false"></asp:TextBox>
+                                  <label for="Unit"><h3>Kas Kecil</h3></label>
+                                  <asp:DropDownList ID="kaskeciledit" runat="server" CssClass="form-control"/>
+                                  
+                                  <br />
+                                  <label for="Unit"><h3>Jumlah Uang</h3></label>
+                                  <asp:TextBox ID="jmlhmasukedit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+
+                                  <br />
+                                  <label for="Unit"><h3>Tanggal Pemasukkan</h3></label>
+                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
+                                      <asp:TextBox ID="tglmasukedit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                           <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label for="Unit"><h3>Tahun Periode</h3></label>
+                                  <div class="input-group date" id="yearpicker" data-provide="datepicker">
+                                  <asp:TextBox ID="thnmasukedit" runat="server" CssClass="form-control" Placeholder="yyyy"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                          <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label for="Unit"><h3>Jumlah Saldo</h3></label>
+                                  <asp:TextBox ID="jmlhsaldoedit" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <asp:Button ID="update" runat="server" Text="Update" OnClientClick="return dataValidEdit();" OnClick="update_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                       </div>
+                    <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
                     <br />
-                    <div id="gridview" runat="server" class="container-fluid">
-                        <asp:GridView ID="gvBioCash" DataKeyNames="tgl_masuk" runat="server" ClientIDMode="Static" AutoGenerateColumns="false" class="table table-striped table-bordered-hover" OnRowEditing="RowEditing" OnRowCancelingEdit="RowCancelEditing" OnRowUpdating="RowUpdating" OnRowDeleting="RowDeleting" OnRowDataBound="RowDataBound">
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_masuk" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
+                                <asp:TemplateField Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="idmasuklabel" runat="server" Text='<%#Eval("id_masuk") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="TANGGAL MASUK">
                                     <ItemTemplate>
-                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_masuk") %>'></asp:Label>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_masuk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <div class="container-fluid">
-                                        <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                            <asp:TextBox ID="tgledit" runat="server" Text='<%#Eval("tgl_masuk") %>' CssClass="form-control"></asp:TextBox>
-                                            <div class="input-group-addon">
-                                                <span class="glyphicon glyphicon-th"></span>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="PERIODE">
                                     <ItemTemplate>
-                                        <asp:Label ID="thnlabel" runat="server" Text='<%#Eval("thn_periode") %>'></asp:Label>
+                                        <asp:Label ID="thnlabel" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <div class="container-fluid">
-                                            <div class="input-group date" id="yearpicker" data-provide="datepicker">
-                                                <asp:TextBox ID="thnedit" runat="server" Text='<%#Eval("thn_periode") %>' CssClass="form-control"></asp:TextBox>
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-th"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="UNIT">
                                     <ItemTemplate>
-                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("kas_kecil") %>'></asp:Label>
+                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("kas_kecil") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <div class="container-fluid">
-                                            <asp:DropDownList ID="unitedit" runat="server" CssClass="form-control">
-                                            </asp:DropDownList>
-                                        </div>
-                                    </EditItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="JUMLAH">
                                     <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>'></asp:Label>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="jmlhedit" runat="server" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);" CssClass="form-control-static" Text='<%#Eval("jmlh_masuk") %>'></asp:TextBox>
-                                    </EditItemTemplate>
                                 </asp:TemplateField>
-
                                 <asp:TemplateField HeaderText="AKSI">
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="btn_edit" ImageUrl="~/Images/edit.png" Text="Edit" CommandName="Edit" runat="server" />
-                                        <asp:ImageButton ID="btn_delete" ImageUrl="~/Images/delete.png" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" />
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-primary"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:ImageButton ID="btn_update" ImageUrl="~/Images/update.png" Text="Update" CommandName="Update" runat="server" />
-                                        <asp:ImageButton ID="btn_cancel" ImageUrl="~/Images/cancel.png" Text="Cancel" CommandName="Cancel" runat="server" />
-                                    </EditItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
+                            <EditRowStyle BackColor="#7C6F57"></EditRowStyle>
+
+                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White"></FooterStyle>
+
+                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" CssClass="center" Font-Size="Large"></HeaderStyle>
+
+                            <PagerStyle HorizontalAlign="Center" BackColor="#666666" ForeColor="White"></PagerStyle>
+
+                            <RowStyle BackColor="#E3EAEB"></RowStyle>
+
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+                            <SortedAscendingCellStyle BackColor="#F8FAFA"></SortedAscendingCellStyle>
+
+                            <SortedAscendingHeaderStyle BackColor="#246B61"></SortedAscendingHeaderStyle>
+
+                            <SortedDescendingCellStyle BackColor="#D4DFE1"></SortedDescendingCellStyle>
+
+                            <SortedDescendingHeaderStyle BackColor="#15524A"></SortedDescendingHeaderStyle>
                         </asp:GridView>
-                    </div>
-                    <%--<asp:SqlDataSource ID="PemasukkanSqlDataSource" runat="server" 
-                        ConnectionString='<%$ ConnectionStrings:BioCashConnectionString %>' 
-                        SelectCommand="SELECT * FROM biocash.pemasukkan"
-                        DeleteCommand="DELETE FROM biocash.pemasukkan WHERE tgl_masuk=@tgl_masuk">
-                        <DeleteParameters>
-                            <asp:Parameter Name="Unit" Type="String" />
-                        </DeleteParameters>
-                    </asp:SqlDataSource>--%>
-                    <br />
-                    <div id="divform">
-                    <table>
-                        <tr>
-                            <td>
-                                <h3>Pilih Kas Kecil </h3>
-                            </td>
-                            <td >
-                                <div class="container-fluid">
-                                    <asp:DropDownList ID="kas_kecil" runat="server" CssClass="form-control">
-                                    </asp:DropDownList>
-                                </div>
-                                <br />
-                            </td>
-                            <td>
-                                <asp:Label ID="alert_kas" runat="server"></asp:Label>
-                            </td>
-                        </tr>
-                    <tr>
-                        <td>
-                            <h3>Jumlah uang </h3>
-                        </td>
-                            <td>
-                                <div class="container-fluid">
-                                    <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
-                                </div>
-                                <br />
-                            </td>
-                        <td>
-                            <asp:Label ID="alert_uang" runat="server" ></asp:Label>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Tanggal </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                    <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                        <asp:TextBox ID="tgl_masuk" runat="server" CssClass="form-control"></asp:TextBox>
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                    <br />
-                                </div>
-                            </td>
-                            <td>
-                                <asp:Label ID="alert_tgl" runat="server" ></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Periode </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                    <div class="input-group date" id="yearpicker" data-provide="datepicker">
-                                        <asp:TextBox ID="periode_masuk" runat="server" CssClass="form-control"></asp:TextBox>
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                            </td>
-                            <td>
-                                <asp:Label ID="alert_thn" runat="server" ></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Jumlah Saldo </h3>
-                        </td>
-                            <td>
-                                <div class="container-fluid">
-                                    <asp:TextBox ID="saldo" runat="server" CssClass="form-control" ReadOnly></asp:TextBox>
-                                    <br />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <asp:Button ID="Confirm" runat="server" Text="Konfirmasi" CssClass="btn btn-primary" OnClick="Confirm_Click" />
-                                <input type="reset" value="Reset" class="btn btn-danger"/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
                     </div>
                 <div class="footer">
                     <div>
@@ -362,9 +352,79 @@
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+        <script type='text/javascript'>
+                function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
+            </script>
+        <script type="text/javascript">   
+        function dataValidEdit() {    
+            var kaskeciledit = document.getElementById("kaskeciledit").value;
+            var jmlhmasukedit = document.getElementById("jmlhmasukedit").value;
+            var tglmasukedit = document.getElementById("tglmasukedit").value;
+            var thnmasukedit = document.getElementById("thnmasukedit").value;
+
+            if (kaskeciledit == '')    
+           {    
+            alert("Pilih kas kecil");    
+            return false;    
+            }    
+
+            if (jmlhmasukedit == '')    
+           {    
+            alert("Masukkan jumlah uang");    
+            return false;    
+           }   
+
+            if (tglmasukedit == '')    
+           {    
+           alert("Pilih tanggal pemasukkan");    
+           return false;    
+            }  
+
+            if (thnmasukedit == '')
+            {    
+            alert("Pilih tahun periode");    
+            return false;    
+            } 
+        }    
+     </script> 
+
+        <script type="text/javascript">   
+        function dataValid() {    
+            var kas_kecil= document.getElementById("kas_kecil").value;    
+            var masuk = document.getElementById("Masuk").value;     
+            var tgl_masuk = document.getElementById("tgl_masuk").value;
+            var periode_masuk = document.getElementById("periode_masuk").value;
+
+            if (kas_kecil == '')    
+           {    
+            alert("Pilih kas kecil");    
+            return false;    
+            }    
+
+            if (masuk == '')    
+           {    
+            alert("Masukkan jumlah uang");    
+            return false;    
+           }   
+
+            if (tgl_masuk == '')    
+           {    
+           alert("Pilih tanggal pemasukkan");    
+           return false;    
+            }  
+
+            if (periode_masuk == '')    
+           {    
+           alert("Pilih tahun periode");    
+           return false;    
+           } 
+        }    
+     </script> 
         <script type="text/javascript">
         $(function () {
-            $('[id*=]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+            $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
                 "responsive": true,
                 "sPaginationType": "full_numbers"
             });
@@ -535,8 +595,7 @@
             });
 
             //date picker
-                $("#datepicker").datepicker( {
-                    
+                $("#datepicker").datepicker({
                     autoclose: true
                 });
 

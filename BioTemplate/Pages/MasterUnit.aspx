@@ -157,47 +157,110 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Master Unit</h1>
                     <br />
-                    <div id="forminput" runat="server" class="container-fluid form-horizontal">
-                       <label for="textbox"><h3 style="padding-right:10px;">Tambah Data</h3></label>
-                        <asp:TextBox ID="Unit" name="textbox" runat="server" CssClass="form-control-static"></asp:TextBox>
-                        <asp:Label ID="alert" runat="server"></asp:Label>
-                        <br />
-                        <br />
-                        <asp:Button ID="confirm" runat="server" Text="Konfirmasi" OnClick="Confirm_Click" CssClass="btn btn-primary" />
-                    </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
+                                  <i class="fa fa-plus"></i> Tambah Data
+                                </button>
+                    <%-- FORM INPUT MODAL --%>
+                        <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Unit</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <label for="Unit"><h3>Kode Unit</h3></label>
+                                  <asp:TextBox ID="kd_unit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  
+                                  <br />
+                                  <label for="Unit"><h3>Nama Unit</h3></label>
+                                  <asp:TextBox ID="Unit" runat="server" CssClass="form-control"></asp:TextBox>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Confirm" runat="server" Text="Simpan" OnClientClick="return userValid();" OnClick="Confirm_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <%-- AKHIR FORM INPUT MODAL --%>
+                    <%-- FORM EDIT MODAL --%>
+                    <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Unit</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:TextBox ID ="id_unit" runat="server" Visible="false"></asp:TextBox>
+                                  <label for="KdUnitEdit"><h3>Kode Unit</h3></label>
+                                  <asp:TextBox ID="KdUnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  
+                                  <br />
+                                  <label for="UnitEdit"><h3>Nama Unit</h3></label>
+                                  <asp:TextBox ID="UnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Update" runat="server" Text="Update" OnClick="Update_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     <br />
+                    <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                    <div id="gridview" runat="server" class="container-fluid">
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="Unit" ClientIDMode="Static" AutoGenerateColumns="false" class="table table-striped table-responsive table-bordered-hover" OnRowEditing="RowEditing" OnRowCancelingEdit="RowCancelEditing" OnRowUpdating="RowUpdating" OnRowDeleting="RowDeleting">
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_unit" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
-                                <asp:TemplateField HeaderText="UNIT">  
-                                    <ItemTemplate>  
-                                        <asp:Label ID="Unit_label" runat="server" Text='<%#Eval("Unit") %>'></asp:Label>  
-                                    </ItemTemplate>  
-                                    <EditItemTemplate>  
-                                        <asp:TextBox ID="Unitedit" runat="server" CssClass="form-control-static" Text='<%#Eval("Unit") %>'></asp:TextBox>  
-                                    </EditItemTemplate>
+                                <asp:TemplateField HeaderText="KD_UNIT" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Idunitlabel" runat="server" Text='<%# Eval("id_unit") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KD_UNIT">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Kdunitlabel" runat="server" Text='<%# Eval("kd_unit") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="UNIT">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Unitlabel" runat="server" Text='<%# Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
-                                    <ItemTemplate>
-                                        <asp:ImageButton ID="btn_edit" ImageUrl="~/Images/edit.png" Text="Edit" CommandName="Edit" runat="server" />
-                                        <asp:ImageButton ID="btn_delete" AlternateText="Delete" ImageUrl="~/Images/delete.png" OnClientClick="return confirm('Yakin ingin dihapus ?');"  CommandName="Delete" runat="server" />
+                                    <ItemTemplate>     
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-primary"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
                                     </ItemTemplate>
-                                    <EditItemTemplate>
-                                        <asp:ImageButton ID="btn_update" ImageUrl="~/Images/update.png" Text="Update" CommandName="Update" runat="server"/>
-                                        <asp:ImageButton ID="btn_cancel" ImageUrl="~/Images/cancel.png" Text="Cancel" CommandName="Cancel" runat="server"/>
-                                    </EditItemTemplate>
-                                    </asp:TemplateField>
+                                </asp:TemplateField>
                             </Columns>
+                            <EditRowStyle BackColor="#7C6F57"></EditRowStyle>
+
+                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White"></FooterStyle>
+
+                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" Font-Size="Large"></HeaderStyle>
+
+                            <PagerStyle HorizontalAlign="Center" BackColor="#666666" ForeColor="White"></PagerStyle>
+
+                            <RowStyle BackColor="#E3EAEB"></RowStyle>
+
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
+
+                            <SortedAscendingCellStyle BackColor="#F8FAFA"></SortedAscendingCellStyle>
+
+                            <SortedAscendingHeaderStyle BackColor="#246B61"></SortedAscendingHeaderStyle>
+
+                            <SortedDescendingCellStyle BackColor="#D4DFE1"></SortedDescendingCellStyle>
+
+                            <SortedDescendingHeaderStyle BackColor="#15524A"></SortedDescendingHeaderStyle>
                         </asp:GridView>
                     </div>
-                    <%--<asp:SqlDataSource ID="SqlDataSource1" runat="server" 
-                        ConnectionString='<%$ ConnectionStrings:BioCashConnectionString %>' 
-                        SelectCommand="SELECT Unit FROM biocash.Masterunit"
-                        UpdateCommand="UPDATE biocash.Masterunit SET Unit=@Unit WHERE Unit=@Unit"
-                        DeleteCommand="DELETE FROM biocash.Masterunit WHERE Unit=@Unit">
-                    </asp:SqlDataSource>--%>
-                </div>
                 <div class="footer">
                     <div>
                         <strong>Copyright</strong> &copy; 2016 PT Bio Farma (Persero)
@@ -205,7 +268,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
@@ -232,9 +294,32 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
+        <script type='text/javascript'>
+                function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
+            </script>
+        <script type="text/javascript">   
+        function userValid() {    
+           var kd_unit= document.getElementById("kd_unit").value;    
+           var unit= document.getElementById("Unit").value;    
+
+            if (kd_unit == '')    
+           {    
+            alert("Masukkan Kode Unit");    
+            return false;    
+           }    
+
+            if (unit == '')    
+           {    
+           alert("Masukkin Nama Unit");    
+           return false;    
+           }    
+        }    
+     </script> 
         <script type="text/javascript">
         $(function () {
-            $('[id*=]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+            $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
                 "responsive": true,
                 "sPaginationType": "full_numbers"
             });
