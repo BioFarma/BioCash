@@ -158,17 +158,17 @@
                     <h1>Master Unit</h1>
                     <br />
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Data
+                                  <i class="fa fa-plus"></i> Tambah Unit
                                 </button>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Unit</h2>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
+                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Unit</h2>
                               </div>
                               <div class="modal-body">
                                   <label for="Unit"><h3>Kode Unit</h3></label>
@@ -215,8 +215,7 @@
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_unit" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
-                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_unit" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField HeaderText="KD_UNIT" Visible="false">
                                     <ItemTemplate>
@@ -235,30 +234,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
                                     <ItemTemplate>     
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-primary"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
                                         <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                            <EditRowStyle BackColor="#7C6F57"></EditRowStyle>
-
-                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White"></FooterStyle>
-
-                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" Font-Size="Large"></HeaderStyle>
-
-                            <PagerStyle HorizontalAlign="Center" BackColor="#666666" ForeColor="White"></PagerStyle>
-
-                            <RowStyle BackColor="#E3EAEB"></RowStyle>
-
-                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
-                            <SortedAscendingCellStyle BackColor="#F8FAFA"></SortedAscendingCellStyle>
-
-                            <SortedAscendingHeaderStyle BackColor="#246B61"></SortedAscendingHeaderStyle>
-
-                            <SortedDescendingCellStyle BackColor="#D4DFE1"></SortedDescendingCellStyle>
-
-                            <SortedDescendingHeaderStyle BackColor="#15524A"></SortedDescendingHeaderStyle>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                            <RowStyle ForeColor="Black"/>
                         </asp:GridView>
                     </div>
                 <div class="footer">
@@ -294,37 +276,6 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
-        <script type='text/javascript'>
-                function openModal() {
-                    $('[id*=formedit]').modal('show');
-            }
-            </script>
-        <script type="text/javascript">   
-        function userValid() {    
-           var kd_unit= document.getElementById("kd_unit").value;    
-           var unit= document.getElementById("Unit").value;    
-
-            if (kd_unit == '')    
-           {    
-            alert("Masukkan Kode Unit");    
-            return false;    
-           }    
-
-            if (unit == '')    
-           {    
-           alert("Masukkin Nama Unit");    
-           return false;    
-           }    
-        }    
-     </script> 
-        <script type="text/javascript">
-        $(function () {
-            $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
-                "responsive": true,
-                "sPaginationType": "full_numbers"
-            });
-        });
-    </script>
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -478,6 +429,37 @@
         </div>
         <script>
             // Config box
+
+            //Open Modal
+            function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
+
+            //Validation isEmpty
+            function userValid() {    
+               var kd_unit= document.getElementById("kd_unit").value;    
+               var unit= document.getElementById("Unit").value;    
+
+                if (kd_unit == '')    
+               {    
+                alert("Masukkan Kode Unit");    
+                return false;    
+               }    
+
+                if (unit == '')    
+               {    
+               alert("Masukkin Nama Unit");    
+               return false;    
+               }    
+            }    
+
+            //Gridview Bootstrap
+            $(function () {
+                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                    "responsive": true,
+                    "sPaginationType": "full_numbers"
+                });
+            });
 
             //date picker
                 $("#datepicker").datepicker( {

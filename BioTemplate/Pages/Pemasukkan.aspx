@@ -159,17 +159,17 @@
                     <h1>Pemasukkan Saldo Kas</h1>
                     <br />
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Data
+                                  <i class="fa fa-plus"></i> Tambah Pemasukkan
                                 </button>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Unit</h2>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
+                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Pemasukkan</h2>
                               </div>
                               <div class="modal-body">
                                   <label for="Unit"><h3>Kas Kecil</h3></label>
@@ -214,7 +214,7 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h2 class="modal-title" id="exampleModalCenterTitle">Tambah Unit</h2>
+                                <h2 class="modal-title" id="exampleModalCenterTitle"> Edit Unit</h2>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -290,30 +290,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-primary"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
                                         <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                            <EditRowStyle BackColor="#7C6F57"></EditRowStyle>
-
-                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White"></FooterStyle>
-
-                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" CssClass="center" Font-Size="Large"></HeaderStyle>
-
-                            <PagerStyle HorizontalAlign="Center" BackColor="#666666" ForeColor="White"></PagerStyle>
-
-                            <RowStyle BackColor="#E3EAEB"></RowStyle>
-
-                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333"></SelectedRowStyle>
-
-                            <SortedAscendingCellStyle BackColor="#F8FAFA"></SortedAscendingCellStyle>
-
-                            <SortedAscendingHeaderStyle BackColor="#246B61"></SortedAscendingHeaderStyle>
-
-                            <SortedDescendingCellStyle BackColor="#D4DFE1"></SortedDescendingCellStyle>
-
-                            <SortedDescendingHeaderStyle BackColor="#15524A"></SortedDescendingHeaderStyle>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                            <RowStyle ForeColor="black" />
                         </asp:GridView>
                     </div>
                 <div class="footer">
@@ -352,84 +335,6 @@
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
-        <script type='text/javascript'>
-                function openModal() {
-                    $('[id*=formedit]').modal('show');
-            }
-            </script>
-        <script type="text/javascript">   
-        function dataValidEdit() {    
-            var kaskeciledit = document.getElementById("kaskeciledit").value;
-            var jmlhmasukedit = document.getElementById("jmlhmasukedit").value;
-            var tglmasukedit = document.getElementById("tglmasukedit").value;
-            var thnmasukedit = document.getElementById("thnmasukedit").value;
-
-            if (kaskeciledit == '')    
-           {    
-            alert("Pilih kas kecil");    
-            return false;    
-            }    
-
-            if (jmlhmasukedit == '')    
-           {    
-            alert("Masukkan jumlah uang");    
-            return false;    
-           }   
-
-            if (tglmasukedit == '')    
-           {    
-           alert("Pilih tanggal pemasukkan");    
-           return false;    
-            }  
-
-            if (thnmasukedit == '')
-            {    
-            alert("Pilih tahun periode");    
-            return false;    
-            } 
-        }    
-     </script> 
-
-        <script type="text/javascript">   
-        function dataValid() {    
-            var kas_kecil= document.getElementById("kas_kecil").value;    
-            var masuk = document.getElementById("Masuk").value;     
-            var tgl_masuk = document.getElementById("tgl_masuk").value;
-            var periode_masuk = document.getElementById("periode_masuk").value;
-
-            if (kas_kecil == '')    
-           {    
-            alert("Pilih kas kecil");    
-            return false;    
-            }    
-
-            if (masuk == '')    
-           {    
-            alert("Masukkan jumlah uang");    
-            return false;    
-           }   
-
-            if (tgl_masuk == '')    
-           {    
-           alert("Pilih tanggal pemasukkan");    
-           return false;    
-            }  
-
-            if (periode_masuk == '')    
-           {    
-           alert("Pilih tahun periode");    
-           return false;    
-           } 
-        }    
-     </script> 
-        <script type="text/javascript">
-        $(function () {
-            $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
-                "responsive": true,
-                "sPaginationType": "full_numbers"
-            });
-            });
-        </script>
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -583,6 +488,83 @@
         </div>
         <script>
             // Config box
+
+            //Pop up modal Edit
+            function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
+
+            //Validation isEmpty edit
+            function dataValidEdit() {    
+                var kaskeciledit = document.getElementById("kaskeciledit").value;
+                var jmlhmasukedit = document.getElementById("jmlhmasukedit").value;
+                var tglmasukedit = document.getElementById("tglmasukedit").value;
+                var thnmasukedit = document.getElementById("thnmasukedit").value;
+
+                if (kaskeciledit == '')    
+               {    
+                alert("Pilih kas kecil");    
+                return false;    
+                }    
+
+                if (jmlhmasukedit == '')    
+               {    
+                alert("Masukkan jumlah uang");    
+                return false;    
+               }   
+
+                if (tglmasukedit == '')    
+               {    
+               alert("Pilih tanggal pemasukkan");    
+               return false;    
+                }  
+
+                if (thnmasukedit == '')
+                {    
+                alert("Pilih tahun periode");    
+                return false;    
+                } 
+            }    
+
+            //Validation isEmpty input
+            function dataValid() {    
+                var kas_kecil= document.getElementById("kas_kecil").value;    
+                var masuk = document.getElementById("Masuk").value;     
+                var tgl_masuk = document.getElementById("tgl_masuk").value;
+                var periode_masuk = document.getElementById("periode_masuk").value;
+
+                if (kas_kecil == '')    
+               {    
+                alert("Pilih kas kecil");    
+                return false;    
+                }    
+
+                if (masuk == '')    
+               {    
+                alert("Masukkan jumlah uang");    
+                return false;    
+               }   
+
+                if (tgl_masuk == '')    
+               {    
+               alert("Pilih tanggal pemasukkan");    
+               return false;    
+                }  
+
+                if (periode_masuk == '')    
+               {    
+               alert("Pilih tahun periode");    
+               return false;    
+               } 
+            }
+
+            //Gridview Bootstrap
+            $(function () {
+                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                    "responsive": true,
+                    "sPaginationType": "full_numbers"
+                });
+            });
 
         //change page
             $(document).ready(function(){  

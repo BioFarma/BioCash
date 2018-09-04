@@ -13,10 +13,6 @@
     <link href="../CSS/animate.css" rel="stylesheet" />
     <link href="../CSS/style2.css" rel="stylesheet" />
     <link href="../CSS/style.css" rel="stylesheet" />
-    <link href="../CSS/select2.css" rel="stylesheet" />
-    <link href="../CSS/morris.css" rel="stylesheet" />
-    <link href="../CSS/dataTables.bootstrap.css" rel="stylesheet" />
-    <link href="../CSS/dataTables.responsive.css" rel="stylesheet" />
     <link href="../CSS/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../CSS/plugins/dataTables/datatables.min.css" rel="stylesheet" />
     <link href="../CSS/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
@@ -35,9 +31,9 @@
                     <ul class="nav metismenu sidebar-nav" runat="server">
                         <li class="sidebar-brand">
                             <a href="Default.aspx" >BioFarma</a>
-                        </li>
+                        </li>    
                         <li>
-                            <a href="Master.aspx">Master Unit</a>
+                            <a href="MasterUnit.aspx">Master Unit</a>
                         </li>
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
@@ -106,6 +102,8 @@
                                                 </div>
                                             </FooterTemplate>
                                         </asp:Repeater>
+                                        
+
                                     </ul>
                                 </li>
                             </li>
@@ -145,8 +143,6 @@
                                             </div>
                                         </FooterTemplate>
                                     </asp:Repeater>
-                                    
-
                                 </ul>
                             </li>
                             <li>
@@ -159,116 +155,113 @@
                     </nav>
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <h1>Pengeluaran Saldo Kas</h1><br />
+                    <h1>Pengeluaran kas</h1>
                     <br />
-                    <table>
-                        <tr>
-                            <td>
-                                <h3>Pilih Kas </h3>
-                            </td>
-                            <td>
-                                <div class="container-fluid">
-                                <select class="form-control">
-                                    <option>Pilih Unit</option>
-                                    <option>Kas Kecil</option>
-                                    <option>Kas Besar</option>
-                                </select>
-                                </div>
-                                <br />
-                            </td>
-                        </tr>
-                    <tr>
-                        <td>
-                            <h3>Jumlah uang </h3>
-                        </td>
-                            <td>
-                                <div class="container-fluid">
-                                <input type="number" id="masuk" name="masuk" placeholder="Rp." class="form-control" />
-                                </div>
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Tanggal </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                <input data-provide="datepicker" placeholder="mm/dd/yyy" class="form-control">
-                                </div>
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Keperluan </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                <textarea class="form-control" rows="5"></textarea>
-                                </div>
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <h3>Jumlah Saldo </h3>
-                        </td>
-                            <td >
-                                <div class="container-fluid">
-                                <input id="saldo" name="saldo" class="form-control" readonly/>
-                                    <br />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3>Pilih Unit </h3>
-                            </td>
-                            <td >
-                                <div class="container-fluid">
-                                <select class="form-control">
-                                    <option>Pilih Unit</option>
-                                    <option>IT</option>
-                                    <option>SDM</option>
-                                    <option>Keuangan</option>
-                                </select>
-                                </div>
-                                <br />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="button" value="Konfirmasi" class="btn btn-primary "/>
-                                <input type="reset" value="Reset" class="btn btn-danger"/>
-                            </td>
-                        </tr>
-                    </table>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
+                                  <i class="fa fa-plus"></i> Tambah Pngeluaran
+                                </button>
+                    <%-- FORM INPUT MODAL --%>
+                        <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title" id="inputpengeluaran">Tambah Data Pengeluaran</h2>
+                              </div>
+                              <div class="modal-body">
+                                  <label><h3>Pilih Kas</h3></label>
+                                  <asp:DropDownList ID="kas" runat="server" CssClass="form-control">
+
+                                  </asp:DropDownList>
+                                  
+                                  <br />
+                                  <label><h3>Jumlah Uang</h3></label>
+                                  <asp:TextBox ID="jmlhkeluar"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+
+                                  <br />
+                                  <label><h3>Keperluan</h3></label>
+                                  <textarea id="keperluan" runat="server" class="form-control" rows="5"></textarea>
+
+                                  <br />
+                                  <label><h3>Tanggal Pengeluaran</h3></label>
+                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
+                                      <asp:TextBox ID="tgl_keluar" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                           <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label><h3>Plih Unitf</h3></label>
+                                  <asp:DropDownList ID="unitdrop" runat="server" CssClass="form-control"/>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Confirm" runat="server" Text="Simpan" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <%-- AKHIR FORM INPUT MODAL --%>
+                    <%-- FORM EDIT MODAL --%>
+                    <%--<div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Unit</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:TextBox ID ="id_unit" runat="server" Visible="false"></asp:TextBox>
+                                  <label for="KdUnitEdit"><h3>Kode Unit</h3></label>
+                                  <asp:TextBox ID="KdUnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  
+                                  <br />
+                                  <label for="UnitEdit"><h3>Nama Unit</h3></label>
+                                  <asp:TextBox ID="UnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Update" runat="server" Text="Update" OnClick="Update_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <br />--%>
+                    <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                    <table id="tabelmasuk" width="100%" class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Jumlah Uang</th>
-                                <th>Jumlah Saldo</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td algin="center"><center>
-                                        <input type="button" id="edit" name="edit" value="edit" class="btn btn-success" onclick="edit">
-                                        <input type="button" value="hapus" class="btn btn-danger">
-                                    </center>
-                                    </td>
-                                </tr>
-                            </tbody>
-                    </table>
+                        <%--<asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_unit" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                            <Columns>
+                                <asp:TemplateField HeaderText="KD_UNIT" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Idunitlabel" runat="server" Text='<%# Eval("id_unit") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KD_UNIT">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Kdunitlabel" runat="server" Text='<%# Eval("kd_unit") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="UNIT">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Unitlabel" runat="server" Text='<%# Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="AKSI">
+                                    <ItemTemplate>     
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-primary"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                            <RowStyle ForeColor="Black"/>
+                        </asp:GridView>--%>
                     </div>
                 <div class="footer">
                     <div>
@@ -278,9 +271,9 @@
             </div>
         </div>
 
-
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
+        <script src='<%: ResolveClientUrl("~/JS/bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/metisMenu/jquery.metisMenu.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/slimscroll/jquery.slimscroll.js") %>'></script>
 
@@ -303,13 +296,6 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
-        <script src="../JS/jquery.dataTables.min.js"></script>
-        <script src="../JS/dataTables.bootstrap.min.js"></script>
-        <script src="../JS/dataTables.responsive.js"></script>
-        <script type="text/javascript">
-            var tabel=$('#tabelmasuk').DataTable()
-        
-        </script>
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -463,6 +449,51 @@
         </div>
         <script>
             // Config box
+
+            ////Open Modal
+            //function openModal() {
+            //        $('[id*=formedit]').modal('show');
+            //}
+
+            ////Validation isEmpty
+            //function userValid() {    
+            //   var kd_unit= document.getElementById("kd_unit").value;    
+            //   var unit= document.getElementById("Unit").value;    
+
+            //    if (kd_unit == '')    
+            //   {    
+            //    alert("Masukkan Kode Unit");    
+            //    return false;    
+            //   }    
+
+            //    if (unit == '')    
+            //   {    
+            //   alert("Masukkin Nama Unit");    
+            //   return false;    
+            //   }    
+            //}    
+
+            ////Gridview Bootstrap
+            //$(function () {
+            //    $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+            //        "responsive": true,
+            //        "sPaginationType": "full_numbers"
+            //    });
+            //});
+
+            //date picker
+                $("#datepicker").datepicker( {
+                    
+                    autoclose: true
+                });
+
+            //year picker
+                $("#yearpicker").datepicker( {
+                    format: "yyyy",
+                    viewMode: "years", 
+                    minViewMode: "years",
+                    autoclose: true
+                });
 
             // Enable/disable fixed top navbar
             $('#fixednavbar').click(function () {

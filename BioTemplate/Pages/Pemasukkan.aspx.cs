@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -61,7 +62,8 @@ namespace BioTemplate.Pages
         protected void Confirm_Click(object sender, EventArgs e)
         {
             SqlCommand cmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,kas_kecil,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@kas_kecil,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
-                
+            SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Unit,saldo,change_date,ENDDA)values(@BEGDA,@Unit,@saldo,@change_date,@ENDDA)", con);
+
             cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
             cmd.Parameters.AddWithValue("@kas_kecil",kas_kecil.SelectedItem.Value);
             cmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
@@ -69,13 +71,18 @@ namespace BioTemplate.Pages
             cmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
             cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+            scmd.Parameters.AddWithValue("@BEGDA",DateTime.Now);
+            scmd.Parameters.AddWithValue("@Unit", kas_kecil.SelectedItem.Value);
+            scmd.Parameters.AddWithValue("@saldo", Masuk.Text);
+            scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            scmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
             con.Open();
+            scmd.ExecuteNonQuery();
             cmd.ExecuteNonQuery();
             con.Close();
-            Masuk.Text = String.Empty;
-            tgl_masuk.Text = String.Empty;
-            periode_masuk.Text = String.Empty;
-            string message = "Data berhasil dihapus.";
+            string message = "Data berhasil disimpan.";
             string script = "window.onload = function(){ alert('";script += message; script += "')};";
             ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
             gvbind();
@@ -112,6 +119,9 @@ namespace BioTemplate.Pages
             SqlCommand cmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,kas_kecil,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)VALUES(@BEGDA,@kas_kecil,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
             SqlCommand ucmd = new SqlCommand("UPDATE biocash.pemasukkan SET ENDDA=@ENDDA, change_date=@change_date WHERE id_masuk=@id_masuk ", con);
 
+            SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Unit,saldo,change_date,ENDDA)values(@BEGDA,@Unit,@saldo,@change_date,@ENDDA)", con);
+            SqlCommand sucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='"+dateMax+"' ", con);
+
             cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
             cmd.Parameters.AddWithValue("@kas_kecil", kaskeciledit.SelectedItem.Value);
             cmd.Parameters.AddWithValue("@tgl_masuk", tglmasukedit.Text);
@@ -123,9 +133,19 @@ namespace BioTemplate.Pages
             ucmd.Parameters.AddWithValue("@id_masuk",id_masuk.Text);
             ucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
             ucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+
+            scmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+            scmd.Parameters.AddWithValue("@Unit", kaskeciledit.SelectedItem.Value);
+            scmd.Parameters.AddWithValue("@saldo", jmlhmasukedit.Text);
+            scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            scmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+            sucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+            sucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             con.Open();
             ucmd.ExecuteNonQuery();
             cmd.ExecuteNonQuery();
+            scmd.ExecuteNonQuery();
             con.Close();
             string message = "Data berhasil diupdate.";
             string script = "window.onload = function(){ alert('"; script += message; script += "')};";
