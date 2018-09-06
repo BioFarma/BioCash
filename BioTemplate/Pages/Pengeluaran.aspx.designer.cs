@@ -67,13 +67,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.Repeater rptApproval;
         
         /// <summary>
-        /// kas control.
+        /// jmlhsaldo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList kas;
+        protected global::System.Web.UI.WebControls.TextBox jmlhsaldo;
         
         /// <summary>
         /// jmlhkeluar control.
@@ -103,13 +103,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox tgl_keluar;
         
         /// <summary>
-        /// unitdrop control.
+        /// unitDl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitdrop;
+        protected global::System.Web.UI.WebControls.DropDownList unitDl;
         
         /// <summary>
         /// Confirm control.
@@ -119,5 +119,14 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Confirm;
+        
+        /// <summary>
+        /// gvBioCash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvBioCash;
     }
 }

@@ -158,8 +158,8 @@
                     <h1>Pengeluaran kas</h1>
                     <br />
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Pngeluaran
-                                </button>
+                                  <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
+                        <asp:TextBox ID="jmlhsaldo" runat="server" CssClass="form-control-static"/>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -171,18 +171,18 @@
                                 <h2 class="modal-title" id="inputpengeluaran">Tambah Data Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
-                                  <label><h3>Pilih Kas</h3></label>
+<%--                                  <label><h3>Pilih Kas</h3></label>
                                   <asp:DropDownList ID="kas" runat="server" CssClass="form-control">
 
                                   </asp:DropDownList>
                                   
-                                  <br />
+                                  <br />--%>
                                   <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="jmlhkeluar"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
                                   <br />
                                   <label><h3>Keperluan</h3></label>
-                                  <textarea id="keperluan" runat="server" class="form-control" rows="5"></textarea>
+                                  <textarea ID="keperluan" runat="server" class="form-control" rows="5"></textarea>
 
                                   <br />
                                   <label><h3>Tanggal Pengeluaran</h3></label>
@@ -194,13 +194,13 @@
                                   </div>
 
                                   <br />
-                                  <label><h3>Plih Unitf</h3></label>
-                                  <asp:DropDownList ID="unitdrop" runat="server" CssClass="form-control"/>
+                                  <label><h3>Plih Unit</h3></label>
+                                  <asp:DropDownList ID="unitDl" runat="server" CssClass="form-control"/>
 
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <asp:Button ID="Confirm" runat="server" Text="Simpan" CssClass="btn btn-primary" />
+                                  <asp:Button ID="Confirm" runat="server" Text="Simpan" OnClientClick="return dataValid();" OnClick="Confirm_Click" CssClass="btn btn-primary" />
                               </div>
                             </div>
                           </div>
@@ -231,37 +231,48 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                    <br />--%>
+                        </div>--%>
+                    <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <%--<asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_unit" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_keluar" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
-                                <asp:TemplateField HeaderText="KD_UNIT" Visible="false">
+                                <asp:TemplateField Visible="false">
                                     <ItemTemplate>
-                                        <asp:Label ID="Idunitlabel" runat="server" Text='<%# Eval("id_unit") %>'></asp:Label>
+                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id_keluar") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KD_UNIT">
+                                <asp:TemplateField HeaderText="TANGGAL KELUAR">
                                     <ItemTemplate>
-                                        <asp:Label ID="Kdunitlabel" runat="server" Text='<%# Eval("kd_unit") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="UNIT">
                                     <ItemTemplate>
-                                        <asp:Label ID="Unitlabel" runat="server" Text='<%# Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="JUMLAH">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KEPERLUAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
-                                    <ItemTemplate>     
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-primary"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                             <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
-                            <RowStyle ForeColor="Black"/>
-                        </asp:GridView>--%>
+                            <RowStyle ForeColor="black" />
+                        </asp:GridView>
                     </div>
                 <div class="footer">
                     <div>
@@ -455,31 +466,45 @@
             //        $('[id*=formedit]').modal('show');
             //}
 
-            ////Validation isEmpty
-            //function userValid() {    
-            //   var kd_unit= document.getElementById("kd_unit").value;    
-            //   var unit= document.getElementById("Unit").value;    
+            //Validation isEmpty
+            function dataValid() {    
+                var jmlh_keluar= document.getElementById("jmlhkeluar").value;    
+                var keperluan = document.getElementById("keperluan").value;
+                var tgl_keluar = document.getElementById("tgl_keluar").value;
+                var unitDl = document.getElementById("unitDl").value;
 
-            //    if (kd_unit == '')    
-            //   {    
-            //    alert("Masukkan Kode Unit");    
-            //    return false;    
-            //   }    
+                if (jmlh_keluar == '')    
+                {    
+                alert("Masukkan jumlah keluar");    
+                return false;    
+                }    
 
-            //    if (unit == '')    
-            //   {    
-            //   alert("Masukkin Nama Unit");    
-            //   return false;    
-            //   }    
-            //}    
+                if (keperluan == '')    
+                {    
+                alert("isi Keperluan");    
+                return false;    
+                }
 
-            ////Gridview Bootstrap
-            //$(function () {
-            //    $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
-            //        "responsive": true,
-            //        "sPaginationType": "full_numbers"
-            //    });
-            //});
+                if (tgl_keluar == '')    
+                {    
+                alert("Pilih Tanggal");    
+                return false;    
+                }
+
+                if (unitDl == '')    
+                {    
+                alert("Pilih Unit");    
+                return false;    
+                }
+            }    
+
+            //Gridview Bootstrap
+            $(function () {
+                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                    "responsive": true,
+                    "sPaginationType": "full_numbers"
+                });
+            });
 
             //date picker
                 $("#datepicker").datepicker( {

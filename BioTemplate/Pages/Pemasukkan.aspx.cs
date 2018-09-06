@@ -146,6 +146,7 @@ namespace BioTemplate.Pages
             ucmd.ExecuteNonQuery();
             cmd.ExecuteNonQuery();
             scmd.ExecuteNonQuery();
+            sucmd.ExecuteNonQuery();
             con.Close();
             string message = "Data berhasil diupdate.";
             string script = "window.onload = function(){ alert('"; script += message; script += "')};";
