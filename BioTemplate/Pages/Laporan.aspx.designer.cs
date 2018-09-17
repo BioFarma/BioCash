@@ -10,7 +10,7 @@
 namespace BioTemplate.Pages {
     
     
-    public partial class Pemasukkan {
+    public partial class Laporan {
         
         /// <summary>
         /// form1 control.

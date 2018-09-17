@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pemasukkan.aspx.cs" Inherits="BioTemplate.Pages.Pemasukkan" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Laporan.aspx.cs" Inherits="BioTemplate.Pages.Laporan" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,10 +13,6 @@
     <link href="../CSS/animate.css" rel="stylesheet" />
     <link href="../CSS/style2.css" rel="stylesheet" />
     <link href="../CSS/style.css" rel="stylesheet" />
-    <link href="../CSS/select2.css" rel="stylesheet" />
-    <link href="../CSS/morris.css" rel="stylesheet" />
-    <link href="../CSS/dataTables.bootstrap.css" rel="stylesheet" />
-    <link href="../CSS/dataTables.responsive.css" rel="stylesheet" />
     <link href="../CSS/plugins/datapicker/datepicker3.css" rel="stylesheet" />
     <link href="../CSS/plugins/dataTables/datatables.min.css" rel="stylesheet" />
     <link href="../CSS/plugins/clockpicker/clockpicker.css" rel="stylesheet" />
@@ -37,7 +33,7 @@
                             <a href="Default.aspx" >BioFarma</a>
                         </li>    
                         <li>
-                            <a href="Master.aspx">Master Unit</a>
+                            <a href="MasterUnit.aspx">Master Unit</a>
                         </li>
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
@@ -147,8 +143,6 @@
                                             </div>
                                         </FooterTemplate>
                                     </asp:Repeater>
-                                    
-
                                 </ul>
                             </li>
                             <li>
@@ -161,52 +155,8 @@
                     </nav>
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <h1>Laporan Kas</h1><br />
-                    <br />
-                    <table>
-                        <tr>
-                            <td>
-                                <h3>Pilih Unit </h3>
-                            </td>
-                            <td>
-                                <div class="container-fluid">
-                                <select class="form-control">
-                                    <option>Pilih Unit</option>
-                                    <option>IT</option>
-                                    <option>SDM</option>
-                                    <option>Keuangan</option>
-                                </select>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>                           
-                    <br />
-                <div id="wrapper">
-                    <table id="tabelmasuk" width="100%" class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Jumlah Uang</th>
-                                <th>Jumlah Saldo</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td algin="center"><center>
-                                        <input type="button" id="edit" name="edit" value="edit" class="btn btn-success" onclick="edit">
-                                        <input type="button" value="hapus" class="btn btn-danger">
-                                    </center>
-                                    </td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
+                    <h1>Laporan Kas</h1>
+                    
                     </div>
                 <div class="footer">
                     <div>
@@ -216,9 +166,9 @@
             </div>
         </div>
 
-
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
+        <script src='<%: ResolveClientUrl("~/JS/bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/metisMenu/jquery.metisMenu.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/slimscroll/jquery.slimscroll.js") %>'></script>
 
@@ -241,13 +191,6 @@
         <%--Input Mask--%>
         <script src='<%: ResolveClientUrl("~/JS/plugins/jasny/jasny-bootstrap.min.js") %>'></script>
         <script src='<%: ResolveClientUrl("~/JS/plugins/sweetalert/sweetalert.min.js") %>'></script>
-        <script src="../JS/jquery.dataTables.min.js"></script>
-        <script src="../JS/dataTables.bootstrap.min.js"></script>
-        <script src="../JS/dataTables.responsive.js"></script>
-        <script type="text/javascript">
-            var tabel=$('#tabelmasuk').DataTable()
-        
-        </script>
         <script>
             toastr.options = {
                 "closeButton": true,
@@ -401,6 +344,51 @@
         </div>
         <script>
             // Config box
+
+            //Open Modal
+            function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
+
+            //Validation isEmpty
+            function userValid() {    
+               var kd_unit= document.getElementById("kd_unit").value;    
+               var unit= document.getElementById("Unit").value;    
+
+                if (kd_unit == '')    
+               {    
+                alert("Masukkan Kode Unit");    
+                return false;    
+               }    
+
+                if (unit == '')    
+               {    
+               alert("Masukkin Nama Unit");    
+               return false;    
+               }    
+            }    
+
+            //Gridview Bootstrap
+            $(function () {
+                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                    "responsive": true,
+                    "sPaginationType": "full_numbers"
+                });
+            });
+
+            //date picker
+                $("#datepicker").datepicker( {
+                    
+                    autoclose: true
+                });
+
+            //year picker
+                $("#yearpicker").datepicker( {
+                    format: "yyyy",
+                    viewMode: "years", 
+                    minViewMode: "years",
+                    autoclose: true
+                });
 
             // Enable/disable fixed top navbar
             $('#fixednavbar').click(function () {

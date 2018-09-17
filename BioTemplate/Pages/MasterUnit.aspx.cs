@@ -45,15 +45,17 @@ namespace BioTemplate.Pages
         protected void Confirm_Click(object sender, EventArgs e)
         {
                 
-                SqlCommand scmd = new SqlCommand("SELECT *FROM biocash.Masterunit WHERE Unit = @Unit AND kd_unit=@kd_unit", con);
+                SqlCommand scmd = new SqlCommand("SELECT *FROM biocash.Masterunit WHERE Unit = @Unit AND kd_unit=@kd_unit AND ENDDA=@ENDDA", con);
 
-                SqlParameter[] prms = new SqlParameter[2];
+                SqlParameter[] prms = new SqlParameter[3];
             
                 prms[0] = new SqlParameter("@Unit", SqlDbType.VarChar, 50);
                 prms[1] = new SqlParameter("@kd_unit", SqlDbType.VarChar, 50);
+                prms[2] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
                 prms[0].Value = Unit.Text;
                 prms[1].Value = kd_unit.Text;
-            con.Open();
+                prms[2].Value = dateMax;
+                con.Open();
                 scmd.Parameters.AddRange(prms);
                 object obj = scmd.ExecuteScalar();
                 if (obj != null)
@@ -80,14 +82,13 @@ namespace BioTemplate.Pages
                     gvbind();
                 }
                 con.Close();
-            //}
         }
 
         protected void RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
         {
-            int id_unit = Convert.ToInt32(gvBioCash.DataKeys[e.RowIndex].Value.ToString());
+            int id = Convert.ToInt32(gvBioCash.DataKeys[e.RowIndex].Value.ToString());
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE biocash.Masterunit SET ENDDA=@ENDDA WHERE id_unit='" + id_unit + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE biocash.Masterunit SET ENDDA=@ENDDA WHERE id='" + id + "'", con);
             cmd.Parameters.AddWithValue("@ENDDA",DateTime.Now);
             cmd.ExecuteNonQuery();
             con.Close();
@@ -101,7 +102,7 @@ namespace BioTemplate.Pages
         protected void Update_Click(object sender, EventArgs e)
         {
             SqlCommand cmd = new SqlCommand("insert into biocash.Masterunit (kd_unit,Unit,BEGDA,ENDDA,change_date)values(@kd_unit,@Unit,@BEGDA,@ENDDA,@change_date)", con);
-            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Masterunit SET ENDDA=@ENDDA, change_date=@change_date WHERE id_unit=@id_unit", con);
+            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Masterunit SET ENDDA=@ENDDA, change_date=@change_date WHERE id=@id", con);
 
             //Insert new Value as Newest Update
             cmd.Parameters.AddWithValue("@kd_unit", KdUnitEdit.Text);
@@ -110,7 +111,7 @@ namespace BioTemplate.Pages
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             //Update Value
-            ucmd.Parameters.AddWithValue("@id_unit", id_unit.Text);
+            ucmd.Parameters.AddWithValue("@id", id.Text);
             ucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
             ucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             con.Open();
@@ -128,7 +129,7 @@ namespace BioTemplate.Pages
             int rowIndex = Convert.ToInt32(((sender as LinkButton).NamingContainer as GridViewRow).RowIndex);
             GridViewRow row = gvBioCash.Rows[rowIndex];
 
-            id_unit.Text = (row.FindControl("Idunitlabel") as Label).Text;
+            id.Text = (row.FindControl("Idunitlabel") as Label).Text;
             KdUnitEdit.Text = (row.FindControl("Kdunitlabel") as Label).Text;
             UnitEdit.Text = (row.FindControl("Unitlabel") as Label).Text;
             ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModal();", true);

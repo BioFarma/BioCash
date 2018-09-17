@@ -197,7 +197,7 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                  <asp:TextBox ID ="id_unit" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
                                   <label for="KdUnitEdit"><h3>Kode Unit</h3></label>
                                   <asp:TextBox ID="KdUnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
                                   
@@ -215,11 +215,11 @@
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_unit" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField HeaderText="KD_UNIT" Visible="false">
                                     <ItemTemplate>
-                                        <asp:Label ID="Idunitlabel" runat="server" Text='<%# Eval("id_unit") %>'></asp:Label>
+                                        <asp:Label ID="Idunitlabel" runat="server" Text='<%# Eval("id") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="KD_UNIT">

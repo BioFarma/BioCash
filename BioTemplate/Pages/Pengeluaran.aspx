@@ -159,7 +159,10 @@
                     <br />
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
                                   <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
-                        <asp:TextBox ID="jmlhsaldo" runat="server" CssClass="form-control-static"/>
+
+                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
+                                  <i class="fa fa-pencil"></i> Lihat Saldo</button>
+
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -171,12 +174,6 @@
                                 <h2 class="modal-title" id="inputpengeluaran">Tambah Data Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
-<%--                                  <label><h3>Pilih Kas</h3></label>
-                                  <asp:DropDownList ID="kas" runat="server" CssClass="form-control">
-
-                                  </asp:DropDownList>
-                                  
-                                  <br />--%>
                                   <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="jmlhkeluar"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
@@ -207,7 +204,7 @@
                         </div>
                     <%-- AKHIR FORM INPUT MODAL --%>
                     <%-- FORM EDIT MODAL --%>
-                    <%--<div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -217,13 +214,30 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                  <asp:TextBox ID ="id_unit" runat="server" Visible="false"></asp:TextBox>
-                                  <label for="KdUnitEdit"><h3>Kode Unit</h3></label>
-                                  <asp:TextBox ID="KdUnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
-                                  
+                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
+                                  <label><h3>Jumlah Uang</h3></label>
+                                  <asp:TextBox ID="jmlhkeluaredit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+
                                   <br />
-                                  <label for="UnitEdit"><h3>Nama Unit</h3></label>
-                                  <asp:TextBox ID="UnitEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  <label><h3>Keperluan</h3></label>
+                                  <textarea ID="keteranganedit" runat="server" class="form-control" rows="5"></textarea>
+
+                                  <br />
+                                  <label><h3>Tanggal Pengeluaran</h3></label>
+                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
+                                      <asp:TextBox ID="tgledit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                           <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label><h3>Plih Unit</h3></label>
+                                  <asp:DropDownList ID="unitDledit" runat="server" CssClass="form-control"/>
+                                  
+                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -231,16 +245,16 @@
                               </div>
                             </div>
                           </div>
-                        </div>--%>
+                        </div>
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_keluar" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
-                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id_keluar") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="TANGGAL KELUAR">
@@ -273,6 +287,43 @@
                             <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
+
+                    
+                    <%-- FORM SHOW SALDO --%>
+                        <div class="modal fade" id="formsaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title" id="showsaldo">Saldo Saat Ini</h2>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:GridView ID="gvSaldo" runat="server" ClientIDMode="Static" DataKeyNames="Saldo"  AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="UNIT">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Unit" runat="server" Text='<%#Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="SALDO">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Saldo" runat="server" Text='<%#Eval("Saldo") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                      <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                                      <RowStyle Font-Size="Medium" ForeColor="Black"/>
+                                </asp:GridView>
+                                  <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
+                                  <asp:TextBox ID="jsaldo" runat="server" Visible="false"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <%-- AKHIR FORM SHOW SALDO --%>
+
                     </div>
                 <div class="footer">
                     <div>
@@ -461,10 +512,10 @@
         <script>
             // Config box
 
-            ////Open Modal
-            //function openModal() {
-            //        $('[id*=formedit]').modal('show');
-            //}
+            //Open Modal
+            function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
 
             //Validation isEmpty
             function dataValid() {    
@@ -497,6 +548,8 @@
                 return false;    
                 }
             }    
+
+            
 
             //Gridview Bootstrap
             $(function () {

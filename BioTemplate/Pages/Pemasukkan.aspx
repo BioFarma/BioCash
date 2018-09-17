@@ -159,8 +159,12 @@
                     <h1>Pemasukkan Saldo Kas</h1>
                     <br />
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Pemasukkan
-                                </button>
+                                  <i class="fa fa-plus"></i> Tambah Pemasukkan</button>
+                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
+                                  <i class="fa fa-pencil"></i> Lihat Saldo</button>
+
+                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="jsaldo" runat="server" CssClass="navbar-right" Visible="false"></asp:TextBox>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -173,7 +177,7 @@
                               </div>
                               <div class="modal-body">
                                   <label for="Unit"><h3>Kas Kecil</h3></label>
-                                  <asp:DropDownList ID="kas_kecil" runat="server" CssClass="form-control"/>
+                                  <asp:DropDownList ID="unitdl" runat="server" CssClass="form-control"/>
                                   
                                   <br />
                                   <label for="Unit"><h3>Jumlah Uang</h3></label>
@@ -220,9 +224,9 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                  <asp:TextBox ID ="id_masuk" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
                                   <label for="Unit"><h3>Kas Kecil</h3></label>
-                                  <asp:DropDownList ID="kaskeciledit" runat="server" CssClass="form-control"/>
+                                  <asp:DropDownList ID="unitdledit" runat="server" CssClass="form-control"/>
                                   
                                   <br />
                                   <label for="Unit"><h3>Jumlah Uang</h3></label>
@@ -249,6 +253,10 @@
                                   <br />
                                   <label for="Unit"><h3>Jumlah Saldo</h3></label>
                                   <asp:TextBox ID="jmlhsaldoedit" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+
+                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <asp:Button ID="update" runat="server" Text="Update" OnClientClick="return dataValidEdit();" OnClick="update_Click" CssClass="btn btn-primary" />
@@ -258,14 +266,48 @@
                         </div>
                        </div>
                     <%-- AKHIR FORM EDIT MODAL --%>
+                    <%-- FORM SHOW SALDO --%>
+                        <div class="modal fade" id="formsaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title" id="showsaldo">Saldo Saat Ini</h2>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:GridView ID="gvSaldo" runat="server" ClientIDMode="Static" DataKeyNames="Saldo"  AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="UNIT">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Unit" runat="server" Text='<%#Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="SALDO">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Saldo" runat="server" Text='<%#Eval("Saldo") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                      <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                                      <RowStyle Font-Size="Medium" ForeColor="Black"/>
+                                </asp:GridView>
+                                  <asp:TextBox ID="TextBox1" runat="server" Visible="false"/>
+                                  <asp:TextBox ID="TextBox2" runat="server" Visible="false"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <%-- AKHIR FORM SHOW SALDO --%>
                     <br />
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id_masuk" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
                             <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
-                                        <asp:Label ID="idmasuklabel" runat="server" Text='<%#Eval("id_masuk") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="idmasuklabel" runat="server" Text='<%#Eval("id") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="TANGGAL MASUK">
@@ -280,7 +322,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="UNIT">
                                     <ItemTemplate>
-                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("kas_kecil") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("Unit") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="JUMLAH">
@@ -496,12 +538,12 @@
 
             //Validation isEmpty edit
             function dataValidEdit() {    
-                var kaskeciledit = document.getElementById("kaskeciledit").value;
+                var unitdledit = document.getElementById("unitdledit").value;
                 var jmlhmasukedit = document.getElementById("jmlhmasukedit").value;
                 var tglmasukedit = document.getElementById("tglmasukedit").value;
                 var thnmasukedit = document.getElementById("thnmasukedit").value;
 
-                if (kaskeciledit == '')    
+                if (unitdledit == '')    
                {    
                 alert("Pilih kas kecil");    
                 return false;    
@@ -528,12 +570,12 @@
 
             //Validation isEmpty input
             function dataValid() {    
-                var kas_kecil= document.getElementById("kas_kecil").value;    
+                var Unit= document.getElementById("unitdl").value;    
                 var masuk = document.getElementById("Masuk").value;     
                 var tgl_masuk = document.getElementById("tgl_masuk").value;
                 var periode_masuk = document.getElementById("periode_masuk").value;
 
-                if (kas_kecil == '')    
+                if (Unit == '')    
                {    
                 alert("Pilih kas kecil");    
                 return false;    
