@@ -76,6 +76,33 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox jmlhsaldo;
         
         /// <summary>
+        /// saldodel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox saldodel;
+        
+        /// <summary>
+        /// unitdel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox unitdel;
+        
+        /// <summary>
+        /// totdelsaldo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox totdelsaldo;
+        
+        /// <summary>
         /// jsaldo control.
         /// </summary>
         /// <remarks>
@@ -121,22 +148,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox periode_masuk;
         
         /// <summary>
-        /// saldo control.
+        /// simpan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox saldo;
-        
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.LinkButton simpan;
         
         /// <summary>
         /// id control.
@@ -184,15 +202,6 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox thnmasukedit;
         
         /// <summary>
-        /// jmlhsaldoedit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox jmlhsaldoedit;
-        
-        /// <summary>
         /// saldoedit control.
         /// </summary>
         /// <remarks>
@@ -226,7 +235,16 @@ namespace BioTemplate.Pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button update;
+        protected global::System.Web.UI.WebControls.LinkButton update;
+        
+        /// <summary>
+        /// delete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton delete;
         
         /// <summary>
         /// gvSaldo control.

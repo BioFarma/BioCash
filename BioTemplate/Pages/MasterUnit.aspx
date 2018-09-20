@@ -215,7 +215,7 @@
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Black" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField HeaderText="KD_UNIT" Visible="false">
                                     <ItemTemplate>

@@ -163,6 +163,12 @@
                     <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
                                   <i class="fa fa-pencil"></i> Lihat Saldo</button>
 
+                                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
+                                  <asp:TextBox ID="jsaldo" runat="server" Visible="false"/>
+                                  <asp:TextBox ID="unitdbtext" runat="server" Visible="false"/>
+                            <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
+                            <asp:TextBox ID="unitdel" runat="server" Visible="false"></asp:TextBox>
+                            <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -174,6 +180,10 @@
                                 <h2 class="modal-title" id="inputpengeluaran">Tambah Data Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
+                                  <label><h3>Plih Unit</h3></label>
+                                  <asp:DropDownList ID="unitDl" runat="server" CssClass="form-control"/>
+
+                                  <br />
                                   <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="jmlhkeluar"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
@@ -184,20 +194,16 @@
                                   <br />
                                   <label><h3>Tanggal Pengeluaran</h3></label>
                                   <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                      <asp:TextBox ID="tgl_keluar" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
+                                      <asp:TextBox ID="tgl_keluar" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
                                       <div class="input-group-addon">
                                            <span class="glyphicon glyphicon-th"></span>
                                       </div>
                                   </div>
 
-                                  <br />
-                                  <label><h3>Plih Unit</h3></label>
-                                  <asp:DropDownList ID="unitDl" runat="server" CssClass="form-control"/>
-
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <asp:Button ID="Confirm" runat="server" Text="Simpan" OnClientClick="return dataValid();" OnClick="Confirm_Click" CssClass="btn btn-primary" />
+                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Close</button>
+                                  <asp:LinkButton ID="Confirm" runat="server" OnClientClick="return dataValid();" OnClick="Confirm_Click" CssClass="btn btn-primary"><i class="fa fa-save"></i> Simpan</asp:LinkButton>
                               </div>
                             </div>
                           </div>
@@ -208,13 +214,18 @@
                           <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Unit</h2>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
+                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
                                   <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
+                                  
+                                  <label><h3>Unit</h3></label>
+                                  <asp:DropDownList ID="unitDledit" runat="server" CssClass="form-control" Enabled="false"/>
+
+                                  <br />
                                   <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="jmlhkeluaredit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
@@ -225,23 +236,20 @@
                                   <br />
                                   <label><h3>Tanggal Pengeluaran</h3></label>
                                   <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                      <asp:TextBox ID="tgledit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
+                                      <asp:TextBox ID="tgledit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
                                       <div class="input-group-addon">
                                            <span class="glyphicon glyphicon-th"></span>
                                       </div>
                                   </div>
-
-                                  <br />
-                                  <label><h3>Plih Unit</h3></label>
-                                  <asp:DropDownList ID="unitDledit" runat="server" CssClass="form-control"/>
                                   
                                   <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
                                   <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
                                   <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <asp:Button ID="Update" runat="server" Text="Update" OnClick="Update_Click" CssClass="btn btn-primary" />
+                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                  <asp:LinkButton ID="update" runat="server" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
+                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
                               </div>
                             </div>
                           </div>
@@ -249,8 +257,7 @@
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
-                            <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Black" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
@@ -279,11 +286,13 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
+                            <EmptyDataRowStyle HorizontalAlign="Center" />
+                            <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
                             <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
@@ -300,7 +309,7 @@
                                 <h2 class="modal-title" id="showsaldo">Saldo Saat Ini</h2>
                               </div>
                               <div class="modal-body">
-                                  <asp:GridView ID="gvSaldo" runat="server" ClientIDMode="Static" DataKeyNames="Saldo"  AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
+                                  <asp:GridView ID="gvSaldo" runat="server" BorderColor="Transparent" ClientIDMode="Static" DataKeyNames="Saldo" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
                                     <Columns>
                                         <asp:TemplateField HeaderText="UNIT">
                                                 <ItemTemplate>
@@ -313,11 +322,11 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
+                                      <EmptyDataRowStyle HorizontalAlign="Center" />
+                                     <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
                                       <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
                                       <RowStyle Font-Size="Medium" ForeColor="Black"/>
                                 </asp:GridView>
-                                  <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
-                                  <asp:TextBox ID="jsaldo" runat="server" Visible="false"/>
                               </div>
                             </div>
                           </div>

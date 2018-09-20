@@ -67,6 +67,69 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.Repeater rptApproval;
         
         /// <summary>
+        /// jmlhsaldo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox jmlhsaldo;
+        
+        /// <summary>
+        /// jsaldo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox jsaldo;
+        
+        /// <summary>
+        /// unitdbtext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox unitdbtext;
+        
+        /// <summary>
+        /// saldodel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox saldodel;
+        
+        /// <summary>
+        /// unitdel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox unitdel;
+        
+        /// <summary>
+        /// totdelsaldo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox totdelsaldo;
+        
+        /// <summary>
+        /// unitDl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList unitDl;
+        
+        /// <summary>
         /// jmlhkeluar control.
         /// </summary>
         /// <remarks>
@@ -94,22 +157,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox tgl_keluar;
         
         /// <summary>
-        /// unitDl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitDl;
-        
-        /// <summary>
         /// Confirm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Confirm;
+        protected global::System.Web.UI.WebControls.LinkButton Confirm;
         
         /// <summary>
         /// id control.
@@ -119,6 +173,15 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox id;
+        
+        /// <summary>
+        /// unitDledit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList unitDledit;
         
         /// <summary>
         /// jmlhkeluaredit control.
@@ -148,15 +211,6 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox tgledit;
         
         /// <summary>
-        /// unitDledit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitDledit;
-        
-        /// <summary>
         /// saldoedit control.
         /// </summary>
         /// <remarks>
@@ -184,13 +238,22 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox saldoafteredit;
         
         /// <summary>
-        /// Update control.
+        /// update control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Update;
+        protected global::System.Web.UI.WebControls.LinkButton update;
+        
+        /// <summary>
+        /// delete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton delete;
         
         /// <summary>
         /// gvBioCash control.
@@ -209,23 +272,5 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvSaldo;
-        
-        /// <summary>
-        /// jmlhsaldo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox jmlhsaldo;
-        
-        /// <summary>
-        /// jsaldo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox jsaldo;
     }
 }
