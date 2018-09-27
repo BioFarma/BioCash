@@ -1,5 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="BioTemplate.Master.cs" Inherits="BioTemplate.MasterPages.BioProMaster" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Masterkas.aspx.cs" Inherits="BioTemplate.Pages.Masterkas" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,8 +21,6 @@
     <link href="../CSS/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
-    <asp:ContentPlaceHolder ID="cpHead" runat="server">
-    </asp:ContentPlaceHolder>
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
@@ -157,11 +154,95 @@
 
                     </nav>
                 </div>
-                <asp:ContentPlaceHolder ID="cpPageHeader" runat="server"></asp:ContentPlaceHolder>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <asp:ContentPlaceHolder ID="cpMain" runat="server">
-                    </asp:ContentPlaceHolder>
-                </div>
+                    <h1>Master Kas</h1>
+                    <br />
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
+                                  <i class="fa fa-plus"></i> Tambah Kas
+                                </button>
+                    <%-- FORM INPUT MODAL --%>
+                        <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title" id="exampleModalLongTitle">Tambah Kas</h2>
+                              </div>
+                              <div class="modal-body">
+                                  <label><h3>Kode Kas</h3></label>
+                                  <asp:TextBox ID="kd_kas" runat="server" CssClass="form-control"></asp:TextBox>
+                                  
+                                  <br />
+                                  <label><h3>Nama Kas</h3></label>
+                                  <asp:TextBox ID="Kas" runat="server" CssClass="form-control"></asp:TextBox>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Confirm" runat="server" Text="Simpan" OnClientClick="return userValid();" OnClick="Confirm_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <%-- AKHIR FORM INPUT MODAL --%>
+                    <%-- FORM EDIT MODAL --%>
+                    <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Kas</h2>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
+                                  <label for="KdKasEdit"><h3>Kode Kas</h3></label>
+                                  <asp:TextBox ID="KdKasEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  
+                                  <br />
+                                  <label for="Kas"><h3>Nama Kas</h3></label>
+                                  <asp:TextBox ID="KasEdit" runat="server" CssClass="form-control"></asp:TextBox>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <asp:Button ID="Update" runat="server" Text="Update" OnClick="Update_Click" CssClass="btn btn-primary" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <br />
+                    <%-- AKHIR FORM EDIT MODAL --%>
+                    <br />
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Black" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                            <Columns>
+                                <asp:TemplateField HeaderText="KD_KAS" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Idkaslabel" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KD_KAS">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Kdkaslabel" runat="server" Text='<%# Eval("kd_kas") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KAS">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Kaslabel" runat="server" Text='<%# Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="AKSI">
+                                    <ItemTemplate>     
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                            <RowStyle ForeColor="Black"/>
+                        </asp:GridView>
+                    </div>
                 <div class="footer">
                     <div>
                         <strong>Copyright</strong> &copy; 2016 PT Bio Farma (Persero)
@@ -169,7 +250,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
@@ -349,6 +429,51 @@
         </div>
         <script>
             // Config box
+
+            //Open Modal
+            function openModal() {
+                    $('[id*=formedit]').modal('show');
+            }
+
+            //Validation isEmpty
+            function userValid() {    
+               var kd_kas= document.getElementById("kd_kas").value;    
+               var kas= document.getElementById("Kas").value;    
+
+                if (kd_kas == '')    
+               {    
+                alert("Masukkan Kode Kas");    
+                return false;    
+               }    
+
+                if (Kas == '')    
+               {    
+               alert("Masukkan Nama Kas");    
+               return false;    
+               }    
+            }    
+
+            //Gridview Bootstrap
+            $(function () {
+                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                    "responsive": true,
+                    "sPaginationType": "full_numbers"
+                });
+            });
+
+            //date picker
+                $("#datepicker").datepicker( {
+                    
+                    autoclose: true
+                });
+
+            //year picker
+                $("#yearpicker").datepicker( {
+                    format: "yyyy",
+                    viewMode: "years", 
+                    minViewMode: "years",
+                    autoclose: true
+                });
 
             // Enable/disable fixed top navbar
             $('#fixednavbar').click(function () {
@@ -585,8 +710,6 @@
                 }
             }
         </script>
-        <asp:ContentPlaceHolder ID="cpScriptLibContent" runat="server"></asp:ContentPlaceHolder>
-        <asp:ContentPlaceHolder ID="cpScriptContent" runat="server"></asp:ContentPlaceHolder>
     </form>
 </body>
 </html>

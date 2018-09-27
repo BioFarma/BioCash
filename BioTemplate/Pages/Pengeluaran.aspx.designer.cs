@@ -85,13 +85,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox jsaldo;
         
         /// <summary>
-        /// unitdbtext control.
+        /// kasdbtext control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox unitdbtext;
+        protected global::System.Web.UI.WebControls.TextBox kasdbtext;
         
         /// <summary>
         /// saldodel control.
@@ -103,13 +103,22 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox saldodel;
         
         /// <summary>
-        /// unitdel control.
+        /// kasdel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox unitdel;
+        protected global::System.Web.UI.WebControls.TextBox kasdel;
+        
+        /// <summary>
+        /// periodedel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox periodedel;
         
         /// <summary>
         /// totdelsaldo control.
@@ -121,13 +130,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox totdelsaldo;
         
         /// <summary>
-        /// unitDl control.
+        /// kasDl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitDl;
+        protected global::System.Web.UI.WebControls.DropDownList kasDl;
         
         /// <summary>
         /// jmlhkeluar control.
@@ -157,6 +166,60 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox tgl_keluar;
         
         /// <summary>
+        /// periodeDl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList periodeDl;
+        
+        /// <summary>
+        /// bagianDl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList bagianDl;
+        
+        /// <summary>
+        /// vendor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox vendor;
+        
+        /// <summary>
+        /// satuan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox satuan;
+        
+        /// <summary>
+        /// radioya control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radioya;
+        
+        /// <summary>
+        /// radiotidak control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radiotidak;
+        
+        /// <summary>
         /// Confirm control.
         /// </summary>
         /// <remarks>
@@ -175,13 +238,22 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox id;
         
         /// <summary>
-        /// unitDledit control.
+        /// kasDledit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitDledit;
+        protected global::System.Web.UI.WebControls.DropDownList kasDledit;
+        
+        /// <summary>
+        /// periodeDledit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList periodeDledit;
         
         /// <summary>
         /// jmlhkeluaredit control.
@@ -209,6 +281,51 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tgledit;
+        
+        /// <summary>
+        /// bagianDledit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList bagianDledit;
+        
+        /// <summary>
+        /// vendoredit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox vendoredit;
+        
+        /// <summary>
+        /// satuanedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox satuanedit;
+        
+        /// <summary>
+        /// radioyaedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radioyaedit;
+        
+        /// <summary>
+        /// radiotidakedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton radiotidakedit;
         
         /// <summary>
         /// saldoedit control.

@@ -843,7 +843,7 @@
     <Content Include="JS\TableScript\data-tables\jquery.dataTables.js" />
     <Content Include="Pages\Default.aspx" />
     <Content Include="Pages\Laporan.aspx" />
-    <Content Include="Pages\MasterUnit.aspx" />
+    <Content Include="Pages\Masterkas.aspx" />
     <Content Include="Pages\Pemasukkan.aspx" />
     <Content Include="Pages\Pengeluaran.aspx" />
     <Content Include="Web.config" />
@@ -904,12 +904,12 @@
     <Compile Include="Pages\Laporan.aspx.designer.cs">
       <DependentUpon>Laporan.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MasterUnit.aspx.cs">
-      <DependentUpon>MasterUnit.aspx</DependentUpon>
+    <Compile Include="Pages\Masterkas.aspx.cs">
+      <DependentUpon>Masterkas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\MasterUnit.aspx.designer.cs">
-      <DependentUpon>MasterUnit.aspx</DependentUpon>
+    <Compile Include="Pages\Masterkas.aspx.designer.cs">
+      <DependentUpon>Masterkas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Pemasukkan.aspx.cs">
       <DependentUpon>Pemasukkan.aspx</DependentUpon>

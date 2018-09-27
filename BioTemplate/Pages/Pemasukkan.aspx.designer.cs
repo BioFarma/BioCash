@@ -85,13 +85,22 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox saldodel;
         
         /// <summary>
-        /// unitdel control.
+        /// kasdel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox unitdel;
+        protected global::System.Web.UI.WebControls.TextBox kasdel;
+        
+        /// <summary>
+        /// thnperiode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox thnperiode;
         
         /// <summary>
         /// totdelsaldo control.
@@ -112,13 +121,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox jsaldo;
         
         /// <summary>
-        /// unitdl control.
+        /// kasdl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitdl;
+        protected global::System.Web.UI.WebControls.DropDownList kasdl;
         
         /// <summary>
         /// Masuk control.
@@ -148,6 +157,15 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox periode_masuk;
         
         /// <summary>
+        /// nosk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nosk;
+        
+        /// <summary>
         /// simpan control.
         /// </summary>
         /// <remarks>
@@ -166,13 +184,13 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox id;
         
         /// <summary>
-        /// unitdledit control.
+        /// kasdledit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList unitdledit;
+        protected global::System.Web.UI.WebControls.DropDownList kasdledit;
         
         /// <summary>
         /// jmlhmasukedit control.
@@ -200,6 +218,15 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox thnmasukedit;
+        
+        /// <summary>
+        /// noskedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox noskedit;
         
         /// <summary>
         /// saldoedit control.

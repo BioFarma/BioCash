@@ -34,7 +34,7 @@
                             <a href="Default.aspx" >BioFarma</a>
                         </li>    
                         <li>
-                            <a href="MasterUnit.aspx">Master Unit</a>
+                            <a href="Masterkas.aspx">Master Kas</a>
                         </li>
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
@@ -165,7 +165,8 @@
 
                     <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
-                    <asp:TextBox ID="unitdel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="thnperiode" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="jsaldo" runat="server" CssClass="navbar-right" Visible="false"></asp:TextBox>
                     <%-- FORM INPUT MODAL --%>
@@ -179,15 +180,15 @@
                                 <h2 class="modal-title" id="exampleModalLongTitle">Tambah Pemasukkan</h2>
                               </div>
                               <div class="modal-body">
-                                  <label for="Unit"><h3>Pilih unit</h3></label>
-                                  <asp:DropDownList ID="unitdl" runat="server" CssClass="form-control"/>
+                                  <label><h3>Pilih Kas</h3></label>
+                                  <asp:DropDownList ID="kasdl" runat="server" CssClass="form-control"/>
                                   
                                   <br />
-                                  <label for="Unit"><h3>Jumlah Uang</h3></label>
+                                  <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
                                   <br />
-                                  <label for="Unit"><h3>Tanggal Pemasukkan</h3></label>
+                                  <label><h3>Tanggal Pemasukkan</h3></label>
                                   <div class="input-group date" id="datepicker" data-provide="datepicker">
                                       <asp:TextBox ID="tgl_masuk" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
                                       <div class="input-group-addon">
@@ -196,13 +197,18 @@
                                   </div>
 
                                   <br />
-                                  <label for="Unit"><h3>Tahun Periode</h3></label>
+                                  <label><h3>Tahun Periode</h3></label>
                                   <div class="input-group date" id="yearpicker" data-provide="datepicker">
                                   <asp:TextBox ID="periode_masuk" runat="server" CssClass="form-control" Placeholder="yyyy" onkeydown="return false;"></asp:TextBox>
                                       <div class="input-group-addon">
                                           <span class="glyphicon glyphicon-th"></span>
                                       </div>
                                   </div>
+
+                                  <br />
+                                  <label><h3>Nomor SK</h3></label>
+                                  <asp:TextBox ID="nosk" runat="server" CssClass="form-control"></asp:TextBox>
+
                                   </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Cancel</button>
@@ -220,19 +226,19 @@
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h2 class="modal-title" id="exampleModalCenterTitle"> Edit Unit</h2>
+                                <h2 class="modal-title" id="exampleModalCenterTitle"> Edit Pemasukkan</h2>
                               </div>
                               <div class="modal-body">
                                   <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
-                                  <label for="Unit"><h3>Unit</h3></label>
-                                  <asp:DropDownList ID="unitdledit" runat="server" CssClass="form-control" Enabled="false"/>
+                                  <label><h3>Kas</h3></label>
+                                  <asp:DropDownList ID="kasdledit" runat="server" CssClass="form-control" Enabled="false"/>
                                   
                                   <br />
-                                  <label for="Unit"><h3>Jumlah Uang</h3></label>
+                                  <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="jmlhmasukedit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
                                   <br />
-                                  <label for="Unit"><h3>Tanggal Pemasukkan</h3></label>
+                                  <label><h3>Tanggal Pemasukkan</h3></label>
                                   <div class="input-group date" id="datepicker" data-provide="datepicker">
                                       <asp:TextBox ID="tglmasukedit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy"></asp:TextBox>
                                       <div class="input-group-addon">
@@ -241,13 +247,17 @@
                                   </div>
 
                                   <br />
-                                  <label for="Unit"><h3>Tahun Periode</h3></label>
+                                  <label><h3>Tahun Periode</h3></label>
                                   <div class="input-group date" id="yearpicker" data-provide="datepicker">
-                                  <asp:TextBox ID="thnmasukedit" runat="server" CssClass="form-control" Placeholder="yyyy"></asp:TextBox>
+                                  <asp:TextBox ID="thnmasukedit" runat="server" CssClass="form-control" Placeholder="yyyy" Enabled="false"></asp:TextBox>
                                       <div class="input-group-addon">
                                           <span class="glyphicon glyphicon-th"></span>
                                       </div>
                                   </div>
+
+                                  <br />
+                                  <label><h3>Nomor SK</h3></label>
+                                  <asp:TextBox ID="noskedit" runat="server" CssClass="form-control"></asp:TextBox>
 
                                   <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
                                   <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
@@ -275,9 +285,14 @@
                               <div class="modal-body">
                                   <asp:GridView ID="gvSaldo" runat="server" BorderColor="transparent" ClientIDMode="Static" DataKeyNames="Saldo" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
                                     <Columns>
-                                        <asp:TemplateField HeaderText="UNIT">
+                                        <asp:TemplateField HeaderText="Kas">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Unit" runat="server" Text='<%#Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                                    <asp:Label ID="Kas" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Periode">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="periode" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="SALDO">
@@ -317,14 +332,19 @@
                                         <asp:Label ID="thnlabel" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="UNIT">
+                                <asp:TemplateField HeaderText="Kas">
                                     <ItemTemplate>
-                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("Unit") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="JUMLAH">
                                     <ItemTemplate>
                                         <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No SK">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nosklabel" runat="server" Text='<%#Eval("Nosk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
@@ -537,12 +557,13 @@
 
             //Validation isEmpty edit
             function dataValidEdit() {    
-                var unitdledit = document.getElementById("unitdledit").value;
+                var kasdledit = document.getElementById("kasdledit").value;
                 var jmlhmasukedit = document.getElementById("jmlhmasukedit").value;
                 var tglmasukedit = document.getElementById("tglmasukedit").value;
                 var thnmasukedit = document.getElementById("thnmasukedit").value;
+                var noskedit = document.getElementById("noskedit").value;
 
-                if (unitdledit == '')    
+                if (kasdledit == '')    
                {    
                 alert("Pilih kas kecil");    
                 return false;    
@@ -565,16 +586,23 @@
                 alert("Pilih tahun periode");    
                 return false;    
                 } 
+
+                if (noskedit == '')
+                {    
+                alert("Nomor SK harus diisi");    
+                return false;    
+                } 
             }    
 
             //Validation isEmpty input
             function dataValid() {    
-                var Unit= document.getElementById("unitdl").value;    
+                var Kas= document.getElementById("kasdl").value;    
                 var masuk = document.getElementById("Masuk").value;     
                 var tgl_masuk = document.getElementById("tgl_masuk").value;
                 var periode_masuk = document.getElementById("periode_masuk").value;
+                var nosk = document.getElementById("nosk").value;
 
-                if (Unit == '')    
+                if (Kas == '')    
                {    
                 alert("Pilih kas kecil");    
                 return false;    
@@ -595,6 +623,12 @@
                 if (periode_masuk == '')    
                {    
                alert("Pilih tahun periode");    
+               return false;    
+                } 
+
+                if (nosk == '')    
+               {    
+               alert("Nomor SK harus diisi");    
                return false;    
                } 
             }
