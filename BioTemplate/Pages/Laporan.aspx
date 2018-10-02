@@ -156,7 +156,64 @@
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Laporan Kas</h1>
-                    
+                    <asp:GridView ID="gvBioCash" runat="server" ClientIDMode="Static" BorderColor="Transparent" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical">
+                            <Columns>
+                                <asp:TemplateField HeaderText="No">
+                                    <ItemTemplate>
+                                         <%#Container.DataItemIndex+1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="TANGGAL">
+                                    <ItemTemplate>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KAS">
+                                    <ItemTemplate>
+                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="BAGIAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="PERIODE">
+                                    <ItemTemplate>
+                                        <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="JUMLAH">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KEPERLUAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <asp:TemplateField HeaderText="VENDOR">
+                                    <ItemTemplate>
+                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <asp:TemplateField HeaderText="SATUAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="JASA">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <EmptyDataRowStyle HorizontalAlign="Center" />
+                            <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
+                            <RowStyle ForeColor="black" />
+                        </asp:GridView>
                     </div>
                 <div class="footer">
                     <div>

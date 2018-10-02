@@ -43,7 +43,7 @@ namespace BioTemplate.Pages
         {
             int vsaldo = 0;
 
-            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='"+DateTime.Now+"' WHERE saldo<='"+vsaldo.ToString()+"'", con);
+            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='"+DateTime.Now+"' WHERE saldo='"+vsaldo.ToString()+"'", con);
             con.Open();
             ucmd.ExecuteNonQuery();
             con.Close();

@@ -315,11 +315,16 @@
                     <%-- AKHIR FORM SHOW SALDO --%>
                     <br />
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Black" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="idmasuklabel" runat="server" Text='<%#Eval("id") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No">
+                                    <ItemTemplate>
+                                         <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="TANGGAL MASUK" >

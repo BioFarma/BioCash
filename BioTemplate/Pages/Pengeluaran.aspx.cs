@@ -15,6 +15,7 @@ namespace BioTemplate.Pages
         SqlConnection con = new SqlConnection();
         DateTime dateMax = new DateTime(9999, 12, 31, 00, 00, 00);
         string jasaselected;
+        string jasaselectededit;
         protected void Page_Load(object sender, EventArgs e)
         {
             con.ConnectionString = "Data Source=LAPTOP-LUGIMV8T;Initial Catalog=BioCash;User ID=sa;Password=@Gtabp1000";
@@ -41,7 +42,7 @@ namespace BioTemplate.Pages
         {
             int vsaldo = 0;
 
-            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='" + DateTime.Now + "' WHERE saldo<='" + vsaldo.ToString() + "'", con);
+            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='" + DateTime.Now + "' WHERE saldo='" + vsaldo.ToString() + "'", con);
             con.Open();
             ucmd.ExecuteNonQuery();
             con.Close();
@@ -225,8 +226,8 @@ namespace BioTemplate.Pages
             jmlhkeluaredit.Text = (row.FindControl("jmlhlabel") as Label).Text;
             keteranganedit.InnerText = (row.FindControl("keteranganlabel") as Label).Text;
             kasDledit.Text = (row.FindControl("kaslabel") as Label).Text;
-            periodeDledit.SelectedItem.Value = (row.FindControl("periodelabel") as Label).Text;
-            bagianDledit.SelectedItem.Value = (row.FindControl("bagianlabel") as Label).Text;
+            periodeDledit.Text = (row.FindControl("periodelabel") as Label).Text;
+            bagianDledit.Text = (row.FindControl("bagianlabel") as Label).Text;
             vendoredit.Text = (row.FindControl("vendorlabel") as Label).Text;
             satuanedit.Text = (row.FindControl("satuanlabel") as Label).Text;
             saldoedit.Text = jmlhkeluaredit.Text;
@@ -264,13 +265,13 @@ namespace BioTemplate.Pages
                 int saldoupdating = saldotempo - saldoupdate;
                 saldoafteredit.Text = saldoupdating.ToString();
 
-                if (radioya.Checked)
+                if (radioyaedit.Checked)
                 {
-                    jasaselected = "Ya";
+                    jasaselectededit = "Ya";
                 }
-                else if (radiotidak.Checked)
+                else if (radiotidakedit.Checked)
                 {
-                    jasaselected = "Tidak";
+                    jasaselectededit = "Tidak";
                 }
 
                 SqlCommand cmd = new SqlCommand("INSERT INTO biocash.Pengeluaran" + "(BEGDA,Kas,tgl_keluar,keterangan,jmlh_keluar,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)VALUES(@BEGDA,@Kas,@tgl_keluar,@keterangan,@jmlh_keluar,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
@@ -288,7 +289,7 @@ namespace BioTemplate.Pages
                 cmd.Parameters.AddWithValue("@nama_bagian", bagianDledit.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@vendor", vendoredit.Text);
                 cmd.Parameters.AddWithValue("@satuan", satuanedit.Text);
-                cmd.Parameters.AddWithValue("@jasa", jasaselected);
+                cmd.Parameters.AddWithValue("@jasa", jasaselectededit);
                 cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@ENDDA", dateMax);
 

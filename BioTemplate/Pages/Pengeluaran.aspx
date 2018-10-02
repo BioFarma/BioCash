@@ -163,13 +163,13 @@
                     <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
                                   <i class="fa fa-pencil"></i> Lihat Saldo</button>
 
-                                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
+                                  <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
                                   <asp:TextBox ID="jsaldo" runat="server" Visible="false"/>
                                   <asp:TextBox ID="kasdbtext" runat="server" Visible="false"/>
-                            <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
-                            <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
-                            <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
-                            <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
+                                <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
+                                <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
+                                <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
+                                <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -298,11 +298,16 @@
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Black" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No">
+                                    <ItemTemplate>
+                                         <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="TANGGAL">
@@ -380,6 +385,11 @@
                                         <asp:TemplateField HeaderText="Kas">
                                                 <ItemTemplate>
                                                     <asp:Label ID="Kas" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Periode">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Kas" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="SALDO">
@@ -593,6 +603,59 @@
             }
 
             //Validation isEmpty
+            function dataValidEdit() {    
+                var jmlh_keluaredit = document.getElementById("jmlhkeluaredit").value;
+                var keperluanedit = document.getElementById("keteranganedit").value;
+                var tgledit = document.getElementById("tgledit").value;
+                var bagianDledit = document.getElementById("bagianDledit").value;
+                var vendoredit = document.getElementById("vendoredit").value;
+                var satuanedit = document.getElementById("satuanedit").value;
+
+                if (jmlh_keluaredit == '')    
+                {    
+                alert("Masukkan jumlah keluar");    
+                return false;    
+                }
+
+                if (keperluanedit == '')    
+                {    
+                alert("Keperluan harus diisi");    
+                return false;    
+                }
+
+                if (tgledit == '')    
+                {    
+                alert("Tanggal harus dipilih");    
+                return false;    
+                }
+
+                if (bagianDledit == '')    
+                {    
+                alert("Bagian harus dipilih");    
+                return false;    
+                }
+
+                if (vendoredit == '')    
+                {    
+                alert("Vendor harus diisi");    
+                return false;    
+                }
+
+                if (satuanedit == '')    
+                {    
+                alert("Satuan harus diisi");    
+                return false;    
+                }
+
+                if (!document.getElementById("<%=radioyaedit.ClientID %>").checked && !document.getElementById("<%=radiotidakedit.ClientID %>").checked)    
+                {    
+                alert("Jasa harus dipilih");    
+                return false;    
+                }
+
+            }    
+            
+            //Validation isEmpty
             function dataValid() {    
                 var jmlh_keluar= document.getElementById("jmlhkeluar").value;    
                 var keperluan = document.getElementById("keperluan").value;
@@ -658,74 +721,8 @@
                 return false;    
                 }
 
-            }    
-
-            //Validation isEmptyEdit
-            function dataValidEdit() {    
-                var jmlhkeluaredit= document.getElementById("jmlhkeluaredit").value;    
-                var keperluanedit = document.getElementById("keperluanedit").value;
-                var tgledit = document.getElementById("tgledit").value;
-                var kasDledit = document.getElementById("kasDledit").value;
-                var periodeDledit = document.getElementById("periodeDledit").value;
-                var bagianDledit = document.getElementById("bagianDledit").value;
-
-
-                if (jmlhkeluaredit == '')    
-                {    
-                alert("Masukkan jumlah keluar");    
-                return false;    
-                }    
-
-                if (keperluanedit == '')    
-                {    
-                alert("isi Keperluan");    
-                return false;    
-                }
-
-                if (tgledit == '')    
-                {    
-                alert("Pilih Tanggal");    
-                return false;    
-                }
-
-                if (kasDledit == '')    
-                {    
-                alert("Pilih Kas");    
-                return false;    
-                }
-
-                if (periodeDledit == '')    
-                {    
-                alert("Periode harus dipilih");    
-                return false;    
-                }
-
-                if (bagianDledit == '')    
-                {    
-                alert("Bagian harus dipilih");    
-                return false;    
-                }
-
-                if (vendoredit == '')    
-                {    
-                alert("Vendor harus diisi");    
-                return false;    
-                }
-
-                if (satuanedit == '')    
-                {    
-                alert("Satuan harus diisi");    
-                return false;    
-                }
-
-                if (!document.getElementById("<%=radioyaedit.ClientID %>").checked && !document.getElementById("<%=radiotidakedit.ClientID %>").checked)    
-                {    
-                alert("Jasa harus dipilih");    
-                return false;    
-                }
-            }    
+            } 
             
-
             //Gridview Bootstrap
             $(function () {
                 $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
