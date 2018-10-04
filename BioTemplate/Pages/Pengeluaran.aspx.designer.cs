@@ -67,6 +67,33 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.Repeater rptApproval;
         
         /// <summary>
+        /// warning1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label warning1;
+        
+        /// <summary>
+        /// warning2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label warning2;
+        
+        /// <summary>
+        /// confirmpop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton confirmpop;
+        
+        /// <summary>
         /// jmlhsaldo control.
         /// </summary>
         /// <remarks>

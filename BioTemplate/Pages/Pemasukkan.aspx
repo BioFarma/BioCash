@@ -103,8 +103,6 @@
                                                 </div>
                                             </FooterTemplate>
                                         </asp:Repeater>
-                                        
-
                                     </ul>
                                 </li>
                             </li>
@@ -169,6 +167,7 @@
                     <asp:TextBox ID="thnperiode" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="jsaldo" runat="server" CssClass="navbar-right" Visible="false"></asp:TextBox>
+
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -315,7 +314,7 @@
                     <%-- AKHIR FORM SHOW SALDO --%>
                     <br />
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting">
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>

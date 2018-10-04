@@ -33,7 +33,7 @@
                             <a href="Default.aspx" >BioFarma</a>
                         </li>    
                         <li>
-                            <a href="MasterUnit.aspx">Master Unit</a>
+                            <a href="Masterkas.aspx">Master Kas</a>
                         </li>
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
