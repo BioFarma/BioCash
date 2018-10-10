@@ -67,10 +67,12 @@ namespace BioTemplate.Pages
                 }
                 else
                 {
-                    SqlCommand cmd = new SqlCommand("insert into biocash.Masterkas (kd_kas,Kas,BEGDA,ENDDA,change_date)values(@kd_kas,@Kas,@BEGDA,@ENDDA,@change_date)", con);
+                    SqlCommand cmd = new SqlCommand("insert into biocash.Masterkas (kd_kas,Kas,Plafond,nosk,BEGDA,ENDDA,change_date)values(@kd_kas,@Kas,@plafond,@nosk,@BEGDA,@ENDDA,@change_date)", con);
                 
                     cmd.Parameters.AddWithValue("@kd_kas", kd_kas.Text);
                     cmd.Parameters.AddWithValue("@Kas", Kas.Text);
+                    cmd.Parameters.AddWithValue("@Plafond", plafond.Text);
+                    cmd.Parameters.AddWithValue("@nosk", nosk.Text);
                     cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                     cmd.Parameters.AddWithValue("@ENDDA", dateMax);
                     cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
@@ -101,12 +103,14 @@ namespace BioTemplate.Pages
 
         protected void Update_Click(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("insert into biocash.Masterkas (kd_kas,Kas,BEGDA,ENDDA,change_date)values(@kd_kas,@Kas,@BEGDA,@ENDDA,@change_date)", con);
+            SqlCommand cmd = new SqlCommand("insert into biocash.Masterkas (kd_kas,Kas,Plafond,nosk,BEGDA,ENDDA,change_date)values(@kd_kas,@Kas,@Plafond,@nosk,@BEGDA,@ENDDA,@change_date)", con);
             SqlCommand ucmd = new SqlCommand("UPDATE biocash.Masterkas SET ENDDA=@ENDDA, change_date=@change_date WHERE id=@id", con);
 
             //Insert new Value as Newest Update
             cmd.Parameters.AddWithValue("@kd_kas", KdKasEdit.Text);
             cmd.Parameters.AddWithValue("@Kas", KasEdit.Text);
+            cmd.Parameters.AddWithValue("@Plafond", plafondEdit.Text);
+            cmd.Parameters.AddWithValue("@nosk", noskEdit.Text);
             cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
@@ -132,6 +136,8 @@ namespace BioTemplate.Pages
             id.Text = (row.FindControl("Idkaslabel") as Label).Text;
             KdKasEdit.Text = (row.FindControl("Kdkaslabel") as Label).Text;
             KasEdit.Text = (row.FindControl("Kaslabel") as Label).Text;
+            plafondEdit.Text = (row.FindControl("plafondlabel") as Label).Text;
+            noskEdit.Text = (row.FindControl("nosklabel") as Label).Text;
             ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModal();", true);
         }
     }

@@ -41,8 +41,12 @@
                         <li>
                             <a href="Pengeluaran.aspx">Pengeluaran</a>
                         </li>
-                        <li>
-                            <a href="Laporan.aspx">Laporan</a>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Laporan <span class="caret"></span></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="LaporMasuk.aspx">Pemasukkan</a></li>
+                            <li><a href="LaporKeluar.aspx">Pengeluaran</a></li>
+                          </ul>
                         </li>
                     </ul>
                 </div>
@@ -177,6 +181,15 @@
                                   <br />
                                   <label><h3>Nama Kas</h3></label>
                                   <asp:TextBox ID="Kas" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Plafond</h3></label>
+                                  <asp:TextBox ID="plafond" runat="server" CssClass="form-control" onkeydown ="return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Nomor SK</h3></label>
+                                  <asp:TextBox ID="nosk" runat="server" CssClass="form-control"></asp:TextBox>
+
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -204,10 +217,19 @@
                                   <br />
                                   <label for="Kas"><h3>Nama Kas</h3></label>
                                   <asp:TextBox ID="KasEdit" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Plafond</h3></label>
+                                  <asp:TextBox ID="plafondEdit" runat="server" CssClass="form-control" onkeydown ="return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Nomor SK</h3></label>
+                                  <asp:TextBox ID="noskEdit" runat="server" CssClass="form-control"></asp:TextBox>
+
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <asp:Button ID="Update" runat="server" Text="Update" OnClick="Update_Click" CssClass="btn btn-primary" />
+                                  <asp:Button ID="Update" runat="server" Text="Update" OnClientClick="return userValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary" />
                               </div>
                             </div>
                           </div>
@@ -215,7 +237,7 @@
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Black" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField HeaderText="KD_KAS" Visible="false">
                                     <ItemTemplate>
@@ -230,6 +252,16 @@
                                 <asp:TemplateField HeaderText="KAS">
                                     <ItemTemplate>
                                         <asp:Label ID="Kaslabel" runat="server" Text='<%# Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="PLAFOND">
+                                    <ItemTemplate>
+                                        <asp:Label ID="plafondlabel" runat="server" Text='<%# Eval("plafond") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="NOMOR SK">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nosklabel" runat="server" Text='<%# Eval("nosk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
@@ -436,21 +468,67 @@
             }
 
             //Validation isEmpty
+            function userValidEdit() {    
+                var kdkasEdit = document.getElementById("kdkasEdit").value;    
+                var kasEdit = document.getElementById("KasEdit").value;
+                var plafondEdit = document.getElementById("plafondEdit").value;  
+                var noskEdit = document.getElementById("noskEdit").value;  
+
+                if (kdkasEdit == '')    
+               {    
+                alert("Kode Kas harus diisi");    
+                return false;    
+               }    
+
+                if (kasEdit == '')    
+               {    
+               alert("Nama Kas harus diisi");    
+               return false;    
+                }   
+
+                if (plafondEdit  == '')    
+               {    
+               alert("Plafond harus diisi");    
+               return false;    
+                }   
+
+                if (noskEdit == '')    
+               {    
+               alert("Nomor SK harus diisi");    
+               return false;    
+               }   
+            }    
+
+            //Validation isEmpty
             function userValid() {    
-               var kd_kas= document.getElementById("kd_kas").value;    
-               var kas= document.getElementById("Kas").value;    
+                var kd_kas= document.getElementById("kd_kas").value;    
+                var kas = document.getElementById("Kas").value;
+                var plafond = document.getElementById("plafond").value;  
+                var nosk = document.getElementById("nosk").value;  
 
                 if (kd_kas == '')    
                {    
-                alert("Masukkan Kode Kas");    
+                alert("Kode Kas harus diisi");    
                 return false;    
                }    
 
                 if (Kas == '')    
                {    
-               alert("Masukkan Nama Kas");    
+               alert("Nama Kas harus diisi");    
                return false;    
-               }    
+                }   
+
+                if (plafond  == '')    
+               {    
+               alert("Plafond harus diisi");    
+               return false;    
+                }   
+
+                if (nosk == '')    
+               {    
+               alert("Nomor SK harus diisi");    
+               return false;    
+               }   
             }    
 
             //Gridview Bootstrap

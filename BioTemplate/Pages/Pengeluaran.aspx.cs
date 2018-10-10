@@ -25,7 +25,6 @@ namespace BioTemplate.Pages
                 gvBindSaldo();
                 gvbind();
                 dlkas();
-                dlperiode();
                 dlbagian();
             }
         }
@@ -35,7 +34,8 @@ namespace BioTemplate.Pages
             jmlhkeluar.Text = string.Empty;
             keperluan.Value = string.Empty;
             tgl_keluar.Text = string.Empty;
-            jmlhkeluar.Text = string.Empty;
+            vendor.Text = string.Empty;
+            satuan.Text = string.Empty;
         }
 
         protected void gvBindSaldo()
@@ -72,21 +72,7 @@ namespace BioTemplate.Pages
                 gvBioCash.DataBind();
             }
         }
-
-        protected void dlperiode()
-        {
-            SqlCommand cmd = new SqlCommand("SELECT DISTINCT thn_periode FROM biocash.Saldo WHERE ENDDA='" + dateMax + "'", con); // table name 
-            SqlDataAdapter sda = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            sda.Fill(ds);  // fill dataset
-            periodeDl.DataTextField = ds.Tables[0].Columns["thn_periode"].ToString(); // text field name of table dispalyed in dropdown
-            periodeDl.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
-            periodeDl.DataBind();  //binding dropdownlist
-
-            periodeDledit.DataTextField = ds.Tables[0].Columns["thn_periode"].ToString(); // text field name of table dispalyed in dropdown
-            periodeDledit.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
-            periodeDledit.DataBind();  //binding dropdownlist
-        }
+        
 
         protected void dlbagian()
         {
@@ -97,9 +83,11 @@ namespace BioTemplate.Pages
             bagianDl.DataTextField = ds.Tables[0].Columns["nama_bagian"].ToString(); // text field name of table dispalyed in dropdown
             bagianDl.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
             bagianDl.DataBind();  //binding dropdownlist
+            bagianDl.Items.Insert(0, "--Pilih bagian--");
             bagianDledit.DataTextField = ds.Tables[0].Columns["nama_bagian"].ToString(); // text field name of table dispalyed in dropdown
             bagianDledit.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
             bagianDledit.DataBind();  //binding dropdownlist
+            bagianDledit.Items.Insert(0, "--Pilih bagian--");
         }
 
         protected void dlkas()
@@ -111,9 +99,28 @@ namespace BioTemplate.Pages
             kasDl.DataTextField = ds.Tables[0].Columns["Kas"].ToString(); // text field name of table dispalyed in dropdown
             kasDl.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
             kasDl.DataBind();  //binding dropdownlist
+            kasDl.Items.Insert(0, "--Pilih kas--");
             kasDledit.DataTextField = ds.Tables[0].Columns["Kas"].ToString(); // text field name of table dispalyed in dropdown
             kasDledit.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
             kasDledit.DataBind();  //binding dropdownlist
+            kasDledit.Items.Insert(0, "--Pilih kas--");
+        }
+
+        protected void kasDl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("SELECT thn_periode FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "'", con);
+            
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                sda.Fill(ds);  // fill dataset
+                periodeDl.DataTextField = ds.Tables[0].Columns["thn_periode"].ToString(); // text field name of table dispalyed in dropdown
+                periodeDl.DataSource = ds.Tables[0];      //assigning datasource to the dropdownlist
+                periodeDl.DataBind();  //binding dropdownlist
+                periodeDl.Items.Insert(0, "--Pilih periode--");
+                ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModalInput();", true);
+           
+            con.Close();
         }
 
         protected void Confirm_Click(object sender, EventArgs e)

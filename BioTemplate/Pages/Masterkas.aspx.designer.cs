@@ -85,6 +85,24 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox Kas;
         
         /// <summary>
+        /// plafond control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox plafond;
+        
+        /// <summary>
+        /// nosk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox nosk;
+        
+        /// <summary>
         /// Confirm control.
         /// </summary>
         /// <remarks>
@@ -119,6 +137,24 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox KasEdit;
+        
+        /// <summary>
+        /// plafondEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox plafondEdit;
+        
+        /// <summary>
+        /// noskEdit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox noskEdit;
         
         /// <summary>
         /// Update control.

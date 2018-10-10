@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Pengeluaran.aspx.cs" Inherits="BioTemplate.Pages.Pengeluaran" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LaporMasuk.aspx.cs" Inherits="BioTemplate.Pages.LaporMasuk" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -159,276 +160,45 @@
                     </nav>
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <h1>Pengeluaran kas</h1>
-                    <br />
-                    <div class="modal fade" id="confirmmasuk" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-body">
-                              <asp:Label ID="warning1" runat="server" CssClass="h4"></asp:Label>
-                              <br />
-                              <br />
-                              <asp:Label ID="warning2" runat="server" CssClass="h4"></asp:Label>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
-                                  <asp:LinkButton ID="confirmpop" runat="server" OnClientClick="return dataValid();" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
-
-                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
-                                  <i class="fa fa-pencil"></i> Lihat Saldo</button>
-
-                                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
-                                    <asp:TextBox ID="jsaldo" runat="server" Visible="false"/>
-                                    <asp:TextBox ID="kasdbtext" runat="server" Visible="false"/>
-                                    <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
-                                    <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
-                                    <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
-                                    <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
-                    <%-- FORM INPUT MODAL --%>
-                        <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h2 class="modal-title" id="inputpengeluaran">Tambah Data Pengeluaran</h2>
-                              </div>
-                              <div class="modal-body">
-                                  <label><h3>Plih Kas</h3></label>
-                                  <asp:DropDownList ID="kasDl" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="kasDl_SelectedIndexChanged"/>
-
-                                  <br />
-                                  <label><h3>Jumlah Uang</h3></label>
-                                  <asp:TextBox ID="jmlhkeluar"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
-
-                                  <br />
-                                  <label><h3>Keperluan</h3></label>
-                                  <textarea ID="keperluan" runat="server" class="form-control" rows="5"></textarea>
-
-                                  <br />
-                                  <label><h3>Tanggal Pengeluaran</h3></label>
-                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                      <asp:TextBox ID="tgl_keluar" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
-                                      <div class="input-group-addon">
-                                           <span class="glyphicon glyphicon-th"></span>
-                                      </div>
-                                  </div>
-                                  <br />
-                                  <label><h3>Plih periode</h3></label>
-                                  <asp:DropDownList ID="periodeDl" runat="server" CssClass="form-control"/>
-
-                                  <br />
-                                  <label><h3>Plih bagian</h3></label>
-                                  <asp:DropDownList ID="bagianDl" runat="server" CssClass="form-control"/>
-
-                                  <br />
-                                  <label><h3>Vendor</h3></label>
-                                  <asp:TextBox ID="vendor" runat="server" CssClass="form-control"></asp:TextBox>
-
-                                  <br />
-                                  <label><h3>Satuan</h3></label>
-                                  <asp:TextBox ID="satuan" runat="server" CssClass="form-control"></asp:TextBox>
-
-                                  <br />
-                                  <label for="radioya"><h3>Jasa : </h3></label>
-                                  <asp:RadioButton ID="radioya" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" />
-                                  <asp:RadioButton ID="radiotidak" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa"/>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
-                                  <asp:LinkButton ID="Confirm" runat="server" OnClientClick="return dataValid();" OnClick="Confirm_Click" CssClass="btn btn-primary"><i class="fa fa-save"></i> Simpan</asp:LinkButton>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    <%-- AKHIR FORM INPUT MODAL --%>
-                    <%-- FORM EDIT MODAL --%>
-                    <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Pengeluaran</h2>
-                              </div>
-                              <div class="modal-body">
-                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
-                                  
-                                  <label><h3>Kas</h3></label>
-                                  <asp:DropDownList ID="kasDledit" runat="server" CssClass="form-control" Enabled="false"/>
-
-                                  <br />
-                                  <label><h3>Periode</h3></label>
-                                  <asp:DropDownList ID="periodeDledit" runat="server" CssClass="form-control" Enabled="false"/>
-
-                                  <br />
-                                  <label><h3>Jumlah Uang</h3></label>
-                                  <asp:TextBox ID="jmlhkeluaredit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
-
-                                  <br />
-                                  <label><h3>Keperluan</h3></label>
-                                  <textarea ID="keteranganedit" runat="server" class="form-control" rows="5"></textarea>
-
-                                  <br />
-                                  <label><h3>Tanggal Pengeluaran</h3></label>
-                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                      <asp:TextBox ID="tgledit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
-                                      <div class="input-group-addon">
-                                           <span class="glyphicon glyphicon-th"></span>
-                                      </div>
-                                  </div>
-
-                                  <br />
-                                  <label><h3>Plih bagian</h3></label>
-                                  <asp:DropDownList ID="bagianDledit" runat="server" CssClass="form-control"/>
-
-                                  <br />
-                                  <label><h3>Vendor</h3></label>
-                                  <asp:TextBox ID="vendoredit" runat="server" CssClass="form-control"></asp:TextBox>
-
-                                  <br />
-                                  <label><h3>Satuan</h3></label>
-                                  <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control"></asp:TextBox>
-
-                                  <br />
-                                  <label for="radioya"><h3>Jasa : </h3></label>
-                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" />
-                                  <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa"/>
-                                  
-                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
-                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
-                                  <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
-                                  <asp:LinkButton ID="update" runat="server" OnClientClick="return dataValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
-                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    <br />
-                    <%-- AKHIR FORM EDIT MODAL --%>
-                    <br />
-                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical" OnRowDeleting="RowDeleting" >
+                    <h1>Laporan Kas Pemasukkan</h1>
+                    <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333">
                             <Columns>
-                                <asp:TemplateField Visible="false">
-                                    <ItemTemplate>
-                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="No">
                                     <ItemTemplate>
                                          <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="TANGGAL">
+                                <asp:TemplateField HeaderText="TANGGAL MASUK" >
                                     <ItemTemplate>
-                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KAS">
-                                    <ItemTemplate>
-                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="BAGIAN">
-                                    <ItemTemplate>
-                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_masuk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="PERIODE">
                                     <ItemTemplate>
-                                        <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="thnlabel" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Kas">
+                                    <ItemTemplate>
+                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="JUMLAH">
                                     <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KEPERLUAN">
+                                <asp:TemplateField HeaderText="No SK">
                                     <ItemTemplate>
-                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="VENDOR">
-                                    <ItemTemplate>
-                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="SATUAN">
-                                    <ItemTemplate>
-                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JASA">
-                                    <ItemTemplate>
-                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="AKSI">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
+                                        <asp:Label ID="nosklabel" runat="server" Text='<%#Eval("Nosk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                             <EmptyDataRowStyle HorizontalAlign="Center" />
                             <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
-                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
-
-                    
-                    <%-- FORM SHOW SALDO --%>
-                        <div class="modal fade" id="formsaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h2 class="modal-title" id="showsaldo">Saldo Saat Ini</h2>
-                              </div>
-                              <div class="modal-body">
-                                  <asp:GridView ID="gvSaldo" runat="server" BorderColor="Transparent" ClientIDMode="Static" DataKeyNames="Saldo" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="Kas">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="Kas" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Periode">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="Kas" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="SALDO">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="Saldo" runat="server" Text='<%#Eval("Saldo") %>' Font-Size="Medium"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                      <EmptyDataRowStyle HorizontalAlign="Center" />
-                                     <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
-                                      <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
-                                      <RowStyle Font-Size="Medium" ForeColor="Black"/>
-                                </asp:GridView>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    <%-- AKHIR FORM SHOW SALDO --%>
-
                     </div>
                 <div class="footer">
                     <div>
@@ -618,140 +388,28 @@
             // Config box
 
             //Open Modal
-            function openModalConfirm() {
-                    $('[id*=confirmmasuk]').modal('show');
-            }
-
-            //Open Modal
-            function openModalInput() {
-                    $('[id*=forminput]').modal('show');
-            }
-
-            //Open Modal
             function openModal() {
                     $('[id*=formedit]').modal('show');
             }
 
             //Validation isEmpty
-            function dataValidEdit() {    
-                var jmlh_keluaredit = document.getElementById("jmlhkeluaredit").value;
-                var keperluanedit = document.getElementById("keteranganedit").value;
-                var tgledit = document.getElementById("tgledit").value;
-                var bagianDledit = document.getElementById("bagianDledit").value;
-                var vendoredit = document.getElementById("vendoredit").value;
-                var satuanedit = document.getElementById("satuanedit").value;
+            function userValid() {    
+               var kd_unit= document.getElementById("kd_unit").value;    
+               var unit= document.getElementById("Unit").value;    
 
-                if (jmlh_keluaredit == '')    
-                {    
-                alert("Masukkan jumlah keluar");    
+                if (kd_unit == '')    
+               {    
+                alert("Masukkan Kode Unit");    
                 return false;    
-                }
+               }    
 
-                if (keperluanedit == '')    
-                {    
-                alert("Keperluan harus diisi");    
-                return false;    
-                }
-
-                if (tgledit == '')    
-                {    
-                alert("Tanggal harus dipilih");    
-                return false;    
-                }
-
-                if (bagianDledit == '--Pilih bagian--')    
-                {    
-                alert("Bagian harus dipilih");    
-                return false;    
-                }
-
-                if (vendoredit == '')    
-                {    
-                alert("Vendor harus diisi");    
-                return false;    
-                }
-
-                if (satuanedit == '')    
-                {    
-                alert("Satuan harus diisi");    
-                return false;    
-                }
-
-                if (!document.getElementById("<%=radioyaedit.ClientID %>").checked && !document.getElementById("<%=radiotidakedit.ClientID %>").checked)    
-                {    
-                alert("Jasa harus dipilih");    
-                return false;    
-                }
-
+                if (unit == '')    
+               {    
+               alert("Masukkin Nama Unit");    
+               return false;    
+               }    
             }    
-            
-            //Validation isEmpty
-            function dataValid() {    
-                var jmlh_keluar= document.getElementById("jmlhkeluar").value;    
-                var keperluan = document.getElementById("keperluan").value;
-                var tgl_keluar = document.getElementById("tgl_keluar").value;
-                var kasDl = document.getElementById("kasDl").value;
-                var periodeDl = document.getElementById("periodeDl").value;
-                var bagianDl = document.getElementById("bagianDl").value;
-                var vendor = document.getElementById("vendor").value;
-                var satuan = document.getElementById("satuan").value;
 
-                if (kasDl == '--Pilih kas--')    
-                {    
-                alert("Pilih Kas");    
-                return false;    
-                }
-
-                if (jmlh_keluar == '')    
-                {    
-                alert("Masukkan jumlah keluar");    
-                return false;    
-                }    
-
-                if (keperluan == '')    
-                {    
-                alert("isi Keperluan");    
-                return false;    
-                }
-
-                if (tgl_keluar == '')    
-                {    
-                alert("Pilih Tanggal");    
-                return false;    
-                }
-
-                if (periodeDl == '--Pilih periode--')    
-                {    
-                alert("Periode harus dipilih");    
-                return false;    
-                }
-
-                if (bagianDl == '--Pilih bagian--')    
-                {    
-                alert("Bagian harus dipilih");    
-                return false;    
-                }
-
-                if (vendor == '')    
-                {    
-                alert("Vendor harus diisi");    
-                return false;    
-                }
-
-                if (satuan == '')    
-                {    
-                alert("Satuan harus diisi");    
-                return false;    
-                }
-
-                if (!document.getElementById("<%=radioya.ClientID %>").checked && !document.getElementById("<%=radiotidak.ClientID %>").checked)    
-                {    
-                alert("Jasa harus dipilih");    
-                return false;    
-                }
-
-            } 
-            
             //Gridview Bootstrap
             $(function () {
                 $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
@@ -1012,4 +670,3 @@
     </form>
 </body>
 </html>
-

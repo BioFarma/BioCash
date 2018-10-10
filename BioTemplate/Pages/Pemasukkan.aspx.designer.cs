@@ -157,15 +157,6 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox periode_masuk;
         
         /// <summary>
-        /// nosk control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox nosk;
-        
-        /// <summary>
         /// simpan control.
         /// </summary>
         /// <remarks>
@@ -193,6 +184,15 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.DropDownList kasdledit;
         
         /// <summary>
+        /// thnmasukedit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox thnmasukedit;
+        
+        /// <summary>
         /// jmlhmasukedit control.
         /// </summary>
         /// <remarks>
@@ -209,24 +209,6 @@ namespace BioTemplate.Pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tglmasukedit;
-        
-        /// <summary>
-        /// thnmasukedit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox thnmasukedit;
-        
-        /// <summary>
-        /// noskedit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox noskedit;
         
         /// <summary>
         /// saldoedit control.

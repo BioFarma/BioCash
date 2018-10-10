@@ -42,8 +42,12 @@
                         <li>
                             <a href="Pengeluaran.aspx">Pengeluaran</a>
                         </li>
-                        <li>
-                            <a href="Laporan.aspx">Laporan</a>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Laporan <span class="caret"></span></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li><a href="LaporMasuk.aspx">Pemasukkan</a></li>
+                            <li><a href="LaporKeluar.aspx">Pengeluaran</a></li>
+                          </ul>
                         </li>
                     </ul>
                 </div>
@@ -180,11 +184,11 @@
                               </div>
                               <div class="modal-body">
                                   <label><h3>Pilih Kas</h3></label>
-                                  <asp:DropDownList ID="kasdl" runat="server" CssClass="form-control"/>
+                                  <asp:DropDownList ID="kasdl" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="kasdl_SelectedIndexChanged"/>
                                   
                                   <br />
                                   <label><h3>Jumlah Uang</h3></label>
-                                  <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+                                  <asp:TextBox ID="Masuk"  runat="server" CssClass="form-control" onkeydown="return false;" />
 
                                   <br />
                                   <label><h3>Tanggal Pemasukkan</h3></label>
@@ -203,10 +207,6 @@
                                           <span class="glyphicon glyphicon-th"></span>
                                       </div>
                                   </div>
-
-                                  <br />
-                                  <label><h3>Nomor SK</h3></label>
-                                  <asp:TextBox ID="nosk" runat="server" CssClass="form-control"></asp:TextBox>
 
                                   </div>
                               <div class="modal-footer">
@@ -231,6 +231,15 @@
                                   <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
                                   <label><h3>Kas</h3></label>
                                   <asp:DropDownList ID="kasdledit" runat="server" CssClass="form-control" Enabled="false"/>
+
+                                  <br />
+                                  <label><h3>Tahun Periode</h3></label>
+                                  <div class="input-group date" id="yearpicker" data-provide="datepicker">
+                                  <asp:TextBox ID="thnmasukedit" runat="server" CssClass="form-control" Placeholder="yyyy" Enabled="false"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                          <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
                                   
                                   <br />
                                   <label><h3>Jumlah Uang</h3></label>
@@ -244,19 +253,6 @@
                                            <span class="glyphicon glyphicon-th"></span>
                                       </div>
                                   </div>
-
-                                  <br />
-                                  <label><h3>Tahun Periode</h3></label>
-                                  <div class="input-group date" id="yearpicker" data-provide="datepicker">
-                                  <asp:TextBox ID="thnmasukedit" runat="server" CssClass="form-control" Placeholder="yyyy" Enabled="false"></asp:TextBox>
-                                      <div class="input-group-addon">
-                                          <span class="glyphicon glyphicon-th"></span>
-                                      </div>
-                                  </div>
-
-                                  <br />
-                                  <label><h3>Nomor SK</h3></label>
-                                  <asp:TextBox ID="noskedit" runat="server" CssClass="form-control"></asp:TextBox>
 
                                   <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
                                   <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
@@ -344,11 +340,6 @@
                                 <asp:TemplateField HeaderText="JUMLAH">
                                     <ItemTemplate>
                                         <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>' Font-Size="Medium"></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="No SK">
-                                    <ItemTemplate>
-                                        <asp:Label ID="nosklabel" runat="server" Text='<%#Eval("Nosk") %>' Font-Size="Medium"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="AKSI">
@@ -554,6 +545,11 @@
         <script>
             // Config box
 
+            //Pop up modal Input
+            function openModalInput() {
+                    $('[id*=forminput]').modal('show');
+            }
+
             //Pop up modal Edit
             function openModal() {
                     $('[id*=formedit]').modal('show');
@@ -565,9 +561,8 @@
                 var jmlhmasukedit = document.getElementById("jmlhmasukedit").value;
                 var tglmasukedit = document.getElementById("tglmasukedit").value;
                 var thnmasukedit = document.getElementById("thnmasukedit").value;
-                var noskedit = document.getElementById("noskedit").value;
 
-                if (kasdledit == '')    
+                if (kasdledit == '--Pilih kas--')    
                {    
                 alert("Pilih kas kecil");    
                 return false;    
@@ -590,12 +585,6 @@
                 alert("Pilih tahun periode");    
                 return false;    
                 } 
-
-                if (noskedit == '')
-                {    
-                alert("Nomor SK harus diisi");    
-                return false;    
-                } 
             }    
 
             //Validation isEmpty input
@@ -604,9 +593,8 @@
                 var masuk = document.getElementById("Masuk").value;     
                 var tgl_masuk = document.getElementById("tgl_masuk").value;
                 var periode_masuk = document.getElementById("periode_masuk").value;
-                var nosk = document.getElementById("nosk").value;
 
-                if (Kas == '')    
+                if (Kas == '--Pilih kas--')    
                {    
                 alert("Pilih kas kecil");    
                 return false;    
@@ -629,12 +617,6 @@
                alert("Pilih tahun periode");    
                return false;    
                 } 
-
-                if (nosk == '')    
-               {    
-               alert("Nomor SK harus diisi");    
-               return false;    
-               } 
             }
 
             //Gridview Bootstrap
