@@ -163,9 +163,37 @@ namespace BioTemplate.Pages
 
                 if (k < 0)
                 {
-                    warning1.Text = "Jumlah pengeluaran untuk kas "+ kasDl.SelectedItem.Value +" melebihi saldo yang ada. <br /> Sisa saldo yang kurang akan dilimpahkan ke pemasukkan selanjutnya.";
-                    warning2.Text = "Yakin ingin melanjutkan ?";
-                    ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModalConfirm();", true);
+                    int periode = Convert.ToInt32(periodeDl.SelectedItem.Value);
+                    int findperiod = periode + 1;
+                    string find = findperiod.ToString();
+
+                    SqlCommand fcmd = new SqlCommand("SELECT saldo,Kas FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + find + "'", con);
+
+                    SqlParameter[] fprms = new SqlParameter[3];
+
+                    fprms[0] = new SqlParameter("@saldo", SqlDbType.VarChar, 50);
+                    fprms[1] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
+                    fprms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
+                    fprms[0].Value = jmlhsaldo.Text;
+                    fprms[1].Value = kasdbtext.Text;
+                    fprms[2].Value = periodeDl.SelectedItem.Value;
+                    con.Open();
+                    fcmd.Parameters.AddRange(fprms);
+                    object periodefind = fcmd.ExecuteScalar();
+                    con.Close();
+                    if (periodefind == null)
+                    {
+                        warning1.Text = "Jumlah pengeluaran untuk kas " + kasDl.SelectedItem.Value + " melebihi saldo yang ada ("+k.ToString()+"). <br /> Sisa saldo yang kurang akan dilimpahkan ke pemasukkan selanjutnya.";
+                        warning2.Text = "Ingin tambah pemasukkan di periode saat ini ("+periodeDl.SelectedItem.Value+") ?";
+                        ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModalConfirm();", true);
+                    }
+                    else
+                    {
+                        Label1.Text = "Jumlah pengeluaran untuk kas " + kasDl.SelectedItem.Value + " melebihi saldo yang ada (" + k.ToString() + "). <br /> Sisa saldo yang kurang akan dilimpahkan kepemasukkan " + kasDl.SelectedItem.Value+" "+find+".";
+                        Label2.Text = "Yakin ingin melanjutkan ?";
+                        ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModalConfirmPeriode();", true);
+                    }
+
                 }
                 else
                 {
@@ -304,6 +332,178 @@ namespace BioTemplate.Pages
                 icmd.ExecuteNonQuery();
                 cmd.ExecuteNonQuery();
                 con.Close();
+                Response.Write("<script language='javascript'>window.alert('Saldo sudah berkurang. Silahkan tambah pemasukkan');window.location='Pemasukkan.aspx';</script>");
+            }
+        }
+
+        protected void btnperiode_Click(object sender, EventArgs e)
+        {
+            SqlCommand lcmd = new SqlCommand("SELECT saldo,Kas FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + periodeDl.SelectedItem.Value + "'", con);
+            con.Open();
+            SqlDataReader myReader = lcmd.ExecuteReader();
+            while (myReader.Read())
+            {
+                string result = myReader.GetValue(0).ToString();
+                jmlhsaldo.Text = result.ToString();
+            }
+            con.Close();
+
+            int getperiode = Convert.ToInt32(periodeDl.SelectedItem.Value);
+            int periodesum = getperiode + 1;
+            string nextperiode = periodesum.ToString();
+
+            SqlCommand pcmd = new SqlCommand("SELECT saldo,Kas FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + nextperiode + "'", con);
+            con.Open();
+            SqlDataReader PReader = pcmd.ExecuteReader();
+            while (PReader.Read())
+            {
+                string result = PReader.GetValue(0).ToString();
+                jsaldo.Text = result.ToString();
+            }
+            con.Close();
+
+            int saldonext = Convert.ToInt32(jsaldo.Text);
+            int saldolama = Convert.ToInt32(jmlhsaldo.Text);
+            int saldobaru = Convert.ToInt32(jmlhkeluar.Text);
+            int subtotal = saldolama - saldobaru;
+            int total = subtotal + saldonext;
+            string totalperiode = total.ToString();
+
+            if (radioya.Checked)
+            {
+                jasaselected = "Ya";
+            }
+            else if (radiotidak.Checked)
+            {
+                jasaselected = "Tidak";
+            }
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO biocash.Pengeluaran" + "(BEGDA,Kas,tgl_keluar,keterangan,jmlh_keluar,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_keluar,@keterangan,@jmlh_keluar,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
+            SqlCommand incmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+            SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo set change_date=@change_date, ENDDA=@ENDDA WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + periodeDl.SelectedItem.Value + "'", con);
+            SqlCommand iuncmd = new SqlCommand("UPDATE biocash.Saldo set change_date=@change_date, ENDDA=@ENDDA WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + nextperiode + "'", con);
+
+            cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+            cmd.Parameters.AddWithValue("@Kas", kasDl.SelectedItem.Value);
+            cmd.Parameters.AddWithValue("@tgl_keluar", tgl_keluar.Text);
+            cmd.Parameters.AddWithValue("@keterangan", keperluan.Value);
+            cmd.Parameters.AddWithValue("@jmlh_keluar", jmlhkeluar.Text);
+            cmd.Parameters.AddWithValue("@thn_periode", periodeDl.SelectedItem.Value);
+            cmd.Parameters.AddWithValue("@nama_bagian", bagianDl.SelectedItem.Value);
+            cmd.Parameters.AddWithValue("@vendor", vendor.Text);
+            cmd.Parameters.AddWithValue("@satuan", satuan.Text);
+            cmd.Parameters.AddWithValue("@jasa", jasaselected);
+            cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+            incmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+            incmd.Parameters.AddWithValue("@Kas", kasDl.SelectedItem.Value);
+            incmd.Parameters.AddWithValue("@saldo", totalperiode);
+            incmd.Parameters.AddWithValue("@thn_periode", nextperiode);
+            incmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            incmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+            iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+            iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+
+            iuncmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+            iuncmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+
+            con.Open();
+            iucmd.ExecuteNonQuery();
+            iuncmd.ExecuteNonQuery();
+            incmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
+            con.Close();
+            string message = "Data berhasil disimpan";
+            string script = "{ alert('" + message + "'); }";
+            ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
+            gvbind();
+            gvBindSaldo();
+            clearTextInput();
+        }
+
+        protected void confirmmin_Click(object sender, EventArgs e)
+        {
+            SqlCommand scmd = new SqlCommand("SELECT saldo,Kas FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + periodeDl.SelectedItem.Value + "'", con);
+
+            SqlParameter[] prms = new SqlParameter[3];
+
+            prms[0] = new SqlParameter("@saldo", SqlDbType.VarChar, 50);
+            prms[1] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
+            prms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
+            prms[0].Value = jmlhsaldo.Text;
+            prms[1].Value = kasdbtext.Text;
+            prms[2].Value = periodeDl.SelectedItem.Value;
+            con.Open();
+            scmd.Parameters.AddRange(prms);
+            object obj = scmd.ExecuteScalar();
+            con.Close();
+            if (obj == null)
+            {
+                string message = "Belum ada pemasukkan";
+                string script = "window.onload = function(){ alert('"; script += message; script += "')};";
+                ClientScript.RegisterStartupScript(this.GetType(), "WarningMessage", script, true);
+            }
+            else
+            {
+                SqlCommand lcmd = new SqlCommand("SELECT saldo,Kas FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + periodeDl.SelectedItem.Value + "'", con);
+                con.Open();
+                SqlDataReader myReader = lcmd.ExecuteReader();
+                while (myReader.Read())
+                {
+                    string result = myReader.GetValue(0).ToString();
+                    jmlhsaldo.Text = result.ToString();
+                }
+                con.Close();
+
+                int i = Convert.ToInt32(jmlhsaldo.Text);
+                int j = Convert.ToInt32(jmlhkeluar.Text);
+                int k = i - j;
+                jsaldo.Text = k.ToString();
+
+                if (radioya.Checked)
+                {
+                    jasaselected = "Ya";
+                }
+                else if (radiotidak.Checked)
+                {
+                    jasaselected = "Tidak";
+                }
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO biocash.Pengeluaran" + "(BEGDA,Kas,tgl_keluar,keterangan,jmlh_keluar,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_keluar,@keterangan,@jmlh_keluar,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
+                SqlCommand icmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+                SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo set change_date=@change_date, ENDDA=@ENDDA WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='" + periodeDl.SelectedItem.Value + "'", con);
+
+
+                cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                cmd.Parameters.AddWithValue("@Kas", kasDl.SelectedItem.Value);
+                cmd.Parameters.AddWithValue("@tgl_keluar", tgl_keluar.Text);
+                cmd.Parameters.AddWithValue("@keterangan", keperluan.Value);
+                cmd.Parameters.AddWithValue("@jmlh_keluar", jmlhkeluar.Text);
+                cmd.Parameters.AddWithValue("@thn_periode", periodeDl.SelectedItem.Value);
+                cmd.Parameters.AddWithValue("@nama_bagian", bagianDl.SelectedItem.Value);
+                cmd.Parameters.AddWithValue("@vendor", vendor.Text);
+                cmd.Parameters.AddWithValue("@satuan", satuan.Text);
+                cmd.Parameters.AddWithValue("@jasa", jasaselected);
+                cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                icmd.Parameters.AddWithValue("@Kas", kasDl.SelectedItem.Value);
+                icmd.Parameters.AddWithValue("@saldo", jsaldo.Text);
+                icmd.Parameters.AddWithValue("@thn_periode", periodeDl.SelectedItem.Value);
+                icmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                icmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+
+                con.Open();
+                iucmd.ExecuteNonQuery();
+                icmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+                con.Close();
                 string message = "Data berhasil disimpan";
                 string script = "{ alert('" + message + "'); }";
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
@@ -332,7 +532,7 @@ namespace BioTemplate.Pages
 
         protected void Update_Click(object sender, EventArgs e)
         {
-            SqlCommand sscmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='"+periodeDledit.SelectedItem.Value+"'", con);
+            SqlCommand sscmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDl.SelectedItem.Value + "' AND thn_periode='"+periodeDledit.Text+"'", con);
             con.Open();
             SqlDataReader myReader = sscmd.ExecuteReader();
             while (myReader.Read())
@@ -374,14 +574,14 @@ namespace BioTemplate.Pages
                 SqlCommand ucmd = new SqlCommand("UPDATE biocash.Pengeluaran SET ENDDA=@ENDDA, change_date=@change_date WHERE id=@id ", con);
 
                 SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                SqlCommand sucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDledit.SelectedItem.Value + "' AND thn_periode='"+periodeDledit.SelectedItem.Value+"' ", con);
+                SqlCommand sucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasDledit.SelectedItem.Value + "' AND thn_periode='"+periodeDledit.Text+"' ", con);
 
                 cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                 cmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@tgl_keluar", tgledit.Text);
                 cmd.Parameters.AddWithValue("@keterangan", keteranganedit.Value);
                 cmd.Parameters.AddWithValue("@jmlh_keluar", jmlhkeluaredit.Text);
-                cmd.Parameters.AddWithValue("@thn_periode", periodeDledit.SelectedItem.Value);
+                cmd.Parameters.AddWithValue("@thn_periode", periodeDledit.Text);
                 cmd.Parameters.AddWithValue("@nama_bagian", bagianDledit.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@vendor", vendoredit.Text);
                 cmd.Parameters.AddWithValue("@satuan", satuanedit.Text);
@@ -396,7 +596,7 @@ namespace BioTemplate.Pages
                 scmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                 scmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
                 scmd.Parameters.AddWithValue("@saldo", saldoafteredit.Text);
-                scmd.Parameters.AddWithValue("@thn_periode", periodeDledit.SelectedItem.Value);
+                scmd.Parameters.AddWithValue("@thn_periode", periodeDledit.Text);
                 scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                 scmd.Parameters.AddWithValue("@ENDDA", dateMax);
 

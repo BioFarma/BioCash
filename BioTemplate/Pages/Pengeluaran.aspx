@@ -171,8 +171,24 @@
                               <asp:Label ID="warning2" runat="server" CssClass="h4"></asp:Label>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
-                                  <asp:LinkButton ID="confirmpop" runat="server" OnClientClick="return dataValid();" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
+                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-succes"><i class="fa fa-arrow-circle-o-right"></i> Tetap beban hutang</asp:LinkButton>
+                                  <asp:LinkButton ID="confirmpop" runat="server" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Tambah pemasukkan</asp:LinkButton>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal fade" id="confirmperiode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                              <asp:Label ID="Label1" runat="server" CssClass="h4"></asp:Label>
+                              <br />
+                              <br />
+                              <asp:Label ID="Label2" runat="server" CssClass="h4"></asp:Label>
+                          </div>
+                          <div class="modal-footer">
+                                  <asp:LinkButton ID="btnhutang" runat="server" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Tetap beban hutang</asp:LinkButton>
+                                  <asp:LinkButton ID="btnperiode" runat="server" OnClick="btnperiode_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
                           </div>
                         </div>
                       </div>
@@ -267,8 +283,8 @@
 
                                   <br />
                                   <label><h3>Periode</h3></label>
-                                  <asp:DropDownList ID="periodeDledit" runat="server" CssClass="form-control" Enabled="false"/>
-
+                                  <asp:TextBox ID="periodeDledit" runat="server" CssClass="form-control" onkeydown="return false;" ></asp:TextBox>
+                                  <hr class="styled" />
                                   <br />
                                   <label><h3>Jumlah Uang</h3></label>
                                   <asp:TextBox ID="jmlhkeluaredit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
@@ -616,6 +632,11 @@
         </div>
         <script>
             // Config box
+
+            //Open Modal
+            function openModalConfirmPeriode() {
+                    $('[id*=confirmperiode]').modal('show');
+            }
 
             //Open Modal
             function openModalConfirm() {
