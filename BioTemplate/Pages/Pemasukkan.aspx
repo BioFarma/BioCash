@@ -42,12 +42,8 @@
                         <li>
                             <a href="Pengeluaran.aspx">Pengeluaran</a>
                         </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Laporan <span class="caret"></span></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="LaporMasuk.aspx">Pemasukkan</a></li>
-                            <li><a href="LaporKeluar.aspx">Pengeluaran</a></li>
-                          </ul>
+                        <li>
+                            <a href="Laporan.aspx">Laporan</a>
                         </li>
                     </ul>
                 </div>

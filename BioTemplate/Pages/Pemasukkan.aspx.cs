@@ -24,7 +24,6 @@ namespace BioTemplate.Pages
 
             if (!IsPostBack)
             {
-
                 dlkas();
                 gvBindSaldo();
                 gvbind();
@@ -108,6 +107,7 @@ namespace BioTemplate.Pages
         
         protected void Confirm_Click(object sender, EventArgs e)
         {
+
             SqlCommand selectcmd = new SqlCommand("SELECT *FROM biocash.pemasukkan WHERE Kas=@Kas AND ENDDA=@ENDDA AND thn_periode=@thn_periode", con);
 
             SqlParameter[] prms = new SqlParameter[3];
@@ -282,8 +282,8 @@ namespace BioTemplate.Pages
         protected void RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
         {
             int id = Convert.ToInt32(gvBioCash.DataKeys[e.RowIndex].Value.ToString());
-            con.Open();
 
+            con.Open();
             SqlCommand scmd = new SqlCommand("SELECT Kas,jmlh_masuk,thn_periode FROM biocash.pemasukkan WHERE id='" + id + "'", con);
             SqlDataReader myReader = scmd.ExecuteReader();
             while (myReader.Read())

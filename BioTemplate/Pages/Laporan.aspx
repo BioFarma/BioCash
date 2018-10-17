@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Laporan.aspx.cs" Inherits="BioTemplate.Pages.Laporan" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -156,7 +157,7 @@
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Laporan Kas</h1>
-                    <asp:GridView ID="gvBioCash" runat="server" ClientIDMode="Static" BorderColor="Transparent" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333" GridLines="Vertical">
+                    <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333">
                             <Columns>
                                 <asp:TemplateField HeaderText="No">
                                     <ItemTemplate>
@@ -211,7 +212,7 @@
                             </Columns>
                             <EmptyDataRowStyle HorizontalAlign="Center" />
                             <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
-                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
                     </div>
@@ -685,4 +686,3 @@
     </form>
 </body>
 </html>
-

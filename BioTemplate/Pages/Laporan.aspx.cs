@@ -22,7 +22,9 @@ namespace BioTemplate.Pages
 
         protected void gvbind()
         {
+            con.Open();
             SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA='" + dateMax + "'", con);
+            //SqlCommand cmd = new SqlCommand("SELECT biocash.pemasukkan.id , biocash.pemasukkan.tgl_masuk, biocash.pemasukkan.thn_periode, biocash.pemasukkan.Unit, biocash.pemasukkan.jmlh_masuk FROM biocash.pemasukkan INNER JOIN biocash.Saldo ON biocash.pemasukkan.Unit=biocash.Saldo.Unit WHERE biocash.pemasukkan.ENDDA='"+dateMax+"' AND biocash.pemasukkan.Unit=biocash.Saldo.Unit", con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);

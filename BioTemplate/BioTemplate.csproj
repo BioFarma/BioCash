@@ -842,8 +842,7 @@
     <Content Include="JS\TableScript\data-tables\images\sort_desc.png" />
     <Content Include="JS\TableScript\data-tables\jquery.dataTables.js" />
     <Content Include="Pages\Default.aspx" />
-    <Content Include="Pages\LaporKeluar.aspx" />
-    <Content Include="Pages\LaporMasuk.aspx" />
+    <Content Include="Pages\Laporan.aspx" />
     <Content Include="Pages\Masterkas.aspx" />
     <Content Include="Pages\Pemasukkan.aspx" />
     <Content Include="Pages\Pengeluaran.aspx" />
@@ -898,19 +897,12 @@
     <Compile Include="Pages\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\LaporKeluar.aspx.cs">
-      <DependentUpon>LaporKeluar.aspx</DependentUpon>
+    <Compile Include="Pages\Laporan.aspx.cs">
+      <DependentUpon>Laporan.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\LaporKeluar.aspx.designer.cs">
-      <DependentUpon>LaporKeluar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LaporMasuk.aspx.cs">
-      <DependentUpon>LaporMasuk.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\LaporMasuk.aspx.designer.cs">
-      <DependentUpon>LaporMasuk.aspx</DependentUpon>
+    <Compile Include="Pages\Laporan.aspx.designer.cs">
+      <DependentUpon>Laporan.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Masterkas.aspx.cs">
       <DependentUpon>Masterkas.aspx</DependentUpon>
