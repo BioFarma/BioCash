@@ -156,6 +156,23 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Pemasukkan Saldo Kas</h1>
                     <br />
+                    <div class="modal fade" id="confirmpopmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                              <asp:Label ID="label1" runat="server" CssClass="h4"></asp:Label>
+                              <br />
+                              <br />
+                              <asp:Label ID="label2" runat="server" CssClass="h4"></asp:Label>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Cancel</button>
+                                  <asp:LinkButton ID="confirmpop" runat="server" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
                                   <i class="fa fa-plus"></i> Tambah Pemasukkan</button>
                     <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
@@ -540,6 +557,11 @@
         </div>
         <script>
             // Config box
+
+            //Open Modal
+            function openModalConfirm() {
+                    $('[id*=confirmpopmin]').modal('show');
+            }
 
             //Pop up modal Input
             function openModalInput() {

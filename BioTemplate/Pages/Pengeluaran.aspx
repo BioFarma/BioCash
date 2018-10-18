@@ -167,7 +167,7 @@
                               <asp:Label ID="warning2" runat="server" CssClass="h4"></asp:Label>
                           </div>
                           <div class="modal-footer">
-                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-succes"><i class="fa fa-arrow-circle-o-right"></i> Tetap beban hutang</asp:LinkButton>
+                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Tetap beban hutang</asp:LinkButton>
                                   <asp:LinkButton ID="confirmpop" runat="server" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Tambah pemasukkan</asp:LinkButton>
                           </div>
                         </div>

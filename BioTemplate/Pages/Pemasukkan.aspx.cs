@@ -107,99 +107,289 @@ namespace BioTemplate.Pages
         
         protected void Confirm_Click(object sender, EventArgs e)
         {
+            string vsaldo = "0";
 
-            SqlCommand selectcmd = new SqlCommand("SELECT *FROM biocash.pemasukkan WHERE Kas=@Kas AND ENDDA=@ENDDA AND thn_periode=@thn_periode", con);
+            SqlCommand ccmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@kas AND saldo < @saldo", con);
+            SqlParameter[] cprms = new SqlParameter[3];
 
-            SqlParameter[] prms = new SqlParameter[3];
-
-            prms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
-            prms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
-            prms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
-            prms[0].Value = kasdl.Text;
-            prms[1].Value = dateMax;
-            prms[2].Value = periode_masuk.Text;
+            cprms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
+            cprms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+            cprms[2] = new SqlParameter("@saldo", SqlDbType.VarChar, 50);
+            cprms[0].Value = kasdl.Text;
+            cprms[1].Value = dateMax;
+            cprms[2].Value = vsaldo;
             con.Open();
-            selectcmd.Parameters.AddRange(prms);
-            object obj = selectcmd.ExecuteScalar();
-            if (obj != null)
+            ccmd.Parameters.AddRange(cprms);
+            object saldomin = ccmd.ExecuteScalar();
+            con.Close();
+            if (saldomin != null)
             {
-                SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='"+ kasdl.SelectedItem.Value +"' AND thn_periode='"+periode_masuk.Text+"'", con);
-
-                SqlDataReader myReader = cmd.ExecuteReader();
-                while (myReader.Read())
+                SqlCommand salcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND saldo < 0", con);
+                con.Open();
+                SqlDataReader mysalReader = salcmd.ExecuteReader();
+                while (mysalReader.Read())
                 {
-                    string result = myReader.GetValue(0).ToString();
-                    jmlhsaldo.Text = result.ToString();
+                    string result = mysalReader.GetValue(0).ToString();
+                    jsaldo.Text = result.ToString();
                 }
                 con.Close();
 
-                int i = Convert.ToInt32(jmlhsaldo.Text);
-                int j = Convert.ToInt32(Masuk.Text);
-                int k = i + j;
-                jsaldo.Text = k.ToString();
+                if (Convert.ToInt32(jsaldo.Text) >= 0)
+                {
+                    SqlCommand selectcmd = new SqlCommand("SELECT *FROM biocash.pemasukkan WHERE Kas=@Kas AND ENDDA=@ENDDA AND thn_periode=@thn_periode", con);
 
-                SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
-                SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='"+periode_masuk.Text+"' ", con);
+                    SqlParameter[] prms = new SqlParameter[3];
 
-                icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
-                icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
-                icmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
-                icmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
-                icmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
-                icmd.Parameters.AddWithValue("@change_date", DateTime.Now);
-                icmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                    prms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
+                    prms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+                    prms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
+                    prms[0].Value = kasdl.SelectedItem.Value;
+                    prms[1].Value = dateMax;
+                    prms[2].Value = periode_masuk.Text;
+                    con.Open();
+                    selectcmd.Parameters.AddRange(prms);
+                    object obj = selectcmd.ExecuteScalar();
+                    if (obj != null)
+                    {
+                        SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "'", con);
 
-                iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
-                iscmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
-                iscmd.Parameters.AddWithValue("@saldo", jsaldo.Text);
-                iscmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
-                iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
-                iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                        SqlDataReader myReader = cmd.ExecuteReader();
+                        while (myReader.Read())
+                        {
+                            string result = myReader.GetValue(0).ToString();
+                            jmlhsaldo.Text = result.ToString();
+                        }
+                        con.Close();
 
-                iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
-                iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
-                con.Open();
-                iucmd.ExecuteNonQuery();
-                iscmd.ExecuteNonQuery();
-                icmd.ExecuteNonQuery();
-                con.Close();
-                string message = "Data berhasil disimpan.";
-                string script = "window.onload = function(){ alert('"; script += message; script += "')};";
-                ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
-                clearTextInput();
-                gvbind();
-                gvBindSaldo();
+                        int i = Convert.ToInt32(jmlhsaldo.Text);
+                        int j = Convert.ToInt32(Masuk.Text);
+                        int k = i + j;
+                        jsaldo.Text = k.ToString();
+
+
+
+                        SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
+                        SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+                        SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "' ", con);
+
+                        icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                        icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                        icmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
+                        icmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                        icmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
+                        icmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        icmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                        iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                        iscmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                        iscmd.Parameters.AddWithValue("@saldo", jsaldo.Text);
+                        iscmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                        iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                        iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                        iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        con.Open();
+                        iucmd.ExecuteNonQuery();
+                        iscmd.ExecuteNonQuery();
+                        icmd.ExecuteNonQuery();
+                        con.Close();
+                        string message = "Data berhasil disimpan.";
+                        string script = "window.onload = function(){ alert('"; script += message; script += "')};";
+                        ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
+                        clearTextInput();
+                        gvbind();
+                        gvBindSaldo();
+                    }
+                    else
+                    {
+                        SqlCommand ecmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
+                        SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+
+                        ecmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                        ecmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                        ecmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
+                        ecmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                        ecmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
+                        ecmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        ecmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                        scmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                        scmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                        scmd.Parameters.AddWithValue("@saldo", Masuk.Text);
+                        scmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                        scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        scmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                        scmd.ExecuteNonQuery();
+                        ecmd.ExecuteNonQuery();
+                        con.Close();
+                        string message = "Data berhasil disimpan";
+                        string script = "{ alert('" + message + "'); }";
+                        ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
+                        clearTextInput();
+                        gvbind();
+                        gvBindSaldo();
+                    }
+                }
+                else
+                {
+                    gvbind();
+                    gvBindSaldo();
+                    label1.Text = "Terdapat kredit sebesar " + jsaldo.Text + " di kas " + kasdl.SelectedItem.Value + "";
+                    label2.Text = "Kredit tersebut akan dilimpahkan pada pemasukkan saat ini. <br /> Lanjutkan ?";
+                    ClientScript.RegisterStartupScript(this.GetType(), "Pop", "openModalConfirm();", true);
+                }
             }
             else
             {
-                SqlCommand ecmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
-                SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+                SqlCommand selectcmd = new SqlCommand("SELECT *FROM biocash.pemasukkan WHERE Kas=@Kas AND ENDDA=@ENDDA AND thn_periode=@thn_periode", con);
 
-                ecmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
-                ecmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
-                ecmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
-                ecmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
-                ecmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
-                ecmd.Parameters.AddWithValue("@change_date", DateTime.Now);
-                ecmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                SqlParameter[] prms = new SqlParameter[3];
 
-                scmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
-                scmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
-                scmd.Parameters.AddWithValue("@saldo", Masuk.Text);
-                scmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
-                scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
-                scmd.Parameters.AddWithValue("@ENDDA", dateMax);
-                scmd.ExecuteNonQuery();
-                ecmd.ExecuteNonQuery();
-                con.Close();
-                string message = "Data berhasil disimpan";
-                string script = "{ alert('" + message + "'); }";
-                ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
-                clearTextInput();
-                gvbind();
-                gvBindSaldo();
+                prms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
+                prms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+                prms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
+                prms[0].Value = kasdl.Text;
+                prms[1].Value = dateMax;
+                prms[2].Value = periode_masuk.Text;
+                con.Open();
+                selectcmd.Parameters.AddRange(prms);
+                object obj = selectcmd.ExecuteScalar();
+                if (obj != null)
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "'", con);
+
+                    SqlDataReader myReader = cmd.ExecuteReader();
+                    while (myReader.Read())
+                    {
+                        string result = myReader.GetValue(0).ToString();
+                        jmlhsaldo.Text = result.ToString();
+                    }
+                    con.Close();
+
+                    int i = Convert.ToInt32(jmlhsaldo.Text);
+                    int j = Convert.ToInt32(Masuk.Text);
+                    int k = i + j;
+                    jsaldo.Text = k.ToString();
+
+
+
+                    SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
+                    SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+                    SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "' ", con);
+
+                    icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                    icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                    icmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
+                    icmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                    icmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
+                    icmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    icmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                    iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                    iscmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                    iscmd.Parameters.AddWithValue("@saldo", jsaldo.Text);
+                    iscmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                    iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                    iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                    iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    con.Open();
+                    iucmd.ExecuteNonQuery();
+                    iscmd.ExecuteNonQuery();
+                    icmd.ExecuteNonQuery();
+                    con.Close();
+                    string message = "Data berhasil disimpan.";
+                    string script = "window.onload = function(){ alert('"; script += message; script += "')};";
+                    ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
+                    clearTextInput();
+                    gvbind();
+                    gvBindSaldo();
+                }
+                else
+                {
+                    SqlCommand ecmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
+                    SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+
+                    ecmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                    ecmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                    ecmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
+                    ecmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                    ecmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
+                    ecmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    ecmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+                    scmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                    scmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                    scmd.Parameters.AddWithValue("@saldo", Masuk.Text);
+                    scmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+                    scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    scmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                    scmd.ExecuteNonQuery();
+                    ecmd.ExecuteNonQuery();
+                    con.Close();
+                    string message = "Data berhasil disimpan";
+                    string script = "{ alert('" + message + "'); }";
+                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
+                    clearTextInput();
+                    gvbind();
+                    gvBindSaldo();
+                }
             }
+        }
+
+        protected void confirmpop_Click(object sender, EventArgs e)
+        {
+            SqlCommand ccmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND saldo < 0", con);
+            con.Open();
+            SqlDataReader myCReader = ccmd.ExecuteReader();
+            while (myCReader.Read())
+            {
+                string result = myCReader.GetValue(0).ToString();
+                jsaldo.Text = result.ToString();
+            }
+            con.Close();
+
+            int saldominus = Convert.ToInt32(jsaldo.Text);
+            int saldonow = Convert.ToInt32(Masuk.Text);
+            int total = saldominus + saldonow;
+            string totalsaldo = total.ToString();
+
+            SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
+            SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
+            SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "' ", con);
+            SqlCommand iuscmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='" +DateTime.Now+ "', change_date='"+DateTime.Now+"' WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND saldo < 0", con);
+
+            icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+            icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+            icmd.Parameters.AddWithValue("@tgl_masuk", tgl_masuk.Text);
+            icmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+            icmd.Parameters.AddWithValue("@jmlh_masuk", Masuk.Text);
+            icmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            icmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+            iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+            iscmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+            iscmd.Parameters.AddWithValue("@saldo", totalsaldo);
+            iscmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
+            iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
+            iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+            iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+            con.Open();
+            iucmd.ExecuteNonQuery();
+            iuscmd.ExecuteNonQuery();
+            iscmd.ExecuteNonQuery();
+            icmd.ExecuteNonQuery();
+            con.Close();
+            string message = "Data berhasil disimpan.";
+            string script = "window.onload = function(){ alert('"; script += message; script += "')};";
+            ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
+            clearTextInput();
+            gvbind();
+            gvBindSaldo();
         }
 
         protected void btn_edit_Click(object sender, EventArgs e)
