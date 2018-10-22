@@ -20,7 +20,7 @@ namespace BioTemplate.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            con.ConnectionString = "Data Source=LAPTOP-LUGIMV8T;Initial Catalog=BioCash;User ID=sa;Password=@Gtabp1000";
+            con.ConnectionString = "Data Source=MSI;Initial Catalog=BioCash;Persist Security Info=True;User ID=sa;Password=@Gtabp1000";
             if (!IsPostBack)
             {
                 gvbind();
@@ -30,7 +30,8 @@ namespace BioTemplate.Pages
         protected void gvbind()
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Masterkas WHERE ENDDA='"+dateMax+"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT id,kd_kas, Kas, Plafond, nosk FROM biocash.Masterkas WHERE ENDDA = @ENDDA", con);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -51,7 +52,7 @@ namespace BioTemplate.Pages
             
                 prms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
                 prms[1] = new SqlParameter("@kd_kas", SqlDbType.VarChar, 50);
-                prms[2] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+                prms[2] = new SqlParameter("@ENDDA", SqlDbType.DateTime);
                 prms[0].Value = Kas.Text;
                 prms[1].Value = kd_kas.Text;
                 prms[2].Value = dateMax;
@@ -90,7 +91,8 @@ namespace BioTemplate.Pages
         {
             int id = Convert.ToInt32(gvBioCash.DataKeys[e.RowIndex].Value.ToString());
             con.Open();
-            SqlCommand cmd = new SqlCommand("UPDATE biocash.Masterkas SET ENDDA=@ENDDA WHERE id='" + id + "'", con);
+            SqlCommand cmd = new SqlCommand("UPDATE biocash.Masterkas SET ENDDA=@ENDDA WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@ENDDA",DateTime.Now);
             cmd.ExecuteNonQuery();
             con.Close();

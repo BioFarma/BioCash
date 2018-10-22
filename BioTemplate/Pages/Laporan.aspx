@@ -30,7 +30,7 @@
             <nav class="navbar-default navbar-static-side " role="navigation">
                 <div class="sidebar-collapse" id="sideMenu" runat="server">
                     <ul class="nav metismenu sidebar-nav" runat="server">
-                        <li class="sidebar-brand">
+                        <li class="sidebar-brand" style="color:white;">
                             <a href="Default.aspx" >BioFarma</a>
                         </li>    
                         <li>
@@ -39,9 +39,14 @@
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
                         </li>
-                        <li>
-                            <a href="Pengeluaran.aspx">Pengeluaran</a>
-                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pengeluaran <span class="caret"></span></a>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li style="color:whitesmoke;">===============================</li>
+                                  <li style="color:whitesmoke;"><a href="Pengeluaran.aspx">Semua</a></li>
+                                <li style="color:whitesmoke;"><a href="Jasa.aspx">Jasa</a></li>
+                              </ul>
+                            </li>
                         <li>
                             <a href="Laporan.aspx">Laporan</a>
                         </li>
@@ -164,45 +169,45 @@
                                          <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="TANGGAL">
+                                <asp:TemplateField HeaderText="Tanggal">
                                     <ItemTemplate>
-                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KETERANGAN">
+                                <asp:TemplateField HeaderText="Keterangan">
                                     <ItemTemplate>
-                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="SATUAN">
+                                <asp:TemplateField HeaderText="Satuan">
                                     <ItemTemplate>
-                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="BAGIAN">
+                                <asp:TemplateField HeaderText="Bagian">
                                     <ItemTemplate>
-                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JUMLAH">
+                                <asp:TemplateField HeaderText="Total">
                                     <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="VENDOR">
+                                 <asp:TemplateField HeaderText="Vendor">
                                     <ItemTemplate>
-                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JASA">
+                                <asp:TemplateField HeaderText="Jasa">
                                     <ItemTemplate>
-                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
                             <EmptyDataRowStyle HorizontalAlign="Center" />
                             <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
-                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
                     </div>

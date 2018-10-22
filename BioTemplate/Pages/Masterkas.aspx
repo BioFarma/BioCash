@@ -29,7 +29,7 @@
             <nav class="navbar-default navbar-static-side " role="navigation">
                 <div class="sidebar-collapse" id="sideMenu" runat="server">
                     <ul class="nav metismenu sidebar-nav" runat="server">
-                        <li class="sidebar-brand">
+                        <li class="sidebar-brand" style="color:white;">
                             <a href="Default.aspx" >BioFarma</a>
                         </li>    
                         <li>
@@ -38,9 +38,14 @@
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
                         </li>
-                        <li>
-                            <a href="Pengeluaran.aspx">Pengeluaran</a>
-                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pengeluaran <span class="caret"></span></a>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li style="color:whitesmoke;">===============================</li>
+                                  <li style="color:whitesmoke;"><a href="Pengeluaran.aspx">Semua</a></li>
+                                <li style="color:whitesmoke;"><a href="Jasa.aspx">Jasa</a></li>
+                              </ul>
+                            </li>
                          <li>
                             <a href="Laporan.aspx">Laporan</a>
                         </li>
@@ -235,39 +240,39 @@
                     <br />
                         <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
                             <Columns>
-                                <asp:TemplateField HeaderText="KD_KAS" Visible="false">
+                                <asp:TemplateField Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="Idkaslabel" runat="server" Text='<%# Eval("id") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KD_KAS">
+                                <asp:TemplateField HeaderText="Kode">
                                     <ItemTemplate>
-                                        <asp:Label ID="Kdkaslabel" runat="server" Text='<%# Eval("kd_kas") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="Kdkaslabel" runat="server" Text='<%# Eval("kd_kas") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KAS">
+                                <asp:TemplateField HeaderText="Kas">
                                     <ItemTemplate>
-                                        <asp:Label ID="Kaslabel" runat="server" Text='<%# Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="Kaslabel" runat="server" Text='<%# Eval("Kas") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="PLAFOND">
+                                <asp:TemplateField HeaderText="Plafond">
                                     <ItemTemplate>
-                                        <asp:Label ID="plafondlabel" runat="server" Text='<%# Eval("plafond") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="plafondlabel" runat="server" Text='<%# Eval("plafond") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="NOMOR SK">
+                                <asp:TemplateField HeaderText="Nomor Surat">
                                     <ItemTemplate>
-                                        <asp:Label ID="nosklabel" runat="server" Text='<%# Eval("nosk") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="nosklabel" runat="server" Text='<%# Eval("nosk") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="AKSI">
+                                <asp:TemplateField HeaderText="aksi">
                                     <ItemTemplate>     
                                         <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
                                         <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" />
                             <RowStyle ForeColor="Black"/>
                         </asp:GridView>
                     </div>

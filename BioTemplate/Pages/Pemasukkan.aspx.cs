@@ -20,7 +20,7 @@ namespace BioTemplate.Pages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            con.ConnectionString = "Data Source=LAPTOP-LUGIMV8T;Initial Catalog=BioCash;User ID=sa;Password=@Gtabp1000";
+            con.ConnectionString = "Data Source=MSI;Initial Catalog=BioCash;Persist Security Info=True;User ID=sa;Password=@Gtabp1000";
 
             if (!IsPostBack)
             {
@@ -42,12 +42,15 @@ namespace BioTemplate.Pages
         {
             int vsaldo = 0;
 
-            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='"+DateTime.Now+"' WHERE saldo='"+vsaldo.ToString()+"'", con);
+            SqlCommand ucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA WHERE saldo=@saldo", con);
+            ucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+            ucmd.Parameters.AddWithValue("@saldo", vsaldo.ToString());
             con.Open();
             ucmd.ExecuteNonQuery();
             con.Close();
 
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Saldo WHERE ENDDA='" + dateMax + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Saldo WHERE ENDDA=@ENDDA", con);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -61,7 +64,8 @@ namespace BioTemplate.Pages
 
         protected void dlkas()
         {
-            SqlCommand cmd = new SqlCommand("SELECT Kas FROM biocash.Masterkas WHERE ENDDA='"+dateMax+"'", con); // table name 
+            SqlCommand cmd = new SqlCommand("SELECT Kas FROM biocash.Masterkas WHERE ENDDA=@ENDDA", con); // table name 
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             sda.Fill(ds);  // fill dataset
@@ -78,8 +82,9 @@ namespace BioTemplate.Pages
         protected void kasdl_SelectedIndexChanged(object sender, EventArgs e)
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT plafond FROM biocash.Masterkas WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "'", con);
-
+            SqlCommand cmd = new SqlCommand("SELECT plafond FROM biocash.Masterkas WHERE ENDDA=@ENDDA AND Kas=@Kas", con);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+            cmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
             SqlDataReader myReader = cmd.ExecuteReader();
             while (myReader.Read())
             {
@@ -93,7 +98,8 @@ namespace BioTemplate.Pages
         protected void gvbind()
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pemasukkan WHERE ENDDA='"+dateMax+"'", con);
+            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pemasukkan WHERE ENDDA=@ENDDA", con);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -113,7 +119,7 @@ namespace BioTemplate.Pages
             SqlParameter[] cprms = new SqlParameter[3];
 
             cprms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
-            cprms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+            cprms[1] = new SqlParameter("@ENDDA", SqlDbType.DateTime, 50);
             cprms[2] = new SqlParameter("@saldo", SqlDbType.VarChar, 50);
             cprms[0].Value = kasdl.Text;
             cprms[1].Value = dateMax;
@@ -124,7 +130,9 @@ namespace BioTemplate.Pages
             con.Close();
             if (saldomin != null)
             {
-                SqlCommand salcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND saldo < 0", con);
+                SqlCommand salcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND saldo < 0", con);
+                salcmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                salcmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
                 con.Open();
                 SqlDataReader mysalReader = salcmd.ExecuteReader();
                 while (mysalReader.Read())
@@ -137,11 +145,10 @@ namespace BioTemplate.Pages
                 if (Convert.ToInt32(jsaldo.Text) >= 0)
                 {
                     SqlCommand selectcmd = new SqlCommand("SELECT *FROM biocash.pemasukkan WHERE Kas=@Kas AND ENDDA=@ENDDA AND thn_periode=@thn_periode", con);
-
                     SqlParameter[] prms = new SqlParameter[3];
 
                     prms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
-                    prms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+                    prms[1] = new SqlParameter("@ENDDA", SqlDbType.DateTime, 50);
                     prms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
                     prms[0].Value = kasdl.SelectedItem.Value;
                     prms[1].Value = dateMax;
@@ -151,8 +158,10 @@ namespace BioTemplate.Pages
                     object obj = selectcmd.ExecuteScalar();
                     if (obj != null)
                     {
-                        SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "'", con);
-
+                        SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode", con);
+                        cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                        cmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                        cmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
                         SqlDataReader myReader = cmd.ExecuteReader();
                         while (myReader.Read())
                         {
@@ -170,7 +179,7 @@ namespace BioTemplate.Pages
 
                         SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
                         SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                        SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "' ", con);
+                        SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@KAS AND thn_periode=@thn_periode", con);
 
                         icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                         icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
@@ -187,6 +196,9 @@ namespace BioTemplate.Pages
                         iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                         iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+                        iucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+                        iucmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                        iucmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
                         iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                         iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                         con.Open();
@@ -247,7 +259,7 @@ namespace BioTemplate.Pages
                 SqlParameter[] prms = new SqlParameter[3];
 
                 prms[0] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
-                prms[1] = new SqlParameter("@ENDDA", SqlDbType.VarChar, 50);
+                prms[1] = new SqlParameter("@ENDDA", SqlDbType.DateTime, 50);
                 prms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
                 prms[0].Value = kasdl.Text;
                 prms[1].Value = dateMax;
@@ -257,8 +269,10 @@ namespace BioTemplate.Pages
                 object obj = selectcmd.ExecuteScalar();
                 if (obj != null)
                 {
-                    SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "'", con);
-
+                    SqlCommand cmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode", con);
+                    cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                    cmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                    cmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
                     SqlDataReader myReader = cmd.ExecuteReader();
                     while (myReader.Read())
                     {
@@ -276,7 +290,7 @@ namespace BioTemplate.Pages
 
                     SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
                     SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                    SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "' ", con);
+                    SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode ", con);
 
                     icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                     icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
@@ -293,6 +307,9 @@ namespace BioTemplate.Pages
                     iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                     iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+                    iucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+                    iucmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+                    iucmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
                     iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                     iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                     con.Open();
@@ -341,7 +358,9 @@ namespace BioTemplate.Pages
 
         protected void confirmpop_Click(object sender, EventArgs e)
         {
-            SqlCommand ccmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND saldo < 0", con);
+            SqlCommand ccmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND saldo < 0", con);
+            ccmd.Parameters.AddWithValue("@ENDDA", dateMax);
+            ccmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
             con.Open();
             SqlDataReader myCReader = ccmd.ExecuteReader();
             while (myCReader.Read())
@@ -358,8 +377,8 @@ namespace BioTemplate.Pages
 
             SqlCommand icmd = new SqlCommand("INSERT INTO biocash.pemasukkan" + "(BEGDA,Kas,tgl_masuk,thn_periode,jmlh_masuk,change_date,ENDDA)values(@BEGDA,@Kas,@tgl_masuk,@thn_periode,@jmlh_masuk,@change_date,@ENDDA)", con);
             SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-            SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='" + periode_masuk.Text + "' ", con);
-            SqlCommand iuscmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA='" +DateTime.Now+ "', change_date='"+DateTime.Now+"' WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND saldo < 0", con);
+            SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode ", con);
+            SqlCommand iuscmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND saldo < 0", con);
 
             icmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
             icmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
@@ -376,8 +395,17 @@ namespace BioTemplate.Pages
             iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+            iucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+            iucmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+            iucmd.Parameters.AddWithValue("@thn_periode", periode_masuk.Text);
             iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
             iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+
+            iuscmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+            iuscmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
+            iuscmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+            iuscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+
             con.Open();
             iucmd.ExecuteNonQuery();
             iuscmd.ExecuteNonQuery();
@@ -407,7 +435,10 @@ namespace BioTemplate.Pages
 
         protected void update_Click(object sender, EventArgs e)
         {
-            SqlCommand sscmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdl.SelectedItem.Value + "' AND thn_periode='"+thnmasukedit.Text+"'", con);
+            SqlCommand sscmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode", con);
+            sscmd.Parameters.AddWithValue("@ENDDA", dateMax);
+            sscmd.Parameters.AddWithValue("@Kas", kasdledit.SelectedItem.Value);
+            sscmd.Parameters.AddWithValue("@thn_periode", thnmasukedit.Text);
             con.Open();
             SqlDataReader myReader = sscmd.ExecuteReader();
             while (myReader.Read())
@@ -431,7 +462,7 @@ namespace BioTemplate.Pages
             SqlCommand ucmd = new SqlCommand("UPDATE biocash.pemasukkan SET ENDDA=@ENDDA, change_date=@change_date WHERE id=@id ", con);
 
             SqlCommand scmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-            SqlCommand sucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdledit.SelectedItem.Value + "' AND thn_periode='"+thnmasukedit.Text+"' ", con);
+            SqlCommand sucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode ", con);
      
             cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
             cmd.Parameters.AddWithValue("@Kas", kasdledit.SelectedItem.Value);
@@ -452,6 +483,9 @@ namespace BioTemplate.Pages
             scmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             scmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+            sucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+            sucmd.Parameters.AddWithValue("@Kas", kasdledit.SelectedItem.Value);
+            sucmd.Parameters.AddWithValue("@thn_periode", thnmasukedit.Text);
             sucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
             sucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
             con.Open();
@@ -474,7 +508,8 @@ namespace BioTemplate.Pages
             int id = Convert.ToInt32(gvBioCash.DataKeys[e.RowIndex].Value.ToString());
 
             con.Open();
-            SqlCommand scmd = new SqlCommand("SELECT Kas,jmlh_masuk,thn_periode FROM biocash.pemasukkan WHERE id='" + id + "'", con);
+            SqlCommand scmd = new SqlCommand("SELECT Kas,jmlh_masuk,thn_periode FROM biocash.pemasukkan WHERE id=@id", con);
+            scmd.Parameters.AddWithValue("@id", id);
             SqlDataReader myReader = scmd.ExecuteReader();
             while (myReader.Read())
             {
@@ -488,7 +523,10 @@ namespace BioTemplate.Pages
             con.Close();
 
             con.Open();
-            SqlCommand delcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdel.Text + "' AND thn_periode='"+thnperiode.Text+"'", con);
+            SqlCommand delcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode", con);
+            delcmd.Parameters.AddWithValue("@ENDDA", dateMax);
+            delcmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+            delcmd.Parameters.AddWithValue("@thn_periode", thnperiode.Text);
             SqlDataReader delReader = delcmd.ExecuteReader();
             while (delReader.Read())
             {
@@ -512,9 +550,9 @@ namespace BioTemplate.Pages
             {
                 totdelsaldo.Text = deletesaldo.ToString();
 
-                SqlCommand cmd = new SqlCommand("UPDATE biocash.pemasukkan SET ENDDA=@ENDDA WHERE id='" + id + "'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE biocash.pemasukkan SET ENDDA=@ENDDA WHERE id=@id", con);
                 SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdel.Text + "' AND thn_periode='" + thnperiode.Text + "'", con);
+                SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode", con);
 
                 iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                 iscmd.Parameters.AddWithValue("@Kas", kasdel.Text);
@@ -523,9 +561,13 @@ namespace BioTemplate.Pages
                 iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                 iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+                iucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+                iucmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+                iucmd.Parameters.AddWithValue("@thn_periode", thnperiode.Text);
                 iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                 iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
 
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                 con.Open();
                 iucmd.ExecuteNonQuery();
@@ -543,7 +585,9 @@ namespace BioTemplate.Pages
         protected void delete_Click(object sender, EventArgs e)
         {
             con.Open();
-            SqlCommand scmd = new SqlCommand("SELECT Kas,jmlh_masuk,thn_periode FROM biocash.pemasukkan WHERE id='" + id.Text + "'", con);
+            SqlCommand scmd = new SqlCommand("SELECT Kas,jmlh_masuk,thn_periode FROM biocash.pemasukkan WHERE id=@id", con);
+            cmd.Parameters.AddWithValue("@id", id.Text);
+
             SqlDataReader myReader = scmd.ExecuteReader();
             while (myReader.Read())
             {
@@ -557,7 +601,10 @@ namespace BioTemplate.Pages
             con.Close();
 
             con.Open();
-            SqlCommand delcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdel.Text + "' AND thn_periode='"+thnperiode.Text+"'", con);
+            SqlCommand delcmd = new SqlCommand("SELECT saldo FROM biocash.Saldo WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode", con);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
+            cmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+            cmd.Parameters.AddWithValue("@thn_periode", thnperiode.Text);
             SqlDataReader delReader = delcmd.ExecuteReader();
             while (delReader.Read())
             {
@@ -581,9 +628,9 @@ namespace BioTemplate.Pages
             {
                 totdelsaldo.Text = deletesaldo.ToString();
 
-                SqlCommand cmd = new SqlCommand("UPDATE biocash.pemasukkan SET ENDDA=@ENDDA WHERE id='" + id.Text + "'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE biocash.pemasukkan SET ENDDA=@ENDDA WHERE id=@id", con);
                 SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA='" + dateMax + "' AND Kas='" + kasdel.Text + "' AND thn_periode='" + thnperiode.Text + "'", con);
+                SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode", con);
 
                 iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                 iscmd.Parameters.AddWithValue("@Kas", kasdel.Text);
@@ -592,9 +639,13 @@ namespace BioTemplate.Pages
                 iscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                 iscmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+                iucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+                iucmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+                iucmd.Parameters.AddWithValue("@thn_periode", thnperiode.Text);
                 iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                 iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
 
+                cmd.Parameters.AddWithValue("@id", id.Text);
                 cmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                 con.Open();
                 iucmd.ExecuteNonQuery();

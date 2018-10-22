@@ -1,5 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="BioTemplate.Master.cs" Inherits="BioTemplate.MasterPages.BioProMaster" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Jasa.aspx.cs" Inherits="BioTemplate.Pages.Jasa" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,8 +21,6 @@
     <link href="../CSS/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
-    <asp:ContentPlaceHolder ID="cpHead" runat="server">
-    </asp:ContentPlaceHolder>
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
@@ -49,7 +46,7 @@
                                 <li style="color:whitesmoke;"><a href="Jasa.aspx">Jasa</a></li>
                               </ul>
                             </li>
-                        <li>
+                         <li>
                             <a href="Laporan.aspx">Laporan</a>
                         </li>
                     </ul>
@@ -162,11 +159,157 @@
 
                     </nav>
                 </div>
-                <asp:ContentPlaceHolder ID="cpPageHeader" runat="server"></asp:ContentPlaceHolder>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <asp:ContentPlaceHolder ID="cpMain" runat="server">
-                    </asp:ContentPlaceHolder>
-                </div>
+                    <h1>Penegluaran Jasa</h1>
+                    <br />
+                    
+                    <%-- FORM EDIT MODAL --%>
+                    <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title" id="exampleModalCenterTitle">Edit Pengeluaran</h2>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
+                                  
+                                  <label><h3>Kas</h3></label>
+                                  <asp:DropDownList ID="kasDledit" runat="server" CssClass="form-control" Enabled="false"/>
+
+                                  <br />
+                                  <label><h3>Periode</h3></label>
+                                  <asp:TextBox ID="periodeDledit" runat="server" CssClass="form-control" onkeydown="return false;" ></asp:TextBox>
+                                  <hr class="styled" />
+
+                                  <br />
+                                  <label><h3>Satuan</h3></label>
+                                  <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Pph</h3></label>
+                                  <asp:TextBox ID="pphedit" runat="server" CssClass="form-control" placeholder="Rp,-" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Total harga</h3></label>
+                                  <asp:TextBox ID="jmlhkeluaredit" runat="server" CssClass="form-control" onkeydown="return false;"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Keperluan</h3></label>
+                                  <textarea ID="keteranganedit" runat="server" class="form-control" rows="5"></textarea>
+
+                                  <br />
+                                  <label><h3>Tanggal Pengeluaran</h3></label>
+                                  <div class="input-group date" id="datepicker" data-provide="datepicker">
+                                      <asp:TextBox ID="tgledit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
+                                      <div class="input-group-addon">
+                                           <span class="glyphicon glyphicon-th"></span>
+                                      </div>
+                                  </div>
+
+                                  <br />
+                                  <label><h3>Plih bagian</h3></label>
+                                  <asp:DropDownList ID="bagianDledit" runat="server" CssClass="form-control"/>
+
+                                  <br />
+                                  <label><h3>Vendor</h3></label>
+                                  <asp:TextBox ID="vendoredit" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                  <br />
+                                  <label for="radioya"><h3>Jasa : </h3></label>
+                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" />
+                                  <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa"/>
+                                  
+                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                  <asp:LinkButton ID="update" runat="server" OnClientClick="return dataValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
+                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <br />
+                    <%-- AKHIR FORM EDIT MODAL --%>
+                    <br />
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                            <Columns>
+                                <asp:TemplateField Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No">
+                                    <ItemTemplate>
+                                         <%#Container.DataItemIndex+1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="TANGGAL">
+                                    <ItemTemplate>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KAS">
+                                    <ItemTemplate>
+                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="BAGIAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="PERIODE">
+                                    <ItemTemplate>
+                                        <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Total">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="pph">
+                                    <ItemTemplate>
+                                        <asp:Label ID="pphlabel" runat="server" Text='<%#Eval("pph") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="KEPERLUAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <asp:TemplateField HeaderText="VENDOR">
+                                    <ItemTemplate>
+                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <asp:TemplateField HeaderText="SATUAN">
+                                    <ItemTemplate>
+                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="JASA">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="AKSI">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
+                            <RowStyle ForeColor="Black"/>
+                        </asp:GridView>
+                    </div>
                 <div class="footer">
                     <div>
                         <strong>Copyright</strong> &copy; 2016 PT Bio Farma (Persero)
@@ -174,7 +317,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Mainly scripts -->
         <script src='<%: ResolveClientUrl("~/JS/jquery-2.1.1.js") %>'></script>
@@ -354,6 +496,94 @@
         </div>
         <script>
             // Config box
+
+            //Open Modal
+            function openModalEdit() {
+                    $('[id*=formedit]').modal('show');
+            }
+
+            //Validation isEmpty
+            function dataValidEdit() {    
+                var jmlh_keluaredit = document.getElementById("jmlhkeluaredit").value;
+                var keperluanedit = document.getElementById("keteranganedit").value;
+                var tgledit = document.getElementById("tgledit").value;
+                var bagianDledit = document.getElementById("bagianDledit").value;
+                var vendoredit = document.getElementById("vendoredit").value;
+                var satuanedit = document.getElementById("satuanedit").value;
+                var pphedit = document.getElementById("pphedit").value;
+
+                
+                if (satuanedit == '')    
+                {    
+                alert("Satuan harus diisi");    
+                return false;    
+                }
+
+                if (jmlh_keluaredit == '')    
+                {    
+                alert("Masukkan jumlah keluar");    
+                return false;    
+                }
+
+                if (pphedit == '')    
+                {    
+                alert("Masukkan Pph");    
+                return false;    
+                }
+
+                if (keperluanedit == '')    
+                {    
+                alert("Keperluan harus diisi");    
+                return false;    
+                }
+
+                if (tgledit == '')    
+                {    
+                alert("Tanggal harus dipilih");    
+                return false;    
+                }
+
+                if (bagianDledit == '--Pilih bagian--')    
+                {    
+                alert("Bagian harus dipilih");    
+                return false;    
+                }
+
+                if (vendoredit == '')    
+                {    
+                alert("Vendor harus diisi");    
+                return false;    
+                }
+
+                if (!document.getElementById("<%=radioyaedit.ClientID %>").checked && !document.getElementById("<%=radiotidakedit.ClientID %>").checked)    
+                {    
+                alert("Jasa harus dipilih");    
+                return false;    
+                }
+
+            }    
+
+            //Gridview Bootstrap
+            $(function () {
+                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                    "responsive": true,
+                    "sPaginationType": "full_numbers"
+                });
+            });
+
+            //date picker
+                $("#datepicker").datepicker( {
+                    
+                    autoclose: true
+                });
+
+            //year picker
+                $("#yearpicker").datepicker( {
+                    format: "yyyy",
+                    viewMode: "years", 
+                    minViewMode: "years",
+                    autoclose: true
+                });
 
             // Enable/disable fixed top navbar
             $('#fixednavbar').click(function () {
@@ -590,8 +820,7 @@
                 }
             }
         </script>
-        <asp:ContentPlaceHolder ID="cpScriptLibContent" runat="server"></asp:ContentPlaceHolder>
-        <asp:ContentPlaceHolder ID="cpScriptContent" runat="server"></asp:ContentPlaceHolder>
     </form>
 </body>
 </html>
+

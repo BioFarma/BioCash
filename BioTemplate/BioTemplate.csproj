@@ -842,6 +842,7 @@
     <Content Include="JS\TableScript\data-tables\images\sort_desc.png" />
     <Content Include="JS\TableScript\data-tables\jquery.dataTables.js" />
     <Content Include="Pages\Default.aspx" />
+    <Content Include="Pages\Jasa.aspx" />
     <Content Include="Pages\Laporan.aspx" />
     <Content Include="Pages\Masterkas.aspx" />
     <Content Include="Pages\Pemasukkan.aspx" />
@@ -896,6 +897,13 @@
     </Compile>
     <Compile Include="Pages\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Jasa.aspx.cs">
+      <DependentUpon>Jasa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Jasa.aspx.designer.cs">
+      <DependentUpon>Jasa.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Laporan.aspx.cs">
       <DependentUpon>Laporan.aspx</DependentUpon>

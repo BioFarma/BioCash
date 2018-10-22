@@ -16,14 +16,15 @@ namespace BioTemplate.Pages
         DateTime dateMax = new DateTime(9999, 12, 31, 00, 00, 00);
         protected void Page_Load(object sender, EventArgs e)
         {
-            con.ConnectionString = "Data Source=LAPTOP-LUGIMV8T;Initial Catalog=BioCash;User ID=sa;Password=@Gtabp1000";
+            con.ConnectionString = "Data Source=MSI;Initial Catalog=BioCash;Persist Security Info=True;User ID=sa;Password=@Gtabp1000";
             gvbind();
         }
 
         protected void gvbind()
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA='" + dateMax + "'", con);
+            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA", con);
+            cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             //SqlCommand cmd = new SqlCommand("SELECT biocash.pemasukkan.id , biocash.pemasukkan.tgl_masuk, biocash.pemasukkan.thn_periode, biocash.pemasukkan.Unit, biocash.pemasukkan.jmlh_masuk FROM biocash.pemasukkan INNER JOIN biocash.Saldo ON biocash.pemasukkan.Unit=biocash.Saldo.Unit WHERE biocash.pemasukkan.ENDDA='"+dateMax+"' AND biocash.pemasukkan.Unit=biocash.Saldo.Unit", con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();

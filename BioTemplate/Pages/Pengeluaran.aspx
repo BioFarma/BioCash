@@ -38,9 +38,14 @@
                         <li>
                             <a href="Pemasukkan.aspx">Pemasukkan</a>
                         </li>
-                        <li>
-                            <a href="Pengeluaran.aspx">Pengeluaran</a>
-                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pengeluaran <span class="caret"></span></a>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li style="color:whitesmoke;">===============================</li>
+                                  <li style="color:whitesmoke;"><a href="Pengeluaran.aspx">Semua</a></li>
+                                <li style="color:whitesmoke;"><a href="Jasa.aspx">Jasa</a></li>
+                              </ul>
+                            </li>
                         <li>
                             <a href="Laporan.aspx">Laporan</a>
                         </li>
@@ -102,8 +107,6 @@
                                                 </div>
                                             </FooterTemplate>
                                         </asp:Repeater>
-                                        
-
                                     </ul>
                                 </li>
                             </li>
@@ -167,7 +170,7 @@
                               <asp:Label ID="warning2" runat="server" CssClass="h4"></asp:Label>
                           </div>
                           <div class="modal-footer">
-                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Tetap beban hutang</asp:LinkButton>
+                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Menjadi kredit</asp:LinkButton>
                                   <asp:LinkButton ID="confirmpop" runat="server" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Tambah pemasukkan</asp:LinkButton>
                           </div>
                         </div>
@@ -183,8 +186,25 @@
                               <asp:Label ID="Label2" runat="server" CssClass="h4"></asp:Label>
                           </div>
                           <div class="modal-footer">
-                                  <asp:LinkButton ID="btnhutang" runat="server" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Tetap beban hutang</asp:LinkButton>
+                                  <asp:LinkButton ID="btnhutang" runat="server" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Menjadi kredit</asp:LinkButton>
                                   <asp:LinkButton ID="btnperiode" runat="server" OnClick="btnperiode_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal fade" id="updatemin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                              <asp:Label ID="updatelabel1" runat="server" CssClass="h4"></asp:Label>
+                              <br />
+                              <br />
+                              <asp:Label ID="updatelabel2" runat="server" CssClass="h4"></asp:Label>
+                          </div>
+                          <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                  <asp:LinkButton ID="updateminus" OnClick="updateminus_Click" runat="server" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
                           </div>
                         </div>
                       </div>
@@ -213,12 +233,25 @@
                                 <h2 class="modal-title" id="inputpengeluaran">Tambah Data Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
+                                  
                                   <label><h3>Plih Kas</h3></label>
                                   <asp:DropDownList ID="kasDl" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="kasDl_SelectedIndexChanged"/>
+                                   
+                                  <br />
+                                  <label><h3>Satuan</h3></label>
+                                  <asp:TextBox ID="satuan" runat="server" CssClass="form-control"></asp:TextBox>
+                                  
+                                  <br />
+                                  <label><h3>Harga / pcs</h3></label>
+                                  <asp:TextBox ID="harga" runat="server" CssClass="form-control" placeholder="Rp" onblur= "multiply()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
                                   <br />
-                                  <label><h3>Jumlah Uang</h3></label>
-                                  <asp:TextBox ID="jmlhkeluar"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+                                  <label><h3>Quantity</h3></label>
+                                  <asp:TextBox ID="quantity" runat="server" CssClass="form-control" onblur= "multiply()"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Total harga</h3></label>
+                                  <asp:TextBox ID="jmlhkeluar" runat="server" CssClass="form-control" onkeydown="return false;"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Keperluan</h3></label>
@@ -243,10 +276,6 @@
                                   <br />
                                   <label><h3>Vendor</h3></label>
                                   <asp:TextBox ID="vendor" runat="server" CssClass="form-control"></asp:TextBox>
-
-                                  <br />
-                                  <label><h3>Satuan</h3></label>
-                                  <asp:TextBox ID="satuan" runat="server" CssClass="form-control"></asp:TextBox>
 
                                   <br />
                                   <label for="radioya"><h3>Jasa : </h3></label>
@@ -281,9 +310,22 @@
                                   <label><h3>Periode</h3></label>
                                   <asp:TextBox ID="periodeDledit" runat="server" CssClass="form-control" onkeydown="return false;" ></asp:TextBox>
                                   <hr class="styled" />
+
                                   <br />
-                                  <label><h3>Jumlah Uang</h3></label>
-                                  <asp:TextBox ID="jmlhkeluaredit"  runat="server" CssClass="form-control" placeholder="Rp" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+                                  <label><h3>Satuan</h3></label>
+                                  <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Harga / pcs</h3></label>
+                                  <asp:TextBox ID="hargaedit"  runat="server" CssClass="form-control" placeholder="Rp" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+
+                                  <br />
+                                  <label><h3>Quantity</h3></label>
+                                  <asp:TextBox ID="quantityedit" runat="server" CssClass="form-control" onblur= "multiplyEdit()"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Total harga</h3></label>
+                                  <asp:TextBox ID="jmlhkeluaredit" runat="server" CssClass="form-control" onkeydown="return false;"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Keperluan</h3></label>
@@ -305,10 +347,6 @@
                                   <br />
                                   <label><h3>Vendor</h3></label>
                                   <asp:TextBox ID="vendoredit" runat="server" CssClass="form-control"></asp:TextBox>
-
-                                  <br />
-                                  <label><h3>Satuan</h3></label>
-                                  <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control"></asp:TextBox>
 
                                   <br />
                                   <label for="radioya"><h3>Jasa : </h3></label>
@@ -334,7 +372,7 @@
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
-                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="idkeluarlabel" runat="server" Text='<%#Eval("id") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="No">
@@ -342,52 +380,62 @@
                                          <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="TANGGAL">
+                                <asp:TemplateField HeaderText="Tanggal">
                                     <ItemTemplate>
-                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KAS">
+                                <asp:TemplateField HeaderText="Kas">
                                     <ItemTemplate>
-                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="BAGIAN">
+                                <asp:TemplateField HeaderText="Bagian">
                                     <ItemTemplate>
-                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="PERIODE">
+                                <asp:TemplateField HeaderText="Periode">
                                     <ItemTemplate>
-                                        <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JUMLAH">
+                                <asp:TemplateField HeaderText="Harga">
                                     <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="hargalabel" runat="server" Text='<%#Eval("harga") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KEPERLUAN">
+                                <asp:TemplateField HeaderText="QTY">
                                     <ItemTemplate>
-                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="quantitylabel" runat="server" Text='<%#Eval("unit") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="VENDOR">
+                                <asp:TemplateField HeaderText="Total">
                                     <ItemTemplate>
-                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="SATUAN">
+                                <asp:TemplateField HeaderText="Keperluan">
                                     <ItemTemplate>
-                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JASA">
+                                 <asp:TemplateField HeaderText="Vendor">
                                     <ItemTemplate>
-                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' Font-Size="Medium"></asp:Label>
+                                        <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="AKSI">
+                                 <asp:TemplateField HeaderText="Satuan">
+                                    <ItemTemplate>
+                                        <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Jasa">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Aksi">
                                     <ItemTemplate>
                                         <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
                                         <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
@@ -424,7 +472,7 @@
                                                     <asp:Label ID="Kas" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="SALDO">
+                                            <asp:TemplateField HeaderText="Saldo">
                                                 <ItemTemplate>
                                                     <asp:Label ID="Saldo" runat="server" Text='<%#Eval("Saldo") %>' Font-Size="Medium"></asp:Label>
                                                 </ItemTemplate>
@@ -627,7 +675,12 @@
             </div>
         </div>
         <script>
-            // Config box
+            // Config 
+
+            //Open Modal
+            function openModalUpdateMin() {
+                    $('[id*=updatemin]').modal('show');
+            }
 
             //Open Modal
             function openModalConfirmPeriode() {
@@ -640,6 +693,28 @@
             }
 
             //Open Modal
+            function multiplyEdit()
+                        {
+
+                            var txt1 = document.getElementById("hargaedit").value;
+                            var txt2 = document.getElementById("quantityedit").value;
+
+                                    var total = txt1 * txt2;
+                                    document.getElementById("jmlhkeluaredit").value = total;
+
+                        }
+
+            function multiply()
+                        {
+
+                            var txt1 = document.getElementById("harga").value;
+                            var txt2 = document.getElementById("quantity").value;
+
+                                    var total = txt1 * txt2;
+                                    document.getElementById("jmlhkeluar").value = total;
+
+                        }
+
             function openModalInput() {
                     $('[id*=forminput]').modal('show');
             }
@@ -651,16 +726,37 @@
 
             //Validation isEmpty
             function dataValidEdit() {    
-                var jmlh_keluaredit = document.getElementById("jmlhkeluaredit").value;
+                var jmlhkeluaredit = document.getElementById("jmlhkeluaredit").value;
                 var keperluanedit = document.getElementById("keteranganedit").value;
                 var tgledit = document.getElementById("tgledit").value;
                 var bagianDledit = document.getElementById("bagianDledit").value;
                 var vendoredit = document.getElementById("vendoredit").value;
                 var satuanedit = document.getElementById("satuanedit").value;
+                var quantityedit = document.getElementById("quantityedit").value;
+                var totalhargaedit = document.getElementById("totalhargaedit").value;
 
-                if (jmlh_keluaredit == '')    
+                
+                if (satuanedit == '')    
+                {    
+                alert("Satuan harus diisi");    
+                return false;    
+                }
+
+                if (jmlhkeluaredit == '')    
                 {    
                 alert("Masukkan jumlah keluar");    
+                return false;    
+                }
+
+                if (quantityedit == '')    
+                {    
+                alert("Masukkan quantity");    
+                return false;    
+                }
+
+                if (totalhargaedit == '')    
+                {    
+                alert("Hitung total harga");    
                 return false;    
                 }
 
@@ -688,18 +784,11 @@
                 return false;    
                 }
 
-                if (satuanedit == '')    
-                {    
-                alert("Satuan harus diisi");    
-                return false;    
-                }
-
-                if (!document.getElementById("<%=radioyaedit.ClientID %>").checked && !document.getElementById("<%=radiotidakedit.ClientID %>").checked)    
+                if (!document.getElementById("<%= radioyaedit.ClientID %>").checked && !document.getElementById("<%= radiotidakedit.ClientID %>").checked)    
                 {    
                 alert("Jasa harus dipilih");    
                 return false;    
                 }
-
             }    
             
             //Validation isEmpty
@@ -712,6 +801,8 @@
                 var bagianDl = document.getElementById("bagianDl").value;
                 var vendor = document.getElementById("vendor").value;
                 var satuan = document.getElementById("satuan").value;
+                var quantity = document.getElementById("quantity").value;
+                var totalharga = document.getElementById("totalharga").value;
 
                 if (kasDl == '--Pilih kas--')    
                 {    
@@ -719,11 +810,29 @@
                 return false;    
                 }
 
+                if (satuan == '')    
+                {    
+                alert("Satuan harus diisi");    
+                return false;    
+                }
+
                 if (jmlh_keluar == '')    
                 {    
                 alert("Masukkan jumlah keluar");    
                 return false;    
-                }    
+                }  
+
+                if (quantity == '')    
+                {    
+                alert("Masukkan quantity");    
+                return false;    
+                }  
+
+                if (totalharga == '')    
+                {    
+                alert("Hitung total harga");    
+                return false;    
+                }  
 
                 if (keperluan == '')    
                 {    
@@ -752,12 +861,6 @@
                 if (vendor == '')    
                 {    
                 alert("Vendor harus diisi");    
-                return false;    
-                }
-
-                if (satuan == '')    
-                {    
-                alert("Satuan harus diisi");    
                 return false;    
                 }
 
