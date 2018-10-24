@@ -209,19 +209,36 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="modal fade" id="updateperiode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                              <asp:Label ID="updatelabel3" runat="server" CssClass="h4"></asp:Label>
+                              <br />
+                              <br />
+                              <asp:Label ID="updatelabel4" runat="server" CssClass="h4"></asp:Label>
+                          </div>
+                          <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                  <asp:LinkButton ID="updateperiode" OnClick="updateperiode_Click" runat="server" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
                                   <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
 
                     <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
                                   <i class="fa fa-pencil"></i> Lihat Saldo</button>
 
-                                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"/>
-                                    <asp:TextBox ID="jsaldo" runat="server" Visible="false"/>
+                                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false" placeholder="jmlhsaldo"/>
+                                    <asp:TextBox ID="jsaldo" runat="server" Visible="false" placeholder="jsaldo"/>
                                     <asp:TextBox ID="kasdbtext" runat="server" Visible="false"/>
                                     <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
                                     <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
                                     <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
-                                    <asp:TextBox ID="totdelsaldo" runat="server" Visible="false"></asp:TextBox>
+                                    <asp:TextBox ID="totdelsaldo" runat="server" Visible="false" placeholder="totdelsaldo"></asp:TextBox>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,7 +264,7 @@
 
                                   <br />
                                   <label><h3>Quantity</h3></label>
-                                  <asp:TextBox ID="quantity" runat="server" CssClass="form-control" onblur= "multiply()"></asp:TextBox>
+                                  <asp:TextBox ID="quantity" runat="server" CssClass="form-control" onblur= "multiply()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Total harga</h3></label>
@@ -279,12 +296,12 @@
 
                                   <br />
                                   <label for="radioya"><h3>Jasa : </h3></label>
-                                  <asp:RadioButton ID="radioya" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" />
+                                  <asp:RadioButton ID="radioya" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa"/>
                                   <asp:RadioButton ID="radiotidak" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa"/>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
-                                  <asp:LinkButton ID="Confirm" runat="server" OnClientClick="return dataValid();" OnClick="Confirm_Click" CssClass="btn btn-primary"><i class="fa fa-save"></i> Simpan</asp:LinkButton>
+                                  <asp:LinkButton ID="Confirm" runat="server" OnClientClick="return isDataValid();" OnClick="Confirm_Click" CssClass="btn btn-primary"><i class="fa fa-save"></i> Simpan</asp:LinkButton>
                               </div>
                             </div>
                           </div>
@@ -321,7 +338,7 @@
 
                                   <br />
                                   <label><h3>Quantity</h3></label>
-                                  <asp:TextBox ID="quantityedit" runat="server" CssClass="form-control" onblur= "multiplyEdit()"></asp:TextBox>
+                                  <asp:TextBox ID="quantityedit" runat="server" CssClass="form-control" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Total harga</h3></label>
@@ -350,8 +367,8 @@
 
                                   <br />
                                   <label for="radioya"><h3>Jasa : </h3></label>
-                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" />
-                                  <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa"/>
+                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" Checked="false" />
+                                  <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa" Checked="false"/>
                                   
                                   <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
                                   <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
@@ -359,7 +376,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
-                                  <asp:LinkButton ID="update" runat="server" OnClientClick="return dataValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
+                                  <asp:LinkButton ID="update" runat="server" OnClientClick="return isDataValidEdit()" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
                                 <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
                               </div>
                             </div>
@@ -676,6 +693,136 @@
         </div>
         <script>
             // Config 
+            function isDataValid() {
+                var kasDl = document.getElementById("kasDl").value;
+                var satuan = document.getElementById("satuan").value;
+                var harga = document.getElementById("harga").value;
+                var jmlhkeluar = document.getElementById("jmlhkeluar").value;
+                var quantity = document.getElementById("quantity").value;
+                var keperluan = document.getElementById("keperluan").value
+                var tglkeluar = document.getElementById("tgl_keluar").value;
+                var periodeDl = document.getElementById("periodeDl").value;
+                var bagianDl = document.getElementById("bagianDl").value;
+                var vendor = document.getElementById("vendor").value;
+
+                if (kasDl == '--Pilih kas--') {
+                    alert("Pilih kas");
+                    return false;
+                }
+
+                if (satuan == '') {
+                    alert("Satuan harus diisi");
+                    return false;
+                }
+
+                if (harga == '') {
+                    alert("harga harus diisi");
+                    return false;
+                }
+
+                if (quantity == '') {
+                    alert("Quantity harus diisi");
+                    return false;
+                }
+
+                if (jmlhkeluar == '') {
+                    alert("Total harga harus terisi");
+                    return false;
+                }
+
+                if (keperluan == '') {
+                    alert("Keperluan harus dipilih");
+                    return false;
+                }
+
+                if (tglkeluar == '') {
+                    alert("Tanggal harus dipilih");
+                    return false;
+                }
+
+                if (periodeDl == '--Pilih periode--') {
+                    alert("Pilih periode");
+                    return false;
+                }
+
+                if (bagianDl == '--Pilih bagian--') {
+                    alert("Pilih bagian");
+                    return false;
+                }
+
+                if (vendor == '') {
+                    alert("Vendor harus diisi");
+                    return false;
+                }
+
+                if (!document.getElementById("<%= radioya.ClientID %>").checked && !document.getElementById("<%= radiotidak.ClientID %>").checked)    
+                {    
+                alert("Jasa harus dipilih");    
+                return false;    
+                }
+            }
+
+            function isDataValidEdit() {
+                var satuanedit = document.getElementById("satuanedit").value;
+                var hargaedit = document.getElementById("hargaedit").value;
+                var quantityedit = document.getElementById("quantityedit").value;
+                var jmlhkeluaredit = document.getElementById("jmlhkeluaredit").value;
+                var keperluanedit = document.getElementById("keteranganedit").value;
+                var tgledit = document.getElementById("tgledit").value;
+                var bagianDledit = document.getElementById("bagianDledit").value;
+                var vendoredit = document.getElementById("vendoredit").value;
+
+                if (satuanedit == '') {
+                    alert("Satuan harus diisi");
+                    return false;
+                }
+
+                if (hargaedit == '') {
+                    alert("Harga harus diisi");
+                    return false;
+                }
+
+                if (quantityedit == '') {
+                    alert("Quantity harus diisi");
+                    return false;
+                }
+
+                if (jmlhkeluaredit == '') {
+                    alert("Total harga harus terisi");
+                    return false;
+                }
+
+                if (keperluanedit == '') {
+                    alert("Keperluan harus diisi");
+                    return false;
+                }
+
+                if (tgledit == '') {
+                    alert("Tangga; harus dipilih");
+                    return false;
+                }
+
+                if (bagianDledit == '--Pilih bagian--') {
+                    alert("Bagian harus dipilih");
+                    return false;
+                }
+
+                if (vendoredit == '') {
+                    alert("Vendor harus diisi");
+                    return false;
+                }
+
+                if (!document.getElementById("<%= radioyaedit.ClientID %>").checked && !document.getElementById("<%= radiotidakedit.ClientID %>").checked)    
+                {    
+                alert("Jasa harus dipilih");    
+                return false;    
+                }
+            }
+
+            //Open Modal
+            function openModalUpdatePeriode() {
+                    $('[id*=updateperiode]').modal('show');
+            }
 
             //Open Modal
             function openModalUpdateMin() {
@@ -723,154 +870,6 @@
             function openModal() {
                     $('[id*=formedit]').modal('show');
             }
-
-            //Validation isEmpty
-            function dataValidEdit() {    
-                var jmlhkeluaredit = document.getElementById("jmlhkeluaredit").value;
-                var keperluanedit = document.getElementById("keteranganedit").value;
-                var tgledit = document.getElementById("tgledit").value;
-                var bagianDledit = document.getElementById("bagianDledit").value;
-                var vendoredit = document.getElementById("vendoredit").value;
-                var satuanedit = document.getElementById("satuanedit").value;
-                var quantityedit = document.getElementById("quantityedit").value;
-                var totalhargaedit = document.getElementById("totalhargaedit").value;
-
-                
-                if (satuanedit == '')    
-                {    
-                alert("Satuan harus diisi");    
-                return false;    
-                }
-
-                if (jmlhkeluaredit == '')    
-                {    
-                alert("Masukkan jumlah keluar");    
-                return false;    
-                }
-
-                if (quantityedit == '')    
-                {    
-                alert("Masukkan quantity");    
-                return false;    
-                }
-
-                if (totalhargaedit == '')    
-                {    
-                alert("Hitung total harga");    
-                return false;    
-                }
-
-                if (keperluanedit == '')    
-                {    
-                alert("Keperluan harus diisi");    
-                return false;    
-                }
-
-                if (tgledit == '')    
-                {    
-                alert("Tanggal harus dipilih");    
-                return false;    
-                }
-
-                if (bagianDledit == '--Pilih bagian--')    
-                {    
-                alert("Bagian harus dipilih");    
-                return false;    
-                }
-
-                if (vendoredit == '')    
-                {    
-                alert("Vendor harus diisi");    
-                return false;    
-                }
-
-                if (!document.getElementById("<%= radioyaedit.ClientID %>").checked && !document.getElementById("<%= radiotidakedit.ClientID %>").checked)    
-                {    
-                alert("Jasa harus dipilih");    
-                return false;    
-                }
-            }    
-            
-            //Validation isEmpty
-            function dataValid() {    
-                var jmlh_keluar= document.getElementById("jmlhkeluar").value;    
-                var keperluan = document.getElementById("keperluan").value;
-                var tgl_keluar = document.getElementById("tgl_keluar").value;
-                var kasDl = document.getElementById("kasDl").value;
-                var periodeDl = document.getElementById("periodeDl").value;
-                var bagianDl = document.getElementById("bagianDl").value;
-                var vendor = document.getElementById("vendor").value;
-                var satuan = document.getElementById("satuan").value;
-                var quantity = document.getElementById("quantity").value;
-                var totalharga = document.getElementById("totalharga").value;
-
-                if (kasDl == '--Pilih kas--')    
-                {    
-                alert("Pilih Kas");    
-                return false;    
-                }
-
-                if (satuan == '')    
-                {    
-                alert("Satuan harus diisi");    
-                return false;    
-                }
-
-                if (jmlh_keluar == '')    
-                {    
-                alert("Masukkan jumlah keluar");    
-                return false;    
-                }  
-
-                if (quantity == '')    
-                {    
-                alert("Masukkan quantity");    
-                return false;    
-                }  
-
-                if (totalharga == '')    
-                {    
-                alert("Hitung total harga");    
-                return false;    
-                }  
-
-                if (keperluan == '')    
-                {    
-                alert("isi Keperluan");    
-                return false;    
-                }
-
-                if (tgl_keluar == '')    
-                {    
-                alert("Pilih Tanggal");    
-                return false;    
-                }
-
-                if (periodeDl == '--Pilih periode--')    
-                {    
-                alert("Periode harus dipilih");    
-                return false;    
-                }
-
-                if (bagianDl == '--Pilih bagian--')    
-                {    
-                alert("Bagian harus dipilih");    
-                return false;    
-                }
-
-                if (vendor == '')    
-                {    
-                alert("Vendor harus diisi");    
-                return false;    
-                }
-
-                if (!document.getElementById("<%=radioya.ClientID %>").checked && !document.getElementById("<%=radiotidak.ClientID %>").checked)    
-                {    
-                alert("Jasa harus dipilih");    
-                return false;    
-                }
-
-            } 
             
             //Gridview Bootstrap
             $(function () {

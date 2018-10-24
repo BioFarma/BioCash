@@ -33,6 +33,7 @@ namespace BioTemplate.Pages
 
         protected void clearTextInput()
         {
+            kasdl.ClearSelection();
             Masuk.Text = string.Empty;
             tgl_masuk.Text = string.Empty;
             periode_masuk.Text = string.Empty;

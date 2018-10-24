@@ -166,6 +166,33 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.LinkButton updateminus;
         
         /// <summary>
+        /// updatelabel3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label updatelabel3;
+        
+        /// <summary>
+        /// updatelabel4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label updatelabel4;
+        
+        /// <summary>
+        /// updateperiode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton updateperiode;
+        
+        /// <summary>
         /// jmlhsaldo control.
         /// </summary>
         /// <remarks>

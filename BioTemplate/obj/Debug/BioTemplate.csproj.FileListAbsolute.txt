@@ -35,7 +35,7 @@ D:\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.csprojAssembly
 D:\Coding\Project\VisualStudio\BioCash\BioTemplate\bin\BioTemplate.dll.config
 D:\Coding\Project\VisualStudio\BioCash\BioTemplate\bin\BioTemplate.dll
 D:\Coding\Project\VisualStudio\BioCash\BioTemplate\bin\BioTemplate.pdb
-D:\Coding\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache
 D:\Coding\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.csproj.CoreCompileInputs.cache
 D:\Coding\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.dll
 D:\Coding\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.pdb
+D:\Coding\Project\VisualStudio\BioCash\BioTemplate\obj\Debug\BioTemplate.csprojAssemblyReference.cache

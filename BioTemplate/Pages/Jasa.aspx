@@ -162,7 +162,11 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Penegluaran Jasa</h1>
                     <br />
-                    
+                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
+                                  <i class="fa fa-pencil"></i> Lihat Saldo</button>
+                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false" placeholder="edit"></asp:TextBox>
+                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false" placeholder="temp"></asp:TextBox>
+                                  <asp:TextBox ID ="saldoid" runat="server" Visible="false" placeholder="id"></asp:TextBox>
                     <%-- FORM EDIT MODAL --%>
                     <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -183,18 +187,26 @@
                                   <label><h3>Periode</h3></label>
                                   <asp:TextBox ID="periodeDledit" runat="server" CssClass="form-control" onkeydown="return false;" ></asp:TextBox>
                                   <hr class="styled" />
+                                  
+                                  <br />
+                                  <label><h3>Nomor</h3></label>
+                                  <asp:TextBox ID="nomoredit" runat="server" CssClass="form-control" ></asp:TextBox>
 
                                   <br />
                                   <label><h3>Satuan</h3></label>
                                   <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control"></asp:TextBox>
 
-                                  <br />
-                                  <label><h3>Pph</h3></label>
-                                  <asp:TextBox ID="pphedit" runat="server" CssClass="form-control" placeholder="Rp,-" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
+                                  <asp:TextBox ID="hargaedit" Visible="false"  runat="server" CssClass="form-control" placeholder="Rp" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+
+                                  <asp:TextBox ID="quantityedit" Visible="false" runat="server" CssClass="form-control" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Total harga</h3></label>
                                   <asp:TextBox ID="jmlhkeluaredit" runat="server" CssClass="form-control" onkeydown="return false;"></asp:TextBox>
+
+                                  <br />
+                                  <label><h3>Pph</h3></label>
+                                  <asp:TextBox ID="pphedit" runat="server" CssClass="form-control" placeholder="Rp,-" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Keperluan</h3></label>
@@ -219,12 +231,8 @@
 
                                   <br />
                                   <label for="radioya"><h3>Jasa : </h3></label>
-                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" />
-                                  <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa"/>
-                                  
-                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false"></asp:TextBox>
-                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false"></asp:TextBox>
-                                  <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" Checked="true" />
+                                  <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa" Enabled="false"/>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
@@ -236,8 +244,47 @@
                         </div>
                     <br />
                     <%-- AKHIR FORM EDIT MODAL --%>
+                    <%-- FORM SHOW SALDO --%>
+                        <div class="modal fade" id="formsaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h2 class="modal-title" id="showsaldo">Saldo Saat Ini</h2>
+                              </div>
+                              <div class="modal-body">
+                                  <asp:GridView ID="gvSaldo" runat="server" BorderColor="Transparent" ClientIDMode="Static" DataKeyNames="Saldo" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="Kas">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Kas" runat="server" Text='<%#Eval("Kas") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Periode">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Kas" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Saldo">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Saldo" runat="server" Text='<%#Eval("Saldo") %>' Font-Size="Medium"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                      <EmptyDataRowStyle HorizontalAlign="Center" />
+                                     <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
+                                      <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                                      <RowStyle Font-Size="Medium" ForeColor="Black"/>
+                                </asp:GridView>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <%-- AKHIR FORM SHOW SALDO --%>
                     <br />
-                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
+                        <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" DataKeyNames="id" ShowHeaderWhenEmpty="true" ClientIDMode="Static" AutoGenerateColumns="False" CssClass="table table-striped table-responsive table-bordered-hover" OnRowDeleting="RowDeleting" >
                             <Columns>
                                 <asp:TemplateField Visible="false">
                                     <ItemTemplate>
@@ -269,6 +316,16 @@
                                         <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Harga" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="hargalabel" runat="server" Text='<%#Eval("harga") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="QTY" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="quantitylabel" runat="server" Text='<%#Eval("unit") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Total">
                                     <ItemTemplate>
                                         <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
@@ -279,33 +336,40 @@
                                         <asp:Label ID="pphlabel" runat="server" Text='<%#Eval("pph") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KEPERLUAN">
+                                <asp:TemplateField HeaderText="Keperluan">
                                     <ItemTemplate>
                                         <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="VENDOR">
+                                <asp:TemplateField HeaderText="Nomor">
+                                    <ItemTemplate>
+                                        <asp:Label ID="nomorlabel" runat="server" Text='<%#Eval("nomor") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <asp:TemplateField HeaderText="Vendor">
                                     <ItemTemplate>
                                         <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="SATUAN">
+                                 <asp:TemplateField HeaderText="Satuan">
                                     <ItemTemplate>
                                         <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JASA">
+                                <asp:TemplateField HeaderText="Jasa">
                                     <ItemTemplate>
                                         <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="AKSI">
+                                <asp:TemplateField >
                                     <ItemTemplate>
                                         <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
                                         <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
+                            <EmptyDataRowStyle HorizontalAlign="Center" />
+                            <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
                             <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
                             <RowStyle ForeColor="Black"/>
                         </asp:GridView>
@@ -511,8 +575,15 @@
                 var vendoredit = document.getElementById("vendoredit").value;
                 var satuanedit = document.getElementById("satuanedit").value;
                 var pphedit = document.getElementById("pphedit").value;
+                var nomoredit = document.getElementById("nomoredit").value;
 
-                
+
+                if (nomoredit == '')    
+                {    
+                alert("Masukkan nomor");    
+                return false;    
+                }
+
                 if (satuanedit == '')    
                 {    
                 alert("Satuan harus diisi");    
@@ -525,10 +596,9 @@
                 return false;    
                 }
 
-                if (pphedit == '')    
-                {    
-                alert("Masukkan Pph");    
-                return false;    
+                if (pphedit == '') {
+                    alert("Masukkan Pph")
+                    return false;
                 }
 
                 if (keperluanedit == '')    
