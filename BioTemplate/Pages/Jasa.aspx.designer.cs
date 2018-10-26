@@ -94,6 +94,33 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.TextBox saldoid;
         
         /// <summary>
+        /// pphdel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox pphdel;
+        
+        /// <summary>
+        /// kasdel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox kasdel;
+        
+        /// <summary>
+        /// periodedel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox periodedel;
+        
+        /// <summary>
         /// id control.
         /// </summary>
         /// <remarks>

@@ -277,9 +277,9 @@
                                   <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
                                   </div>
                               <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Cancel</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                   <asp:LinkButton ID="update" runat="server" CssClass="btn btn-primary" OnClientClick="return dataValidEdit();" OnClick="update_Click"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
-                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
+                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger navbar-left"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
                               </div>
                           </div>
                         </div>

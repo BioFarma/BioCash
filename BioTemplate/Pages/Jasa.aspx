@@ -162,11 +162,13 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Penegluaran Jasa</h1>
                     <br />
-                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
-                                  <i class="fa fa-pencil"></i> Lihat Saldo</button>
-                                  <asp:TextBox ID ="saldoedit" runat="server" Visible="false" placeholder="edit"></asp:TextBox>
-                                  <asp:TextBox ID ="saldotemp" runat="server" Visible="false" placeholder="temp"></asp:TextBox>
-                                  <asp:TextBox ID ="saldoid" runat="server" Visible="false" placeholder="id"></asp:TextBox>
+                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-pencil"></i> Lihat Saldo</button>
+                        <asp:TextBox ID ="saldoedit" runat="server" Visible="false" placeholder="edit"></asp:TextBox>
+                        <asp:TextBox ID ="saldotemp" runat="server" Visible="false" placeholder="temp"></asp:TextBox>
+                        <asp:TextBox ID ="saldoid" runat="server" Visible="false" placeholder="id"></asp:TextBox>
+                        <asp:TextBox ID="pphdel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
                     <%-- FORM EDIT MODAL --%>
                     <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -178,14 +180,14 @@
                                 <h2 class="modal-title" id="exampleModalCenterTitle">Edit Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
-                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
+                                  <asp:TextBox ID ="id" runat="server" Visible="false" Enabled="false"></asp:TextBox>
                                   
                                   <label><h3>Kas</h3></label>
                                   <asp:DropDownList ID="kasDledit" runat="server" CssClass="form-control" Enabled="false"/>
 
                                   <br />
                                   <label><h3>Periode</h3></label>
-                                  <asp:TextBox ID="periodeDledit" runat="server" CssClass="form-control" onkeydown="return false;" ></asp:TextBox>
+                                  <asp:TextBox ID="periodeDledit" runat="server" CssClass="form-control" Enabled="false" onkeydown="return false;" ></asp:TextBox>
                                   <hr class="styled" />
                                   
                                   <br />
@@ -194,15 +196,15 @@
 
                                   <br />
                                   <label><h3>Satuan</h3></label>
-                                  <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  <asp:TextBox ID="satuanedit" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
 
-                                  <asp:TextBox ID="hargaedit" Visible="false"  runat="server" CssClass="form-control" placeholder="Rp" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
+                                  <asp:TextBox ID="hargaedit" Visible="false" Enabled="false" runat="server" CssClass="form-control" placeholder="Rp" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"/>
 
-                                  <asp:TextBox ID="quantityedit" Visible="false" runat="server" CssClass="form-control" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
+                                  <asp:TextBox ID="quantityedit" Visible="false" Enabled="false" runat="server" CssClass="form-control" onblur= "multiplyEdit()" onkeydown = " return (!((event.keyCode>=65 && event.keyCode <= 95) || event.keyCode >= 106 || (event.keyCode >= 48 && event.keyCode <= 57 && isNaN(event.key))) && event.keyCode!=32);"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Total harga</h3></label>
-                                  <asp:TextBox ID="jmlhkeluaredit" runat="server" CssClass="form-control" onkeydown="return false;"></asp:TextBox>
+                                  <asp:TextBox ID="jmlhkeluaredit" runat="server" Enabled="false" CssClass="form-control" onkeydown="return false;"></asp:TextBox>
 
                                   <br />
                                   <label><h3>Pph</h3></label>
@@ -210,12 +212,12 @@
 
                                   <br />
                                   <label><h3>Keperluan</h3></label>
-                                  <textarea ID="keteranganedit" runat="server" class="form-control" rows="5"></textarea>
+                                  <textarea ID="keteranganedit" runat="server" readonly="readonly" class="form-control" rows="5"></textarea>
 
                                   <br />
                                   <label><h3>Tanggal Pengeluaran</h3></label>
                                   <div class="input-group date" id="datepicker" data-provide="datepicker">
-                                      <asp:TextBox ID="tgledit" runat="server" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
+                                      <asp:TextBox ID="tgledit" runat="server" Enabled="false" CssClass="form-control" Placeholder="dd/mm/yyyy" onkeydown="return false;"></asp:TextBox>
                                       <div class="input-group-addon">
                                            <span class="glyphicon glyphicon-th"></span>
                                       </div>
@@ -223,15 +225,15 @@
 
                                   <br />
                                   <label><h3>Plih bagian</h3></label>
-                                  <asp:DropDownList ID="bagianDledit" runat="server" CssClass="form-control"/>
+                                  <asp:DropDownList ID="bagianDledit" runat="server" Enabled="false" CssClass="form-control"/>
 
                                   <br />
                                   <label><h3>Vendor</h3></label>
-                                  <asp:TextBox ID="vendoredit" runat="server" CssClass="form-control"></asp:TextBox>
+                                  <asp:TextBox ID="vendoredit" runat="server" Enabled="false" CssClass="form-control"></asp:TextBox>
 
                                   <br />
                                   <label for="radioya"><h3>Jasa : </h3></label>
-                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" Checked="true" />
+                                  <asp:RadioButton ID="radioyaedit" runat="server" CssClass="radio radio-inline" Text="Ya" GroupName="jasa" Checked="true" Enabled="false" />
                                   <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa" Enabled="false"/>
                               </div>
                               <div class="modal-footer">
@@ -363,8 +365,9 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField >
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_tambah" runat="server" OnClick="btn_tambah_Click" CssClass="btn btn-circle btn-primary"><i class="fa fa-plus"></i> </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-circle btn-success"><i class="fa fa-edit"></i> </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-circle btn-danger"><i class="fa fa-trash"></i></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

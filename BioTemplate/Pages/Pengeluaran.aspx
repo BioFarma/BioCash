@@ -170,8 +170,8 @@
                               <asp:Label ID="warning2" runat="server" CssClass="h4"></asp:Label>
                           </div>
                           <div class="modal-footer">
-                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-success"><i class="fa fa-arrow-circle-o-right"></i> Menjadi kredit</asp:LinkButton>
-                                  <asp:LinkButton ID="confirmpop" runat="server" OnClick="confirmpop_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Tambah pemasukkan</asp:LinkButton>
+                              <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                  <asp:LinkButton ID="confirmmin" runat="server" OnClientClick="return dataValid();" OnClick="confirmmin_Click" CssClass="btn btn-primary"><i class="fa fa-arrow-circle-o-right"></i> Lanjut</asp:LinkButton>
                           </div>
                         </div>
                       </div>
@@ -375,9 +375,9 @@
                                   <asp:TextBox ID ="saldoafteredit" runat="server" Visible="false"></asp:TextBox>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                   <asp:LinkButton ID="update" runat="server" OnClientClick="return isDataValidEdit()" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
-                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
+                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger navbar-left"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
                               </div>
                             </div>
                           </div>

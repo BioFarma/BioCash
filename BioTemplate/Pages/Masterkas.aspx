@@ -229,7 +229,7 @@
 
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                   <asp:Button ID="Update" runat="server" Text="Update" OnClientClick="return userValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary" />
                               </div>
                             </div>

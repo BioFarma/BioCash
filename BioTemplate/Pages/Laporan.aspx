@@ -22,6 +22,15 @@
     <link href="../CSS/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="../CSS/plugins/iCheck/custom.css" rel="stylesheet" />
     <link href="../CSS/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    <style type="text/css">
+        .auto-style1 {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
@@ -162,7 +171,10 @@
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Laporan Kas</h1>
-                    <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" ClientIDMode="Static" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333">
+                    <asp:LinkButton ID="export" OnClick="export_Click" runat="server" CssClass="btn btn-danger"><i class="fa fa-download"></i> Export </asp:LinkButton>
+                    <br />
+                    <br />
+                    <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" ClientIDMode="Static" ShowFooter="true" AllowPaging="true" PageSize="8" OnPageIndexChanged="gvBioCash_PageIndexChanged" OnPageIndexChanging="gvBioCash_PageIndexChanging" OnRowDataBound="gvBioCash_RowDataBound" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333">
                             <Columns>
                                 <asp:TemplateField HeaderText="No">
                                     <ItemTemplate>
@@ -171,7 +183,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Tanggal">
                                     <ItemTemplate>
-                                        <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
+                                        <asp:Label ID="tgllabel" runat="server"  Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Keterangan">
@@ -184,24 +196,53 @@
                                         <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Unit">
+                                    <ItemTemplate>
+                                        <asp:Label ID="unitlabel" runat="server" Text='<%#Eval("unit") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Bagian">
                                     <ItemTemplate>
                                         <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Total">
+                                <asp:TemplateField HeaderText="Nomor">
                                     <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
+                                        <asp:Label ID="nomorlabel" runat="server" Text='<%#Eval("nomor") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField HeaderText="Vendor">
+                                <asp:TemplateField HeaderText="Vendor">
+                                    <FooterTemplate>
+                                        <asp:Label ID="tot" runat="server" Text="Sum Total" Font-Bold="true"></asp:Label>
+                                    </FooterTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Ddebit">
+                                    <ItemTemplate>
+                                        <asp:Label ID="pphlabel" runat="server" Text='<%#Eval("pph") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:Label ID="pphtotal" runat="server" Font-Bold="true"></asp:Label>
+                                    </FooterTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Kredit">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:Label ID="kredittotal" runat="server" Font-Bold="true"></asp:Label>
+                                    </FooterTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Jasa">
                                     <ItemTemplate>
                                         <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Saldo">
+                                    <ItemTemplate>
+                                        <asp:Label ID="saldolabel" runat="server"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -210,6 +251,21 @@
                             <HeaderStyle BackColor="#eb9d46" ForeColor="White"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
+                    <div class="text-right" style="color:black;">
+                        <div class="container-fluid">
+                            <asp:Label ID="Label1" runat="server" Text="Total Biaya = Rp "></asp:Label>
+                            <asp:Label ID="biaya" runat="server"></asp:Label>
+                        </div>
+                        <div class="container-fluid">
+                            <asp:Label ID="Label2" runat="server" Text="Total PPH = Rp "></asp:Label>
+                            <asp:Label ID="pphh" runat="server"></asp:Label>
+                        </div>
+                            <asp:Label ID="Label5" runat="server" Text="-------------------------------------"></asp:Label>
+                        <div class="container-fluid">
+                            <asp:Label ID="Label3" runat="server" Text="Total = Rp "></asp:Label>
+                            <asp:Label ID="total" runat="server"></asp:Label>
+                        </div>
+                    </div>
                     </div>
                 <div class="footer">
                     <div>
@@ -423,7 +479,7 @@
 
             //Gridview Bootstrap
             $(function () {
-                $('[id*=gvBioCash]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
+                $('[id*=]').prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable({
                     "responsive": true,
                     "sPaginationType": "full_numbers"
                 });
