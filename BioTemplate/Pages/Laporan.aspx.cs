@@ -26,7 +26,8 @@ namespace BioTemplate.Pages
         protected void gvbind()
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND pph IS NOT NULL", con);
+            //SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND pph IS NOT NULL", con);
+            SqlCommand cmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.keterangan,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,biocash.Pengeluaran.pph, biocash.Pengeluaran.jmlh_keluar,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.ENDDA = @ENDDA AND biocash.Saldo.ENDDA = @ENDDA WHERE biocash.Pengeluaran.change_date = biocash.Saldo.change_date AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas", con);
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             con.Close();
@@ -106,7 +107,7 @@ namespace BioTemplate.Pages
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                sumdebit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "pph"));
+                //sumdebit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "pph"));
                 sumkredit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "jmlh_keluar"));
             }
             if (e.Row.RowType == DataControlRowType.Footer)
@@ -119,7 +120,7 @@ namespace BioTemplate.Pages
                 int kredit = Convert.ToInt32(kredittotal.Text);
                 int debit = Convert.ToInt32(pphtotal.Text);
                 int saldo = kredit - debit;
-                
+
                 biaya.Text = sumkredit.ToString();
                 pphh.Text = sumdebit.ToString();
                 total.Text = saldo.ToString();

@@ -340,12 +340,12 @@
                                          <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="TANGGAL MASUK" >
+                                <asp:TemplateField HeaderText="Tanggal" >
                                     <ItemTemplate>
                                         <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_masuk") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="PERIODE">
+                                <asp:TemplateField HeaderText="Periode">
                                     <ItemTemplate>
                                         <asp:Label ID="thnlabel" runat="server" Text='<%#Eval("thn_periode") %>' ></asp:Label>
                                     </ItemTemplate>
@@ -355,15 +355,15 @@
                                         <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="JUMLAH">
+                                <asp:TemplateField HeaderText="Jumlah">
                                     <ItemTemplate>
                                         <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_masuk") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="AKSI">
+                                <asp:TemplateField HeaderText="">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-circle btn-success" ToolTip="Ubah data"><i class="fa fa-edit"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-circle btn-danger" ToolTip="Hapus data"><i class="fa fa-trash"></i></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

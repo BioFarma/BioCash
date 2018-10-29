@@ -229,15 +229,21 @@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
                                   <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
 
-                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
-                                  <i class="fa fa-pencil"></i> Lihat Saldo</button>
+                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-pencil"></i> Lihat Saldo</button>
 
-                                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false" placeholder="jmlhsaldo"/>
-                                    <asp:TextBox ID="jsaldo" runat="server" Visible="false" placeholder="jsaldo"/>
-                                    <asp:TextBox ID="kasdbtext" runat="server" Visible="false"/>
-                                    <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
-                                    <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
-                                    <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false" placeholder="jmlhsaldo"/>
+                    <asp:TextBox ID="jsaldo" runat="server" Visible="false" placeholder="jsaldo"/>
+                    <asp:TextBox ID="kasdbtext" runat="server" Visible="false"/>
+                    <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="unitdel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="hargadel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="bagiandel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="vendordel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="satuandel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="keterangandel" runat="server" Visible="false"></asp:TextBox>
+                    <asp:TextBox ID="tgldel" runat="server" Visible="false"></asp:TextBox>
                                     <asp:TextBox ID="totdelsaldo" runat="server" Visible="false" placeholder="totdelsaldo"></asp:TextBox>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -454,8 +460,8 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Aksi">
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Ubah</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-danger"><i class="fa fa-trash"></i> Hapus</asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-circle btn-success" ToolTip="Ubah data"><i class="fa fa-edit"></i> </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-circle btn-danger" ToolTip="Hapus data"><i class="fa fa-trash"></i></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

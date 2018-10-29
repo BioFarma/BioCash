@@ -242,7 +242,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Saldo">
                                     <ItemTemplate>
-                                        <asp:Label ID="saldolabel" runat="server"></asp:Label>
+                                        <asp:Label ID="saldolabel" runat="server" Text='<%#Eval("saldo") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

@@ -160,7 +160,7 @@
                     </nav>
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
-                    <h1>Penegluaran Jasa</h1>
+                    <h1>Pengeluaran Jasa</h1>
                     <br />
                     <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-pencil"></i> Lihat Saldo</button>
                         <asp:TextBox ID ="saldoedit" runat="server" Visible="false" placeholder="edit"></asp:TextBox>
@@ -238,7 +238,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
-                                  <asp:LinkButton ID="update" runat="server" OnClientClick="return dataValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
+                                <asp:LinkButton ID="update" runat="server" OnClientClick="return dataValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
                                 <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
                               </div>
                             </div>
@@ -298,22 +298,22 @@
                                          <%#Container.DataItemIndex+1 %>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="TANGGAL">
+                                <asp:TemplateField HeaderText="Tanggal">
                                     <ItemTemplate>
                                         <asp:Label ID="tgllabel" runat="server" Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="KAS">
+                                <asp:TemplateField HeaderText="Kas">
                                     <ItemTemplate>
                                         <asp:Label ID="kaslabel" runat="server" Text='<%#Eval("Kas") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="BAGIAN">
+                                <asp:TemplateField HeaderText="Bagian">
                                     <ItemTemplate>
                                         <asp:Label ID="bagianlabel" runat="server" Text='<%#Eval("nama_bagian") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="PERIODE">
+                                <asp:TemplateField HeaderText="Periode">
                                     <ItemTemplate>
                                         <asp:Label ID="periodelabel" runat="server" Text='<%#Eval("thn_periode") %>'></asp:Label>
                                     </ItemTemplate>
@@ -323,7 +323,7 @@
                                         <asp:Label ID="hargalabel" runat="server" Text='<%#Eval("harga") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="QTY" Visible="false">
+                                <asp:TemplateField HeaderText="Qty." Visible="false">
                                     <ItemTemplate>
                                         <asp:Label ID="quantitylabel" runat="server" Text='<%#Eval("unit") %>' ></asp:Label>
                                     </ItemTemplate>
@@ -365,9 +365,9 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField >
                                     <ItemTemplate>
-                                        <asp:LinkButton ID="btn_tambah" runat="server" OnClick="btn_tambah_Click" CssClass="btn btn-circle btn-primary"><i class="fa fa-plus"></i> </asp:LinkButton>
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-circle btn-success"><i class="fa fa-edit"></i> </asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-circle btn-danger"><i class="fa fa-trash"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btn_tambah" runat="server" OnClick="btn_tambah_Click" CssClass="btn btn-circle btn-primary" ToolTip="Tambah pph dan nomor"><i class="fa fa-plus"></i> </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-circle btn-success" ToolTip="Ubah data"><i class="fa fa-edit"></i> </asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" runat="server" CssClass="btn btn-circle btn-danger" ToolTip="Hapus data"><i class="fa fa-trash"></i></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

@@ -266,9 +266,9 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="aksi">
-                                    <ItemTemplate>     
-                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-success"><i class="fa fa-edit"></i> Edit Data</asp:LinkButton>
-                                        <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-danger" ><i class="fa fa-trash"></i> Hapus Data</asp:LinkButton>
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="btn_edit" runat="server" OnClick="btn_edit_Click" CssClass="btn btn-circle btn-success" ToolTip="Ubah data"><i class="fa fa-edit"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btn_delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" CommandName="Delete" CssClass="btn btn-circle btn-danger" ToolTip="Hapus data"><i class="fa fa-trash"></i></asp:LinkButton>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
