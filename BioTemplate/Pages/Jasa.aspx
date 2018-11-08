@@ -162,7 +162,9 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Pengeluaran Jasa</h1>
                     <br />
-                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-pencil"></i> Lihat Saldo</button>
+                    <div class="container-fluid">
+                            <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-list-alt"></i> Lihat Saldo</button>
+                        </div>
                         <asp:TextBox ID ="saldoedit" runat="server" Visible="false" placeholder="edit"></asp:TextBox>
                         <asp:TextBox ID ="saldotemp" runat="server" Visible="false" placeholder="temp"></asp:TextBox>
                         <asp:TextBox ID ="saldoid" runat="server" Visible="false" placeholder="id"></asp:TextBox>

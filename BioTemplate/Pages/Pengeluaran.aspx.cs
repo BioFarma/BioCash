@@ -69,7 +69,7 @@ namespace BioTemplate.Pages
 
         protected void gvbind()
         {
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND pph IS NULL", con);
+            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA", con);
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -82,7 +82,6 @@ namespace BioTemplate.Pages
             }
         }
         
-
         protected void dlbagian()
         {
             SqlCommand cmd = new SqlCommand("SELECT nama_bagian FROM biocash.Bagian", con); // table name 
@@ -486,16 +485,16 @@ namespace BioTemplate.Pages
             quantityedit.Text = (row.FindControl("quantitylabel") as Label).Text;
             saldoedit.Text = jmlhkeluaredit.Text;
             string jasacheck = (row.FindControl("jasalabel") as Label).Text;
-            //if (jasacheck != "Ya")
-            //{
-            //    radiotidakedit.Checked = true;
-            //    radioyaedit.Checked = false;
-            //}
-            //else
-            //{
-            //    radioyaedit.Checked = true;
-            //    radiotidakedit.Checked = false;
-            //}
+            if (jasacheck.Trim() != "Ya")
+            {
+                radiotidakedit.Checked = true;
+                radioyaedit.Checked = false;
+            }
+            else
+            {
+                radioyaedit.Checked = true;
+                radiotidakedit.Checked = false;
+            }
 
             SqlCommand sscmd = new SqlCommand("SELECT pph FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode AND tgl_keluar=@tgl_keluar AND jmlh_keluar=@jmlh_keluar AND unit=@unit AND harga=@harga AND nama_bagian=@nama_bagian AND satuan=@satuan AND keterangan=@keterangan", con);
             sscmd.Parameters.AddWithValue("@ENDDA", dateMax);
@@ -518,7 +517,7 @@ namespace BioTemplate.Pages
             con.Close();
             if(jmlhsaldo.Text != string.Empty)
             { 
-                string message = "Terdapat pph dan nomor pada data ini. Silahkan hapus pph dan nomor pada menu Pengeluaran khusus Jasa";
+                string message = "Terdapat kredit dan nomor pada data ini. Silahkan hapus kredit dan nomor pada menu Pengeluaran khusus Jasa";
                 string script = "{ alert('" + message + "'); }";
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
             }
@@ -948,7 +947,7 @@ namespace BioTemplate.Pages
             con.Close();
             if (jmlhsaldo.Text != string.Empty)
             {
-                string message = "Terdapat pph dan nomor pada data ini. Silahkan hapus pph dan nomor pada menu Pengeluaran khusus Jasa";
+                string message = "Terdapat kredit dan nomor pada data ini. Silahkan hapus kredit dan nomor pada menu Pengeluaran khusus Jasa";
                 string script = "{ alert('" + message + "'); }";
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
             }
@@ -1081,7 +1080,7 @@ namespace BioTemplate.Pages
             con.Close();
             if (jmlhsaldo.Text != string.Empty)
             {
-                string message = "Terdapat pph dan nomor pada data ini. Silahkan hapus pph dan nomor pada menu Pengeluaran khusus Jasa";
+                string message = "Terdapat kredit dan nomor pada data ini. Silahkan hapus kredit dan nomor pada menu Pengeluaran khusus Jasa";
                 string script = "{ alert('" + message + "'); }";
                 ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
             }

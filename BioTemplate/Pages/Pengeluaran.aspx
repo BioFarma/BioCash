@@ -226,11 +226,10 @@
                         </div>
                       </div>
                     </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Pengeluaran</button>
-
-                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-pencil"></i> Lihat Saldo</button>
-
+                    <div class="container-fluid">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput"><i class="fa fa-plus"></i> Tambah Pengeluaran</button>
+                    <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo"><i class="fa fa-list-alt"></i> Lihat Saldo</button>
+                    </div>
                     <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false" placeholder="jmlhsaldo"/>
                     <asp:TextBox ID="jsaldo" runat="server" Visible="false" placeholder="jsaldo"/>
                     <asp:TextBox ID="kasdbtext" runat="server" Visible="false"/>
@@ -433,11 +432,6 @@
                                         <asp:Label ID="quantitylabel" runat="server" Text='<%#Eval("unit") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Total">
-                                    <ItemTemplate>
-                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Keperluan">
                                     <ItemTemplate>
                                         <asp:Label ID="keteranganlabel" runat="server" Text='<%#Eval("keterangan") %>' ></asp:Label>
@@ -451,6 +445,16 @@
                                  <asp:TemplateField HeaderText="Satuan">
                                     <ItemTemplate>
                                         <asp:Label ID="satuanlabel" runat="server" Text='<%#Eval("satuan") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Kredit">
+                                    <ItemTemplate>
+                                        <asp:Label ID="pphlabel" runat="server" Text='<%#Eval("pph") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Debit">
+                                    <ItemTemplate>
+                                        <asp:Label ID="jmlhlabel" runat="server" Text='<%#Eval("jmlh_keluar") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Jasa">
@@ -471,7 +475,6 @@
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
 
-                    
                     <%-- FORM SHOW SALDO --%>
                         <div class="modal fade" id="formsaldo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">

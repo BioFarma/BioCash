@@ -31,6 +31,53 @@
             margin-bottom: 20px;
         }
     </style>
+    <style>
+        .search-box{
+	        position: absolute;
+	        background: #eb9d46;
+	        height: 40px;
+	        border-radius: 50px;
+        }
+
+        .search-box:hover > .search-txt{
+	        width: 150px;
+	        padding: 0 6px;
+        }
+
+        .search-box:hover > .search-btn{
+	        background: white;
+            color:#eb9d46;
+        }
+
+        .search-btn{
+	        color: white;
+	        float: left;
+	        width: 40px;
+	        height: 40px;
+	        border-radius: 50%;
+	        background: #eb9d46;
+	        display: flex;
+	        justify-content: center;
+	        align-items: center;
+	        transition: 0.4s;
+        }
+
+        .search-txt{
+	        border: none;
+	        background: none;
+	        float: right;
+	        padding: 0;
+	        color: white;
+	        font-size: 16px;
+	        transition: 0.4s;
+	        line-height: 40px;
+	        width: 0px; 
+        }
+
+        .spasi{
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <%--<body class="fixed-sidebar fixed-nav pace-done mdskin2">--%>
 <body class="fixed-sidebar fixed-nav pace-done mdskin2">
@@ -171,9 +218,43 @@
                 </div>
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Laporan Kas</h1>
-                    <asp:LinkButton ID="export" OnClick="export_Click" runat="server" CssClass="btn btn-danger"><i class="fa fa-download"></i> Export </asp:LinkButton>
+                    <div class="container-fluid">
+                    <asp:LinkButton ID="export" OnClick="export_Click" runat="server" CssClass="btn btn-danger pull-right spasi"><i class="fa fa-download"></i> Export </asp:LinkButton>
+                    
+                    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#filter"><i class="fa fa-filter"></i> Filter</button>
+                    <div class="search-box">
+		                <input id="txtSearch" class="search-txt" type="text" placeholder="Search..." />
+		                <a class="search-btn" href="#">
+			                <i class="fa fa-search"></i>
+		                </a>
+	                </div>
+                    </div>
                     <br />
-                    <br />
+                    <asp:TextBox ID="jsaldo" runat="server" Visible="false"></asp:TextBox>
+                    <!-- Modal -->
+                    <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h2 class="modal-title" id="exampleModalLongTitle">Filter</h2>
+                          </div>
+                          <div class="modal-body">
+                            <h3><label>Pilih Kas</label></h3>
+                            <asp:DropDownList ID="kasdl" runat="server" CssClass="form-control" OnSelectedIndexChanged="kasdl_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                              <br />
+                              <h3><label>Pilih periode</label></h3>
+                            <asp:DropDownList ID="periodedl" runat="server" CssClass="form-control"  OnSelectedIndexChanged="periodedl_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Modal -->
                     <asp:GridView ID="gvBioCash" runat="server" BorderColor="Transparent" ClientIDMode="Static" ShowFooter="true" AllowPaging="true" PageSize="8" OnPageIndexChanged="gvBioCash_PageIndexChanged" OnPageIndexChanging="gvBioCash_PageIndexChanging" OnRowDataBound="gvBioCash_RowDataBound" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" CssClass="table table-striped table-responsive table-bordered-hover" CellPadding="4" ForeColor="#333333">
                             <Columns>
                                 <asp:TemplateField HeaderText="No">
@@ -184,6 +265,11 @@
                                 <asp:TemplateField HeaderText="Tanggal">
                                     <ItemTemplate>
                                         <asp:Label ID="tgllabel" runat="server"  Text='<%#Eval("tgl_keluar") %>' ></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Kas">
+                                    <ItemTemplate>
+                                        <asp:Label ID="Kaslabel" runat="server"  Text='<%#Eval("Kas") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Keterangan">
@@ -235,15 +321,13 @@
                                         <asp:Label ID="kredittotal" runat="server" Font-Bold="true"></asp:Label>
                                     </FooterTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Jasa">
-                                    <ItemTemplate>
-                                        <asp:Label ID="jasalabel" runat="server" Text='<%#Eval("jasa") %>' ></asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Saldo">
                                     <ItemTemplate>
                                         <asp:Label ID="saldolabel" runat="server" Text='<%#Eval("saldo") %>' ></asp:Label>
                                     </ItemTemplate>
+                                    <FooterTemplate>
+                                        <asp:Label ID="saldototal" runat="server" Font-Bold="true"></asp:Label>
+                                    </FooterTemplate>
                                 </asp:TemplateField>
                             </Columns>
                             <EmptyDataRowStyle HorizontalAlign="Center" />
@@ -453,10 +537,36 @@
         </div>
         <script>
             // Config box
+            
+             $(document).ready(function () {
+               var rows;
+               var coldata;
+               $('#txtSearch').keyup(function () {
+                   $('#<%=gvBioCash.ClientID%>').find("tr:gt(0)").hide();
+                   var data = $('#txtSearch').val();
+                   var len = data.length;
+                   if (len > 0) {
+                       var gridHeader = $('#<%=gvBioCash.ClientID%>').find('tbody th');
+                       $('#<%=gvBioCash.ClientID%>').find('th').each(function (index) {
+                           $('#<%=gvBioCash.ClientID%>').find('tbody tr').each(function () {
+                           coldata = $(this).find('td').children().eq(index);
+                           var temp = coldata.text().toUpperCase().indexOf(data.toUpperCase());
+                           if (temp === 0) {
+                               $(this).show();
+                           }
+                       });
+                       });
+
+                   } else {
+                   $('#<%=gvBioCash.ClientID%> tbody tr').show();
+                   }
+
+               });
+               });
 
             //Open Modal
-            function openModal() {
-                    $('[id*=formedit]').modal('show');
+            function openModalFilter() {
+                    $('[id*=filter]').modal('show');
             }
 
             //Validation isEmpty

@@ -76,6 +76,33 @@ namespace BioTemplate.Pages {
         protected global::System.Web.UI.WebControls.LinkButton export;
         
         /// <summary>
+        /// jsaldo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox jsaldo;
+        
+        /// <summary>
+        /// kasdl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList kasdl;
+        
+        /// <summary>
+        /// periodedl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList periodedl;
+        
+        /// <summary>
         /// gvBioCash control.
         /// </summary>
         /// <remarks>

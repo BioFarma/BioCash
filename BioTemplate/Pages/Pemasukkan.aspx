@@ -177,12 +177,12 @@
                         </div>
                       </div>
                     </div>
-
+                    <div class="container-fluid">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
                                   <i class="fa fa-plus"></i> Tambah Pemasukkan</button>
                     <button type="button" class="btn btn-primary navbar-right" data-toggle="modal" data-target="#formsaldo">
                                   <i class="fa fa-list-alt"></i> Lihat Saldo</button>
-
+                    </div>
                     <asp:TextBox ID="jmlhsaldo" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="saldodel" runat="server" Visible="false"></asp:TextBox>
                     <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
@@ -308,7 +308,7 @@
                                                     <asp:Label ID="periode" runat="server" Text='<%#Eval("thn_periode") %>' Font-Size="Medium"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="SALDO">
+                                            <asp:TemplateField HeaderText="Saldo">
                                                 <ItemTemplate>
                                                     <asp:Label ID="Saldo" runat="server" Text='<%#Eval("Saldo") %>' Font-Size="Medium"></asp:Label>
                                                 </ItemTemplate>
@@ -316,7 +316,7 @@
                                         </Columns>
                                       <EmptyDataRowStyle HorizontalAlign="Center" />
                                       <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
-                                      <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
+                                      <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
                                       <RowStyle Font-Size="Medium" ForeColor="Black"/>
                                 </asp:GridView>
                                   <asp:TextBox ID="TextBox1" runat="server" Visible="false"/>
@@ -369,7 +369,7 @@
                             </Columns>
                             <EmptyDataRowStyle HorizontalAlign="Center" />
                             <EmptyDataTemplate>No Record Available</EmptyDataTemplate>
-                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" />
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Large"/>
                             <RowStyle ForeColor="black" />
                         </asp:GridView>
                     </div>

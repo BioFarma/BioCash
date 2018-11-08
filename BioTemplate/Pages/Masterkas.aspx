@@ -162,9 +162,9 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                     <h1>Master Kas</h1>
                     <br />
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput">
-                                  <i class="fa fa-plus"></i> Tambah Kas
-                                </button>
+                    <div class="container-fluid">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#forminput"><i class="fa fa-plus"></i> Tambah Kas</button>
+                        </div>
                     <%-- FORM INPUT MODAL --%>
                         <div class="modal fade" id="forminput" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -272,7 +272,7 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
-                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" />
+                            <HeaderStyle BackColor="#eb9d46" ForeColor="White" Font-Size="Medium"/>
                             <RowStyle ForeColor="Black"/>
                         </asp:GridView>
                     </div>
