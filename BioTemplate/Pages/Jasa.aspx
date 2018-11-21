@@ -171,6 +171,18 @@
                         <asp:TextBox ID="pphdel" runat="server" Visible="false"></asp:TextBox>
                         <asp:TextBox ID="kasdel" runat="server" Visible="false"></asp:TextBox>
                         <asp:TextBox ID="periodedel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="jmlh_keluardel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="unitdel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="hargadel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="nama_bagiandel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="vendordel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="nomordel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="satuandel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="jasadel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="tgl_keluardel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="keterangandel" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="pphcek" runat="server" Visible="false"></asp:TextBox>
+                        <asp:TextBox ID="nomorcheck" runat="server" Visible="false"></asp:TextBox>
                     <%-- FORM EDIT MODAL --%>
                     <div class="modal fade" id="formedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -182,7 +194,7 @@
                                 <h2 class="modal-title" id="exampleModalCenterTitle">Edit Pengeluaran</h2>
                               </div>
                               <div class="modal-body">
-                                  <asp:TextBox ID ="id" runat="server" Visible="false" Enabled="false"></asp:TextBox>
+                                  <asp:TextBox ID ="id" runat="server" Visible="false"></asp:TextBox>
                                   
                                   <label><h3>Kas</h3></label>
                                   <asp:DropDownList ID="kasDledit" runat="server" CssClass="form-control" Enabled="false"/>
@@ -239,9 +251,9 @@
                                   <asp:RadioButton ID="radiotidakedit" runat="server" CssClass="radio radio-inline" Text="Tidak" GroupName="jasa" Enabled="false"/>
                               </div>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary navbar-left" data-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                 <asp:LinkButton ID="update" runat="server" OnClientClick="return dataValidEdit();" OnClick="Update_Click" CssClass="btn btn-primary"><i class="fa fa-refresh"></i> Ubah</asp:LinkButton>
-                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
+                                <asp:LinkButton ID="delete" runat="server" OnClientClick="return confirm('Yakin ingin dihapus ?');" OnClick="delete_Click" CssClass="btn btn-danger navbar-left"><i class="fa fa-trash-o"></i> Hapus</asp:LinkButton>
                               </div>
                             </div>
                           </div>

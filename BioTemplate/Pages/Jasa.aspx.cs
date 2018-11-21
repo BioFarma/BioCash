@@ -59,7 +59,7 @@ namespace BioTemplate.Pages
         protected void gvbind()
         {
             con.Open();
-            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND jasa='Ya'", con);
+            SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.PengeluaranJasa WHERE ENDDA=@ENDDA", con);
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -209,7 +209,7 @@ namespace BioTemplate.Pages
                 }
                 con.Close();
 
-                SqlCommand pphcmd = new SqlCommand("SELECT pph FROM biocash.Pengeluaran WHERE id=@id", con);
+                SqlCommand pphcmd = new SqlCommand("SELECT pph FROM biocash.PengeluaranJasa WHERE id=@id", con);
                 pphcmd.Parameters.AddWithValue("@id", id.Text);
                 con.Open();
                 SqlDataReader PhReader = pphcmd.ExecuteReader();
@@ -241,19 +241,17 @@ namespace BioTemplate.Pages
                 }
                 else
                 {
-
-                    SqlCommand cpcmd = new SqlCommand("SELECT pph FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND Kas=@Kas AND thn_periode=@thn_periode", con);
-                    SqlParameter[] cpprms = new SqlParameter[3];
-
-                    cpprms[0] = new SqlParameter("@ENDDA", SqlDbType.DateTime);
-                    cpprms[1] = new SqlParameter("@Kas", SqlDbType.VarChar, 50);
-                    cpprms[2] = new SqlParameter("@thn_periode", SqlDbType.VarChar, 50);
-                    cpprms[0].Value = dateMax;
-                    cpprms[1].Value = kasDledit.SelectedItem.Value;
-                    cpprms[2].Value = periodeDledit.Text;
+                    SqlCommand cmdj = new SqlCommand("SELECT pph, nomor FROM biocash.PengeluaranJasa WHERE id=@id", con);
+                    cmdj.Parameters.AddWithValue("@id", id.Text);
                     con.Open();
-                    cpcmd.Parameters.AddRange(cpprms);
-                    object pphcek = cpcmd.ExecuteScalar();
+                    SqlDataReader JReader = cmdj.ExecuteReader();
+                    while (JReader.Read())
+                    {
+                        string pphjasa = JReader.GetValue(0).ToString();
+                        string nomorjasa = JReader.GetValue(1).ToString();
+                        pphcek.Text = pphjasa.ToString();
+                        nomorcheck.Text = nomorjasa.ToString();
+                    }
                     con.Close();
 
                     if (radioyaedit.Checked)
@@ -265,9 +263,11 @@ namespace BioTemplate.Pages
                         jasaselectededit = "Tidak";
                     }
 
-                    if (pphcek == null)
+                    if (pphcek.Text == string.Empty)
                     {
+                        SqlCommand jucmd = new SqlCommand("UPDATE biocash.PengeluaranJasa SET change_date=@change_date, ENDDA=@ENDDA WHERE id=@id", con);
                         SqlCommand cmd = new SqlCommand("INSERT INTO biocash.Pengeluaran" + "(BEGDA,Kas,tgl_keluar,keterangan,harga,unit,jmlh_keluar,pph,nomor,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)VALUES(@BEGDA,@Kas,@tgl_keluar,@keterangan,@harga,@unit,@jmlh_keluar,@pph,@nomor,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
+                        SqlCommand jcmd = new SqlCommand("INSERT INTO biocash.PengeluaranJasa" + "(BEGDA,Kas,tgl_keluar,keterangan,harga,unit,jmlh_keluar,pph,nomor,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)VALUES(@BEGDA,@Kas,@tgl_keluar,@keterangan,@harga,@unit,@jmlh_keluar,@pph,@nomor,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
                         SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
                         SqlCommand iuscmd = new SqlCommand("UPDATE biocash.Saldo set change_date=@change_date, ENDDA=@ENDDA WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode", con);
 
@@ -288,6 +288,23 @@ namespace BioTemplate.Pages
                         cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                         cmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+                        jcmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                        jcmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
+                        jcmd.Parameters.AddWithValue("@tgl_keluar", tgledit.Text);
+                        jcmd.Parameters.AddWithValue("@keterangan", keteranganedit.Value);
+                        jcmd.Parameters.AddWithValue("@harga", hargaedit.Text);
+                        jcmd.Parameters.AddWithValue("@unit", quantityedit.Text);
+                        jcmd.Parameters.AddWithValue("@jmlh_keluar", jmlhkeluaredit.Text);
+                        jcmd.Parameters.AddWithValue("@pph", pphedit.Text);
+                        jcmd.Parameters.AddWithValue("@nomor", nomoredit.Text);
+                        jcmd.Parameters.AddWithValue("@thn_periode", periodeDledit.Text);
+                        jcmd.Parameters.AddWithValue("@nama_bagian", bagianDledit.SelectedItem.Value);
+                        jcmd.Parameters.AddWithValue("@vendor", vendoredit.Text);
+                        jcmd.Parameters.AddWithValue("@satuan", satuanedit.Text);
+                        jcmd.Parameters.AddWithValue("@jasa", jasaselectededit);
+                        jcmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        jcmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
                         iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                         iscmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
                         iscmd.Parameters.AddWithValue("@saldo", totalsaldo);
@@ -301,10 +318,16 @@ namespace BioTemplate.Pages
                         iuscmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                         iuscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
 
+                        jucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        jucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                        jucmd.Parameters.AddWithValue("@id", id.Text);
+
                         con.Open();
+                        jucmd.ExecuteNonQuery();
                         iuscmd.ExecuteNonQuery();
                         iscmd.ExecuteNonQuery();
                         cmd.ExecuteNonQuery();
+                        jcmd.ExecuteNonQuery();
                         con.Close();
                         string message = "Data berhasil disimpan";
                         string script = "{ alert('" + message + "'); }";
@@ -315,8 +338,10 @@ namespace BioTemplate.Pages
                     else
                     {
                         SqlCommand cmd = new SqlCommand("INSERT INTO biocash.Pengeluaran" + "(BEGDA,Kas,tgl_keluar,keterangan,harga,unit,jmlh_keluar,pph,nomor,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)VALUES(@BEGDA,@Kas,@tgl_keluar,@keterangan,@harga,@unit,@jmlh_keluar,@pph,@nomor,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
+                        SqlCommand jcmd = new SqlCommand("INSERT INTO biocash.PengeluaranJasa" + "(BEGDA,Kas,tgl_keluar,keterangan,harga,unit,jmlh_keluar,pph,nomor,thn_periode,nama_bagian,vendor,satuan,jasa,change_date,ENDDA)VALUES(@BEGDA,@Kas,@tgl_keluar,@keterangan,@harga,@unit,@jmlh_keluar,@pph,@nomor,@thn_periode,@nama_bagian,@vendor,@satuan,@jasa,@change_date,@ENDDA)", con);
                         SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
-                        SqlCommand iucmd = new SqlCommand("UPDATE biocash.Pengeluaran set change_date=@change_date, ENDDA=@ENDDA WHERE id=@id AND pph IS NOT NULL", con);
+                        SqlCommand iucmd = new SqlCommand("UPDATE biocash.Pengeluaran set change_date=@change_date, ENDDA=@ENDDA WHERE ENDDA=@ENDDAS AND Kas=@Kas AND tgl_keluar=@tgl_keluar AND keterangan=@keterangan AND harga=@harga AND unit=@unit AND jmlh_keluar=@jmlh_keluar AND pph=@pph AND nomor=@nomor AND thn_periode=@thn_periode AND nama_bagian=@nama_bagian AND vendor=@vendor AND satuan=@satuan AND jasa=@jasa", con);
+                        SqlCommand jucmd = new SqlCommand("UPDATE biocash.PengeluaranJasa set change_date=@change_date, ENDDA=@ENDDA WHERE id=@id AND pph IS NOT NULL", con);
                         SqlCommand iuscmd = new SqlCommand("UPDATE biocash.Saldo set change_date=@change_date, ENDDA=@ENDDA WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode", con);
 
                         cmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
@@ -336,6 +361,23 @@ namespace BioTemplate.Pages
                         cmd.Parameters.AddWithValue("@change_date", DateTime.Now);
                         cmd.Parameters.AddWithValue("@ENDDA", dateMax);
 
+                        jcmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
+                        jcmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
+                        jcmd.Parameters.AddWithValue("@tgl_keluar", tgledit.Text);
+                        jcmd.Parameters.AddWithValue("@keterangan", keteranganedit.Value);
+                        jcmd.Parameters.AddWithValue("@harga", hargaedit.Text);
+                        jcmd.Parameters.AddWithValue("@unit", quantityedit.Text);
+                        jcmd.Parameters.AddWithValue("@jmlh_keluar", jmlhkeluaredit.Text);
+                        jcmd.Parameters.AddWithValue("@pph", pphedit.Text);
+                        jcmd.Parameters.AddWithValue("@nomor", nomoredit.Text);
+                        jcmd.Parameters.AddWithValue("@thn_periode", periodeDledit.Text);
+                        jcmd.Parameters.AddWithValue("@nama_bagian", bagianDledit.SelectedItem.Value);
+                        jcmd.Parameters.AddWithValue("@vendor", vendoredit.Text);
+                        jcmd.Parameters.AddWithValue("@satuan", satuanedit.Text);
+                        jcmd.Parameters.AddWithValue("@jasa", jasaselectededit);
+                        jcmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        jcmd.Parameters.AddWithValue("@ENDDA", dateMax);
+
                         iscmd.Parameters.AddWithValue("@BEGDA", DateTime.Now);
                         iscmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
                         iscmd.Parameters.AddWithValue("@saldo", totalsaldo);
@@ -349,17 +391,36 @@ namespace BioTemplate.Pages
                         iuscmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                         iuscmd.Parameters.AddWithValue("@change_date", DateTime.Now);
 
-                        iucmd.Parameters.AddWithValue("@id", id.Text);
+                        iucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
                         iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                         iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                        iucmd.Parameters.AddWithValue("@Kas", kasDledit.SelectedItem.Value);
+                        iucmd.Parameters.AddWithValue("@tgl_keluar", tgledit.Text);
+                        iucmd.Parameters.AddWithValue("@keterangan", keteranganedit.Value);
+                        iucmd.Parameters.AddWithValue("@harga", hargaedit.Text);
+                        iucmd.Parameters.AddWithValue("@unit", quantityedit.Text);
+                        iucmd.Parameters.AddWithValue("@jmlh_keluar", jmlhkeluaredit.Text);
+                        iucmd.Parameters.AddWithValue("@pph", pphcek.Text);
+                        iucmd.Parameters.AddWithValue("@nomor", nomorcheck.Text);
+                        iucmd.Parameters.AddWithValue("@thn_periode", periodeDledit.Text);
+                        iucmd.Parameters.AddWithValue("@nama_bagian", bagianDledit.SelectedItem.Value);
+                        iucmd.Parameters.AddWithValue("@vendor", vendoredit.Text);
+                        iucmd.Parameters.AddWithValue("@satuan", satuanedit.Text);
+                        iucmd.Parameters.AddWithValue("@jasa", jasaselectededit);
+
+                        jucmd.Parameters.AddWithValue("@id", id.Text);
+                        jucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                        jucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
 
                         con.Open();
+                        jucmd.ExecuteNonQuery();
                         iucmd.ExecuteNonQuery();
                         iuscmd.ExecuteNonQuery();
                         iscmd.ExecuteNonQuery();
                         cmd.ExecuteNonQuery();
+                        jcmd.ExecuteNonQuery();
                         con.Close();
-                        string message = "Data berhasil disimpan";
+                        string message = "Data berhasil diubah";
                         string script = "{ alert('" + message + "'); }";
                         ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "alert", script, true);
                         gvBindSaldo();
@@ -374,7 +435,7 @@ namespace BioTemplate.Pages
             int id = Convert.ToInt32(gvBioCash.DataKeys[e.RowIndex].Value.ToString());
             con.Open();
 
-            SqlCommand scmd = new SqlCommand("SELECT Kas,pph,thn_periode FROM biocash.Pengeluaran WHERE id=@id", con);
+            SqlCommand scmd = new SqlCommand("SELECT Kas,pph,thn_periode,jmlh_keluar,unit,harga,nama_bagian,vendor,nomor,satuan,jasa,keterangan,tgl_keluar FROM biocash.PengeluaranJasa WHERE id=@id", con);
             scmd.Parameters.AddWithValue("@id", id);
             SqlDataReader myReader = scmd.ExecuteReader();
             while (myReader.Read())
@@ -382,9 +443,29 @@ namespace BioTemplate.Pages
                 string kas = myReader.GetValue(0).ToString();
                 string pph = myReader.GetValue(1).ToString();
                 string periode = myReader.GetValue(2).ToString();
+                string jmlhkeluar = myReader.GetValue(3).ToString();
+                string unit = myReader.GetValue(4).ToString();
+                string harga = myReader.GetValue(5).ToString();
+                string namabagian = myReader.GetValue(6).ToString();
+                string vendor = myReader.GetValue(7).ToString();
+                string nomor = myReader.GetValue(8).ToString();
+                string satuan = myReader.GetValue(9).ToString();
+                string jasa = myReader.GetValue(10).ToString();
+                string keterangan = myReader.GetValue(11).ToString();
+                string tglkeluar = myReader.GetValue(12).ToString();
                 kasdel.Text = kas.ToString();
                 pphdel.Text = pph.ToString();
                 periodedel.Text = periode.ToString();
+                jmlh_keluardel.Text = jmlhkeluar.ToString();
+                unitdel.Text = unit.ToString();
+                hargadel.Text = harga.ToString();
+                nama_bagiandel.Text = namabagian.ToString();
+                vendordel.Text = vendor.ToString();
+                nomordel.Text = nomor.ToString();
+                satuandel.Text = satuan.ToString();
+                jasadel.Text = jasa.ToString();
+                keterangandel.Text = keterangan.ToString();
+                tgl_keluardel.Text = tglkeluar.ToString();
             }
             con.Close();
 
@@ -436,7 +517,9 @@ namespace BioTemplate.Pages
                     int deletesaldo = saldodbtemp - pphtemp;
                     string totdelsaldo = deletesaldo.ToString();
 
-                    SqlCommand cmd = new SqlCommand("UPDATE biocash.Pengeluaran SET ENDDA=@ENDDA WHERE id=@id", con);
+                    SqlCommand cmd = new SqlCommand("UPDATE biocash.PengeluaranJasa SET ENDDA=@ENDDA WHERE id=@id", con);
+                    SqlCommand jcmd = new SqlCommand("UPDATE biocash.PengeluaranJasa SET ENDDA=@ENDDA, change_date=@change_date WHERE Kas=@Kas AND tgl_keluar=@tgl_keluar AND keterangan=@keterangan AND harga=@harga AND unit=@unit AND jmlh_keluar=@jmlh_keluar AND thn_periode=@thn_periode AND nama_bagian=@nama_bagian AND vendor=@vendor AND satuan=@satuan AND jasa=@jasa AND pph IS NULL AND nomor IS NULL", con);
+                    SqlCommand ucmd = new SqlCommand("UPDATE biocash.Pengeluaran SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND tgl_keluar=@tgl_keluar AND keterangan=@keterangan AND harga=@harga AND unit=@unit AND jmlh_keluar=@jmlh_keluar AND thn_periode=@thn_periode AND nama_bagian=@nama_bagian AND vendor=@vendor AND satuan=@satuan AND jasa=@jasa AND pph=@pph AND nomor=@nomor", con);
                     SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
                     SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode ", con);
 
@@ -452,11 +535,44 @@ namespace BioTemplate.Pages
                     iucmd.Parameters.AddWithValue("@thn_periode", periodedel.Text);
                     iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                     iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    
+                    jcmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                    jcmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    jcmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+                    jcmd.Parameters.AddWithValue("@tgl_keluar", tgl_keluardel.Text);
+                    jcmd.Parameters.AddWithValue("@keterangan", keterangandel.Text);
+                    jcmd.Parameters.AddWithValue("@harga", hargadel.Text);
+                    jcmd.Parameters.AddWithValue("@unit", unitdel.Text);
+                    jcmd.Parameters.AddWithValue("@jmlh_keluar", jmlh_keluardel.Text);
+                    jcmd.Parameters.AddWithValue("@thn_periode", periodedel.Text);
+                    jcmd.Parameters.AddWithValue("@nama_bagian", nama_bagiandel.Text);
+                    jcmd.Parameters.AddWithValue("@vendor", vendordel.Text);
+                    jcmd.Parameters.AddWithValue("@satuan", satuandel.Text);
+                    jcmd.Parameters.AddWithValue("@jasa", jasadel.Text);
+
+                    ucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+                    ucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                    ucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    ucmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+                    ucmd.Parameters.AddWithValue("@tgl_keluar", tgl_keluardel.Text);
+                    ucmd.Parameters.AddWithValue("@keterangan", keterangandel.Text);
+                    ucmd.Parameters.AddWithValue("@harga", hargadel.Text);
+                    ucmd.Parameters.AddWithValue("@unit", unitdel.Text);
+                    ucmd.Parameters.AddWithValue("@pph", pphdel.Text);
+                    ucmd.Parameters.AddWithValue("@nomor", nomordel.Text);
+                    ucmd.Parameters.AddWithValue("@jmlh_keluar", jmlh_keluardel.Text);
+                    ucmd.Parameters.AddWithValue("@thn_periode", periodedel.Text);
+                    ucmd.Parameters.AddWithValue("@nama_bagian", nama_bagiandel.Text);
+                    ucmd.Parameters.AddWithValue("@vendor", vendordel.Text);
+                    ucmd.Parameters.AddWithValue("@satuan", satuandel.Text);
+                    ucmd.Parameters.AddWithValue("@jasa", jasadel.Text);
 
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                     con.Open();
                     iucmd.ExecuteNonQuery();
+                    jcmd.ExecuteNonQuery();
+                    ucmd.ExecuteNonQuery();
                     iscmd.ExecuteNonQuery();
                     cmd.ExecuteNonQuery();
                     con.Close();
@@ -471,7 +587,7 @@ namespace BioTemplate.Pages
 
         protected void delete_Click(object sender, EventArgs e)
         {
-            SqlCommand scmd = new SqlCommand("SELECT Kas,pph,thn_periode FROM biocash.Pengeluaran WHERE id=@id", con);
+            SqlCommand scmd = new SqlCommand("SELECT Kas,pph,thn_periode,jmlh_keluar,unit,harga,nama_bagian,vendor,nomor,satuan,jasa,keterangan,tgl_keluar FROM biocash.PengeluaranJasa WHERE id=@id", con);
             scmd.Parameters.AddWithValue("@id", id.Text);
             con.Open();
             SqlDataReader myReader = scmd.ExecuteReader();
@@ -480,9 +596,29 @@ namespace BioTemplate.Pages
                 string kas = myReader.GetValue(0).ToString();
                 string pph = myReader.GetValue(1).ToString();
                 string periode = myReader.GetValue(2).ToString();
+                string jmlhkeluar = myReader.GetValue(3).ToString();
+                string unit = myReader.GetValue(4).ToString();
+                string harga = myReader.GetValue(5).ToString();
+                string namabagian = myReader.GetValue(6).ToString();
+                string vendor = myReader.GetValue(7).ToString();
+                string nomor = myReader.GetValue(8).ToString();
+                string satuan = myReader.GetValue(9).ToString();
+                string jasa = myReader.GetValue(10).ToString();
+                string keterangan = myReader.GetValue(11).ToString();
+                string tglkeluar = myReader.GetValue(12).ToString();
                 kasdel.Text = kas.ToString();
                 pphdel.Text = pph.ToString();
                 periodedel.Text = periode.ToString();
+                jmlh_keluardel.Text = jmlhkeluar.ToString();
+                unitdel.Text = unit.ToString();
+                hargadel.Text = harga.ToString();
+                nama_bagiandel.Text = namabagian.ToString();
+                vendordel.Text = vendor.ToString();
+                nomordel.Text = nomor.ToString();
+                satuandel.Text = satuan.ToString();
+                jasadel.Text = jasa.ToString();
+                keterangandel.Text = keterangan.ToString();
+                tgl_keluardel.Text = tglkeluar.ToString();
             }
             con.Close();
 
@@ -535,6 +671,8 @@ namespace BioTemplate.Pages
                     string totdelsaldo = deletesaldo.ToString();
 
                     SqlCommand cmd = new SqlCommand("UPDATE biocash.Pengeluaran SET ENDDA=@ENDDA WHERE id=@id", con);
+                    SqlCommand jcmd = new SqlCommand("UPDATE biocash.PengeluaranJasa SET ENDDA=@ENDDA, change_date=@change_date WHERE Kas=@Kas AND tgl_keluar=@tgl_keluar AND keterangan=@keterangan AND harga=@harga AND unit=@unit AND jmlh_keluar=@jmlh_keluar AND thn_periode=@thn_periode AND nama_bagian=@nama_bagian AND vendor=@vendor AND satuan=@satuan AND jasa=@jasa AND pph IS NULL AND nomor IS NULL", con);
+                    SqlCommand ucmd = new SqlCommand("UPDATE biocash.Pengeluaran SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND tgl_keluar=@tgl_keluar AND keterangan=@keterangan AND harga=@harga AND unit=@unit AND jmlh_keluar=@jmlh_keluar AND thn_periode=@thn_periode AND nama_bagian=@nama_bagian AND vendor=@vendor AND satuan=@satuan AND jasa=@jasa AND pph=@pph AND nomor=@nomor", con);
                     SqlCommand iscmd = new SqlCommand("INSERT INTO biocash.Saldo" + "(BEGDA,Kas,saldo,thn_periode,change_date,ENDDA)values(@BEGDA,@Kas,@saldo,@thn_periode,@change_date,@ENDDA)", con);
                     SqlCommand iucmd = new SqlCommand("UPDATE biocash.Saldo SET ENDDA=@ENDDA, change_date=@change_date WHERE ENDDA=@ENDDAS AND Kas=@Kas AND thn_periode=@thn_periode ", con);
 
@@ -551,10 +689,43 @@ namespace BioTemplate.Pages
                     iucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                     iucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
 
+                    jcmd.Parameters.AddWithValue("@ENDDA", dateMax);
+                    jcmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    jcmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+                    jcmd.Parameters.AddWithValue("@tgl_keluar", tgl_keluardel.Text);
+                    jcmd.Parameters.AddWithValue("@keterangan", keterangandel.Text);
+                    jcmd.Parameters.AddWithValue("@harga", hargadel.Text);
+                    jcmd.Parameters.AddWithValue("@unit", unitdel.Text);
+                    jcmd.Parameters.AddWithValue("@jmlh_keluar", jmlh_keluardel.Text);
+                    jcmd.Parameters.AddWithValue("@thn_periode", periodedel.Text);
+                    jcmd.Parameters.AddWithValue("@nama_bagian", nama_bagiandel.Text);
+                    jcmd.Parameters.AddWithValue("@vendor", vendordel.Text);
+                    jcmd.Parameters.AddWithValue("@satuan", satuandel.Text);
+                    jcmd.Parameters.AddWithValue("@jasa", jasadel.Text);
+
+                    ucmd.Parameters.AddWithValue("@ENDDAS", dateMax);
+                    ucmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
+                    ucmd.Parameters.AddWithValue("@change_date", DateTime.Now);
+                    ucmd.Parameters.AddWithValue("@Kas", kasdel.Text);
+                    ucmd.Parameters.AddWithValue("@tgl_keluar", tgl_keluardel.Text);
+                    ucmd.Parameters.AddWithValue("@keterangan", keterangandel.Text);
+                    ucmd.Parameters.AddWithValue("@harga", hargadel.Text);
+                    ucmd.Parameters.AddWithValue("@unit", unitdel.Text);
+                    ucmd.Parameters.AddWithValue("@pph", pphdel.Text);
+                    ucmd.Parameters.AddWithValue("@nomor", nomordel.Text);
+                    ucmd.Parameters.AddWithValue("@jmlh_keluar", jmlh_keluardel.Text);
+                    ucmd.Parameters.AddWithValue("@thn_periode", periodedel.Text);
+                    ucmd.Parameters.AddWithValue("@nama_bagian", nama_bagiandel.Text);
+                    ucmd.Parameters.AddWithValue("@vendor", vendordel.Text);
+                    ucmd.Parameters.AddWithValue("@satuan", satuandel.Text);
+                    ucmd.Parameters.AddWithValue("@jasa", jasadel.Text);
+
                     cmd.Parameters.AddWithValue("@id", id.Text);
                     cmd.Parameters.AddWithValue("@ENDDA", DateTime.Now);
                     con.Open();
                     iucmd.ExecuteNonQuery();
+                    jcmd.ExecuteNonQuery();
+                    ucmd.ExecuteNonQuery();
                     iscmd.ExecuteNonQuery();
                     cmd.ExecuteNonQuery();
                     con.Close();

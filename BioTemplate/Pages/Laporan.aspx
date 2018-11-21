@@ -305,7 +305,7 @@
                                         <asp:Label ID="vendorlabel" runat="server" Text='<%#Eval("vendor") %>' ></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Ddebit">
+                                <asp:TemplateField HeaderText="Debit">
                                     <ItemTemplate>
                                         <asp:Label ID="pphlabel" runat="server" Text='<%#Eval("pph") %>' ></asp:Label>
                                     </ItemTemplate>

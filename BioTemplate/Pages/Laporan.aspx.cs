@@ -32,7 +32,8 @@ namespace BioTemplate.Pages
         {
             con.Open();
             //SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND pph IS NOT NULL", con);
-            SqlCommand cmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.Kas,biocash.Pengeluaran.keterangan,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,biocash.Pengeluaran.pph, biocash.Pengeluaran.jmlh_keluar,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.ENDDA = @ENDDA WHERE biocash.Pengeluaran.BEGDA = biocash.Saldo.BEGDA AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas", con);
+            SqlCommand cmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.Kas,CASE WHEN biocash.Pengeluaran.pph IS NULL THEN biocash.Pengeluaran.keterangan ELSE 'Jasa ' +biocash.Pengeluaran.keterangan+ ' PPh (Pasal 23)' END AS keterangan ,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,ISNULL(biocash.Pengeluaran.pph, 0) AS pph, CASE WHEN biocash.pengeluaran.pph is not null  THEN '0' ELSE biocash.Pengeluaran.jmlh_keluar END AS jmlh_keluar,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.ENDDA = @ENDDA WHERE biocash.Pengeluaran.BEGDA = biocash.Saldo.BEGDA AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas ORDER BY biocash.Pengeluaran.tgl_keluar ASC", con);
+        
             cmd.Parameters.AddWithValue("@ENDDA", dateMax);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             con.Close();
@@ -74,7 +75,7 @@ namespace BioTemplate.Pages
 
             con.Open();
             //SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND pph IS NOT NULL", con);
-            SqlCommand gcmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.Kas,biocash.Pengeluaran.keterangan,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,biocash.Pengeluaran.pph, biocash.Pengeluaran.jmlh_keluar,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.Kas = @Kas AND biocash.Pengeluaran.ENDDA = @ENDDA WHERE biocash.Pengeluaran.BEGDA = biocash.Saldo.BEGDA AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas", con);
+            SqlCommand gcmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.Kas,CASE WHEN biocash.Pengeluaran.pph IS NULL THEN biocash.Pengeluaran.keterangan ELSE 'Jasa ' +biocash.Pengeluaran.keterangan+ ' PPh (Pasal 23)' END AS keterangan ,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,ISNULL(biocash.Pengeluaran.pph, 0) AS pph, CASE WHEN biocash.pengeluaran.pph is not null  THEN '0' ELSE biocash.Pengeluaran.jmlh_keluar END AS jmlh_keluar ,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.Kas = @Kas AND biocash.Pengeluaran.ENDDA = @ENDDA WHERE biocash.Pengeluaran.BEGDA = biocash.Saldo.BEGDA AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas ORDER BY biocash.Pengeluaran.tgl_keluar ASC", con);
             gcmd.Parameters.AddWithValue("@ENDDA", dateMax);
             gcmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
             SqlDataAdapter da = new SqlDataAdapter (gcmd);
@@ -106,7 +107,7 @@ namespace BioTemplate.Pages
         {
             con.Open();
             //SqlCommand cmd = new SqlCommand("SELECT *FROM biocash.Pengeluaran WHERE ENDDA=@ENDDA AND pph IS NOT NULL", con);
-            SqlCommand gcmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.Kas,biocash.Pengeluaran.keterangan,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,biocash.Pengeluaran.pph, biocash.Pengeluaran.jmlh_keluar,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.Kas = @Kas AND biocash.Pengeluaran.thn_periode = @thn_periode AND biocash.Pengeluaran.ENDDA = @ENDDA WHERE biocash.Pengeluaran.BEGDA = biocash.Saldo.BEGDA AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas", con);
+            SqlCommand gcmd = new SqlCommand("SELECT biocash.Pengeluaran.tgl_keluar,biocash.Pengeluaran.Kas,CASE WHEN biocash.Pengeluaran.pph IS NULL THEN biocash.Pengeluaran.keterangan ELSE 'Jasa ' +biocash.Pengeluaran.keterangan+ ' PPh (Pasal 23)' END AS keterangan ,biocash.Pengeluaran.satuan,biocash.Pengeluaran.unit,biocash.Pengeluaran.nama_bagian,biocash.Pengeluaran.nomor,biocash.Pengeluaran.vendor,ISNULL(biocash.Pengeluaran.pph, 0) AS pph, CASE WHEN biocash.pengeluaran.pph is not null  THEN '0' ELSE biocash.Pengeluaran.jmlh_keluar END AS jmlh_keluar ,biocash.Pengeluaran.jasa, biocash.Saldo.saldo FROM biocash.Pengeluaran INNER JOIN biocash.Saldo ON biocash.Pengeluaran.Kas = biocash.Saldo.Kas AND biocash.Pengeluaran.Kas = @Kas AND biocash.Pengeluaran.thn_periode = @thn_periode AND biocash.Pengeluaran.ENDDA = @ENDDA WHERE biocash.Pengeluaran.BEGDA = biocash.Saldo.BEGDA AND biocash.Pengeluaran.Kas = biocash.Saldo.Kas ORDER BY biocash.Pengeluaran.tgl_keluar ASC", con);
             gcmd.Parameters.AddWithValue("@ENDDA", dateMax);
             gcmd.Parameters.AddWithValue("@Kas", kasdl.SelectedItem.Value);
             gcmd.Parameters.AddWithValue("@thn_periode", periodedl.SelectedItem.Value);
@@ -203,9 +204,8 @@ namespace BioTemplate.Pages
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                
-                //sumdebit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "pph"));
-                sumkredit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "jmlh_keluar"));
+                    sumdebit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "pph"));
+                    sumkredit += Convert.ToInt32(DataBinder.Eval(e.Row.DataItem, "jmlh_keluar"));
             }
             if (e.Row.RowType == DataControlRowType.Footer)
             {
